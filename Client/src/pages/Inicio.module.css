@@ -1,0 +1,272 @@
+.groupChild {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  border-radius: var(--br-11xl);
+  width: 9.56rem;
+  height: 6.06rem;
+}
+.cerrarSesion {
+  position: absolute;
+  top: 2.25rem;
+  left: 0.88rem;
+  display: inline-block;
+  width: 6.06rem;
+  height: 1.5rem;
+}
+.image8Icon {
+  position: absolute;
+  top: 1.88rem;
+  left: 7.25rem;
+  width: 1.88rem;
+  height: 1.88rem;
+  object-fit: cover;
+}
+.vectorParent {
+  position: absolute;
+  top: 1rem;
+  left: 79.81rem;
+  width: 9.56rem;
+  height: 6.06rem;
+}
+.groupItem {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  background-color: var(--color-mediumslateblue);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 50.19rem;
+  height: 49.63rem;
+}
+.groupInner {
+  position: absolute;
+  top: 5.75rem;
+  left: 2.63rem;
+  border-radius: var(--br-xl);
+  background-color: var(--color-lightsteelblue-100);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 18.69rem;
+  height: 16.81rem;
+}
+.rectangleDiv {
+  position: absolute;
+  top: 5.75rem;
+  left: 27.31rem;
+  border-radius: var(--br-xl);
+  background-color: var(--color-lightsteelblue-100);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 18.69rem;
+  height: 16.81rem;
+}
+.rectangleIcon {
+  position: absolute;
+  top: 26.25rem;
+  left: 2.38rem;
+  border-radius: var(--br-xl);
+  width: 19.19rem;
+  height: 17.31rem;
+}
+.excel {
+  position: absolute;
+  top: 41.38rem;
+  left: 8.75rem;
+  display: inline-block;
+  text-align: center;
+  width: 6.5rem;
+  height: 1.25rem;
+}
+.groupChild1 {
+  position: absolute;
+  top: 26.25rem;
+  left: 27.28rem;
+  border-radius: var(--br-xl);
+  width: 19.19rem;
+  height: 17.31rem;
+}
+.cruds {
+  position: absolute;
+  top: 20.38rem;
+  left: 10.38rem;
+  display: inline-block;
+  width: 3.25rem;
+  height: 1.5rem;
+}
+.listadoHorarios {
+  position: absolute;
+  top: 20.38rem;
+  left: 32.13rem;
+  display: inline-block;
+  width: 9.06rem;
+  height: 1.5rem;
+}
+.solicitudes {
+  position: absolute;
+  top: 41.38rem;
+  left: 34.69rem;
+  display: inline-block;
+  width: 6.5rem;
+  height: 1.25rem;
+}
+.image6Icon {
+  position: absolute;
+  top: 7.38rem;
+  left: 4.94rem;
+  border-radius: var(--br-31xl);
+  width: 14.06rem;
+  height: 12.31rem;
+  object-fit: cover;
+}
+.image7Icon {
+  position: absolute;
+  top: 7.38rem;
+  left: 30rem;
+  border-radius: var(--br-31xl);
+  width: 14.06rem;
+  height: 12.31rem;
+  object-fit: cover;
+}
+.image22Icon {
+  position: absolute;
+  top: 27.81rem;
+  left: 5.13rem;
+  border-radius: var(--br-3xs);
+  width: 13.88rem;
+  height: 12.56rem;
+  object-fit: cover;
+}
+.image10Icon {
+  position: absolute;
+  top: 27.81rem;
+  left: 30rem;
+  border-radius: var(--br-31xl);
+  width: 14.06rem;
+  height: 12.56rem;
+  object-fit: cover;
+}
+.rectangleParent {
+  position: absolute;
+  top: 10.81rem;
+  left: 16.69rem;
+  width: 50.19rem;
+  height: 49.63rem;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-inria-sans);
+}
+.groupChild2 {
+  
+  top: 4.38rem;
+  left: 0rem;
+  background-color: var(--color-mediumslateblue);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 50.19rem;
+  height: 4.38rem;
+}
+.notificaciones {
+  position: absolute;
+  top: 1.5rem;
+  left: 40.31rem;
+  display: inline-block;
+  width: 7.06rem;
+  height: 1.5rem;
+}
+.inicio1 {
+  position: absolute;
+  top: 1.5rem;
+  left: 3.19rem;
+  display: inline-block;
+  width: 2.88rem;
+  height: 1.5rem;
+}
+.image9Icon {
+  position: absolute;
+  top: 1rem;
+  left: 47.38rem;
+  width: 2.31rem;
+  height: 2.13rem;
+  object-fit: cover;
+}
+.lineDiv {
+  position: absolute;
+  top: -0.03rem;
+  left: 39.28rem;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-right: 1px solid var(--color-gray);
+  box-sizing: border-box;
+  width: 0.06rem;
+  height: 4.44rem;
+}
+.groupChild3 {
+  position: absolute;
+  top: -0.03rem;
+  left: 6.59rem;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-right: 1px solid var(--color-gray);
+  box-sizing: border-box;
+  width: 0.06rem;
+  height: 4.44rem;
+}
+.image16Icon {
+  position: absolute;
+  top: 1rem;
+  left: 0.75rem;
+  width: 1.88rem;
+  height: 2rem;
+  object-fit: cover;
+}
+.rectangleGroup {
+  position: absolute;
+  top: 1.63rem;
+  left: 17.19rem;
+  width: 50.19rem;
+  height: 4.38rem;
+  font-size: var(--font-size-base);
+}
+.groupChild4 {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  width: 15.56rem;
+}
+.groupChild5 {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  width: 15.56rem;
+  height: 6.5rem;
+}
+.bienvenidoAdministrador {
+  position: absolute;
+  top: 2rem;
+  left: 2.25rem;
+  display: inline-block;
+  width: 7.5rem;
+  height: 1.5rem;
+}
+.avatarImage60 {
+  position: absolute;
+  top: 1.31rem;
+  left: 10.31rem;
+  border-radius: var(--br-11xl);
+  width: 3.13rem;
+  height: 3.13rem;
+  overflow: hidden;
+  object-fit: cover;
+}
+.vectorGroup {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  width: 15.31rem;
+  height: 64rem;
+}
+.inicio {
+  position: relative;
+  background-color: var(--color-lavender);
+  width: 100%;
+  height: 64rem;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-black);
+  font-family: var(--font-inter);
+}

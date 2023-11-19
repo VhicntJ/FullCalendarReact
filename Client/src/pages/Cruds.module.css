@@ -1,0 +1,315 @@
+.groupChild {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  border-radius: var(--br-11xl);
+  width: 9.56rem;
+  height: 6.06rem;
+}
+.cerrarSesion {
+  position: absolute;
+  top: 2.25rem;
+  left: 0.88rem;
+  display: inline-block;
+  width: 6.06rem;
+  height: 1.5rem;
+}
+.image8Icon {
+  position: absolute;
+  top: 1.88rem;
+  left: 7.25rem;
+  width: 1.88rem;
+  height: 1.88rem;
+  object-fit: cover;
+}
+.vectorParent {
+  position: absolute;
+  top: 1rem;
+  left: 79.81rem;
+  width: 9.56rem;
+  height: 6.06rem;
+}
+.groupItem {
+  
+  top: 4.38rem;
+  left: 0rem;
+  background-color: var(--color-mediumslateblue);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 50.19rem;
+  height: 4.38rem;
+}
+.notificaciones {
+  position: absolute;
+  top: 1.5rem;
+  left: 40.31rem;
+  display: inline-block;
+  width: 7.06rem;
+  height: 1.5rem;
+}
+.inicio {
+  position: absolute;
+  top: 1.5rem;
+  left: 3.19rem;
+  display: inline-block;
+  width: 2.88rem;
+  height: 1.5rem;
+}
+.image9Icon {
+  position: absolute;
+  top: 1rem;
+  left: 47.38rem;
+  width: 2.31rem;
+  height: 2.13rem;
+  object-fit: cover;
+}
+.groupInner {
+  position: absolute;
+  top: -0.03rem;
+  left: 39.28rem;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-right: 1px solid var(--color-gray);
+  box-sizing: border-box;
+  width: 0.06rem;
+  height: 4.44rem;
+}
+.lineDiv {
+  position: absolute;
+  top: -0.03rem;
+  left: 6.59rem;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-right: 1px solid var(--color-gray);
+  box-sizing: border-box;
+  width: 0.06rem;
+  height: 4.44rem;
+}
+.image16Icon {
+  position: absolute;
+  top: 1rem;
+  left: 0.75rem;
+  width: 1.88rem;
+  height: 2rem;
+  object-fit: cover;
+}
+.rectangleParent {
+  position: absolute;
+  top: 1.63rem;
+  left: 17.19rem;
+  width: 50.19rem;
+  height: 4.38rem;
+  font-size: var(--font-size-base);
+}
+.rectangleIcon {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  width: 15.56rem;
+  height: 64rem;
+}
+.groupChild1 {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  width: 15.56rem;
+  height: 6.5rem;
+}
+.bienvenidoAdministrador {
+  position: absolute;
+  top: 2rem;
+  left: 2.25rem;
+  display: inline-block;
+  width: 7.5rem;
+  height: 1.5rem;
+}
+.avatarImage60 {
+  position: absolute;
+  top: 1.31rem;
+  left: 10.31rem;
+  border-radius: var(--br-11xl);
+  width: 3.13rem;
+  height: 3.13rem;
+  overflow: hidden;
+  object-fit: cover;
+}
+.vectorGroup {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  width: 15.31rem;
+  height: 64rem;
+}
+.rectangleDiv {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  background-color: var(--color-mediumslateblue);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 71.75rem;
+  height: 49.63rem;
+}
+.groupChild2 {
+  position: absolute;
+  top: 0rem;
+  left: -0.25rem;
+  width: 72.25rem;
+  height: 5.5rem;
+}
+.cruds1 {
+  position: absolute;
+  top: 1.94rem;
+  left: 2.06rem;
+  font-size: var(--font-size-5xl);
+  font-family: var(--font-carter-one);
+  display: inline-block;
+  width: 9.63rem;
+  height: 2.25rem;
+}
+.groupChild3 {
+  position: absolute;
+  top: 9.88rem;
+  left: 6.88rem;
+  border-radius: var(--br-xl);
+  background-color: var(--color-lightsteelblue-100);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 18.69rem;
+  height: 16.81rem;
+}
+.profesor {
+  position: absolute;
+  top: 24.19rem;
+  left: 13.75rem;
+  display: inline-block;
+  width: 4.94rem;
+  height: 1.25rem;
+}
+.groupChild4 {
+  position: absolute;
+  top: 9.88rem;
+  left: 48.81rem;
+  border-radius: var(--br-xl);
+  background-color: var(--color-lightsteelblue-100);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 18.69rem;
+  height: 16.81rem;
+}
+.alumnos {
+  position: absolute;
+  top: 24.31rem;
+  left: 55.63rem;
+  display: inline-block;
+  width: 5.13rem;
+  height: 1.25rem;
+}
+.groupChild5 {
+  position: absolute;
+  top: 29.63rem;
+  left: 7rem;
+  border-radius: var(--br-xl);
+  background-color: var(--color-lightsteelblue-100);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 18.69rem;
+  height: 16.81rem;
+}
+.carrera {
+  position: absolute;
+  top: 44.06rem;
+  left: 14.13rem;
+  display: inline-block;
+  width: 4.19rem;
+  height: 1.25rem;
+}
+.groupChild6 {
+  position: absolute;
+  top: 20rem;
+  left: 27.88rem;
+  border-radius: var(--br-xl);
+  background-color: var(--color-lightsteelblue-100);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 18.69rem;
+  height: 16.81rem;
+}
+.horarios {
+  position: absolute;
+  top: 34.75rem;
+  left: 34.75rem;
+  display: inline-block;
+  width: 5rem;
+  height: 1.25rem;
+}
+.groupChild7 {
+  position: absolute;
+  top: 29.63rem;
+  left: 48.81rem;
+  border-radius: var(--br-xl);
+  background-color: var(--color-lightsteelblue-100);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 18.69rem;
+  height: 16.81rem;
+}
+.asignatura {
+  position: absolute;
+  top: 44.06rem;
+  left: 54.94rem;
+  display: inline-block;
+  width: 6.5rem;
+  height: 1.25rem;
+}
+.image17Icon {
+  position: absolute;
+  top: 11.63rem;
+  left: 11.44rem;
+  width: 11.5rem;
+  height: 11.38rem;
+  object-fit: cover;
+}
+.image18Icon {
+  position: absolute;
+  top: 22.06rem;
+  left: 30.88rem;
+  width: 12.69rem;
+  height: 12.69rem;
+  object-fit: cover;
+}
+.image19Icon {
+  position: absolute;
+  top: 11.63rem;
+  left: 52.81rem;
+  width: 10.75rem;
+  height: 12.06rem;
+  object-fit: cover;
+}
+.image20Icon {
+  position: absolute;
+  top: 31.31rem;
+  left: 11rem;
+  width: 10.75rem;
+  height: 10.94rem;
+  object-fit: cover;
+}
+.image21Icon {
+  position: absolute;
+  top: 31.31rem;
+  left: 52rem;
+  width: 12.38rem;
+  height: 12.13rem;
+  object-fit: cover;
+}
+.rectangleGroup {
+  position: absolute;
+  top: 8.5rem;
+  left: 16.25rem;
+  width: 71.75rem;
+  height: 49.63rem;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-inria-sans);
+}
+.cruds {
+  position: relative;
+  background-color: var(--color-lavender);
+  width: 100%;
+  height: 64rem;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-black);
+  font-family: var(--font-inter);
+}

@@ -1,0 +1,54 @@
+
+tr {
+  height: 4em; /* Ajusta la altura según tus necesidades */
+}
+
+
+th {
+    background-color: #ff510033;
+}
+
+td {
+    font-weight: bold;
+}	
+
+td.fc-timegrid-slot .fc-timegrid-slot-label .fc-scrollgrid-shrink {
+    background-color: black;
+}
+
+
+
+.check {
+  background-color: #ff5100;
+  border-color: #000000;
+  color: #000000;
+  font-weight: bold;
+}
+a {
+  color: #0025fa;
+  text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 1.5em;
+}
+/*para los eventos*/
+.fc-event-main { 
+  background-color: #ff5100;
+  border-color: #000000;
+}
+.fc-event-main i {
+  color: #000000;
+  font-weight: bold;
+}	
+
+colgroup {
+  background-color: #ff510059;
+  color: #000000;
+  font-weight: bold;
+}
+
+.demo-app-main {
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
