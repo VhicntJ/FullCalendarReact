@@ -10,17 +10,17 @@ export default function Form(){
             <p className='font-medium text-lg text-gray-500 mt-4'>Bienvenido! a CalendarUcen.</p>
             <div className='mt-8'>
                 <div>
-                    <label className='text-lg font-medium'>Email</label>
+                    <label className='text-lg font-medium'>Rut</label>
                     <input
                         className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
-                        placeholder='Enter your email'
+                        placeholder='Ingresa tu Rut'
                     />
                 </div>
                 <div>
                     <label className='text-lg font-medium'>Contraseña</label>
                     <input
                         className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
-                        placeholder='Enter your password'
+                        placeholder='Ingresa tu contraseña'
                         type="password"
                     />
                 </div>
@@ -32,12 +32,12 @@ export default function Form(){
                         />
                         <label className='ml-2 font-medium text-base' for="remember">Recuerdame</label>
                     </div>
-                    <button className='font-medium text-base text-blue-20'>Forgot password</button>
+                    <button className='font-medium text-base text-blue-20'>Recuperar Contraseña</button>
                 </div>
                 <div className='mt-8 flex flex-col gap-y-4'>
-                    <button className='active:scale-[.98] active-75 hover:scale[1.01] ease-in-out transition-all py-3 rounded-xl bg-blue-500 text-white text-lg font-bold'>Sign in</button>
+                    <button className='active:scale-[.98] active-75 hover:scale[1.01] ease-in-out transition-all py-3 rounded-xl bg-blue-500 text-white text-lg font-bold'>Iniciar Sesion</button>
                     <button>
-                        Inicia sesion con Google
+                        Inicia sesion con Correo institucional
                         </button>
                 </div>
             </div>
