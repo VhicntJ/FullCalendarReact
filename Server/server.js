@@ -1,21 +1,22 @@
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql");
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const crypto = require('crypto');
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-const connection = mysql.createConnection({
+const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
   database: 'planeacion'
-  
 });
 
-connection.connect((err) => {
+db.connect((err) => {
   if (err) {
     console.error('Error de conexión a la base de datos:', err);
     return;
@@ -26,7 +27,7 @@ connection.connect((err) => {
 app.get('/salas', (req, res) => {
   const query = 'SELECT * FROM sala';
 
-  connection.query(query, (error, results) => {
+  db.query(query, (error, results) => {
     if (error) {
       res.status(500).json({ error: error.message });
     } else {
@@ -38,7 +39,7 @@ app.get('/salas', (req, res) => {
 app.get('/carreras', (req, res) => {
   const query = 'SELECT * FROM carrera';
 
-  connection.query(query, (error, results) => {
+  db.query(query, (error, results) => {
     if (error) {
       res.status(500).json({ error: error.message });
     } else {
@@ -51,7 +52,7 @@ app.get('/carreras', (req, res) => {
 app.get('/niveles', (req, res) => {
   const query = 'SELECT * FROM nivel';
 
-  connection.query(query, (error, results) => {
+  db.query(query, (error, results) => {
     if (error) {
       res.status(500).json({ error: error.message });
     } else {
@@ -63,7 +64,7 @@ app.get('/niveles', (req, res) => {
 app.get('/profesores', (req, res) => {
   const query = 'SELECT * FROM profesores';
 
-  connection.query(query, (error, results) => {
+  db.query(query, (error, results) => {
     if (error) {
       res.status(500).json({ error: error.message });
     } else {
@@ -75,7 +76,7 @@ app.get('/profesores', (req, res) => {
 app.get('/asignaturas', (req, res) => {
   const query = 'SELECT * FROM asignatura';
 
-  connection.query(query, (error, results) => {
+  db.query(query, (error, results) => {
     if (error) {
       res.status(500).json({ error: error.message });
     } else {
@@ -87,7 +88,7 @@ app.get('/asignaturas', (req, res) => {
 app.get('/facultades', (req, res) => {
   const query = 'SELECT * FROM facultad';
 
-  connection.query(query, (error, results) => {
+  db.query(query, (error, results) => {
     if (error) {
       res.status(500).json({ error: error.message });
     } else {
@@ -104,7 +105,7 @@ app.get('/eventos', (req, res) => {
   JOIN horarios ON eventos.id_horario = horarios.id_horario;
 `; // Ajusta según tu esquema de base de datos
 
-  connection.query(query, (error, results) => {
+  db.query(query, (error, results) => {
     if (error) {
       res.status(500).json({ error: error.message });
     } else {
@@ -128,7 +129,7 @@ app.post('/createProfe', (req, res) => {
   const passwordProfe = crypto.createHash('sha256').update(password).digest('hex');
   console.log("Valor encriptado: ", passwordProfe); // Agrega esta línea para verificar el valor encriptado en la consola
 
-  connection.query('INSERT INTO profesor (rut_profesor,nombre, contrato, password) VALUES (?,?,?,?)', [rut_profesor ,nombre, contrato, passwordProfe], (err, result) => {
+  db.query('INSERT INTO profesor (rut_profesor,nombre, contrato, password) VALUES (?,?,?,?)', [rut_profesor ,nombre, contrato, passwordProfe], (err, result) => {
       if (err) {
           console.log(err);
       } else {
@@ -137,6 +138,16 @@ app.post('/createProfe', (req, res) => {
   });
 });
 
+app.get('/profesores2', (req, res) => {
+  db.query('SELECT * FROM profesor' , 
+  (err, result) => {
+      if (err) {
+          console.log(err);
+      } else {
+          res.send(result);
+      }
+  });
+});
 
 app.put('/updateProfe', (req, res) => {
   const id_profesor = req.body.id_profesor;
@@ -148,7 +159,7 @@ app.put('/updateProfe', (req, res) => {
   // Encripta el contrato usando SHA256
   const passwordProfe = crypto.createHash('sha256').update(password).digest('hex');
   console.log("Valor encriptado: ", passwordProfe); // Agrega esta línea para verificar el valor encriptado en la consola
-  connection.query('UPDATE profesor SET rut_profesor=?, nombre = ?, contrato = ?, password = ? WHERE id_profesor = ?', [rut_profesor,nombre, contrato, passwordProfe, id_profesor],
+  db.query('UPDATE profesor SET rut_profesor=?, nombre = ?, contrato = ?, password = ? WHERE id_profesor = ?', [rut_profesor,nombre, contrato, passwordProfe, id_profesor],
   (err, result) => {
       if (err) {
           console.log(err);
@@ -160,7 +171,7 @@ app.put('/updateProfe', (req, res) => {
 
 app.delete('/deleteProfe/:id_profesor', (req, res) => {
   const id_profesor = req.params.id_profesor;
-  connection.query('DELETE FROM profesor WHERE id_profesor = ?', id_profesor, (err, result) => {
+  db.query('DELETE FROM profesor WHERE id_profesor = ?', id_profesor, (err, result) => {
       if (err) {
           console.log(err);
       } else {
@@ -170,7 +181,7 @@ app.delete('/deleteProfe/:id_profesor', (req, res) => {
 }); 
 
 app.get('/exportar-profesores', (req, res) => {
-  connection.query('SELECT * FROM profesor', (err, result) => {
+  db.query('SELECT * FROM profesor', (err, result) => {
       if (err) {
           console.log(err);
           res.status(500).json({ success: false, message: 'Error en la exportación' });
@@ -210,7 +221,7 @@ app.post('/createAlu', (req, res) => {
   const passwordEncriptado = crypto.createHash('sha256').update(password).digest('hex');
   console.log("Valor encriptado: ", passwordEncriptado); // Agrega esta línea para verificar el valor encriptado en la consola
   
-  connection.query('INSERT INTO alumno (rut, nombre, correo, password, id_carrera) VALUES (?,?,?,?,?)', [rut, nombre, correo, passwordEncriptado, id_carrera], (err, result) => {
+  db.query('INSERT INTO alumno (rut, nombre, correo, password, id_carrera) VALUES (?,?,?,?,?)', [rut, nombre, correo, passwordEncriptado, id_carrera], (err, result) => {
       if (err) {
           console.log(err);
       } else {
@@ -220,7 +231,7 @@ app.post('/createAlu', (req, res) => {
 });
 
 app.get('/alumnos', (req, res) => {
-  connection.query('SELECT * FROM alumno', (err, result) => {
+  db.query('SELECT * FROM alumno', (err, result) => {
       if (err) {
           console.log(err);
       } else {
@@ -241,7 +252,7 @@ app.put('/updateAlu', (req, res) => {
   const passwordEncriptado = crypto.createHash('sha256').update(password).digest('hex');
   console.log("Valor encriptado: ", passwordEncriptado); // Agrega esta línea para verificar el valor encriptado en la consola
   
-  connection.query('UPDATE alumno SET rut = ?, nombre = ?, correo = ?, password = ? , id_carrera = ? WHERE id_alumno = ?', [rut, nombre, correo, passwordEncriptado, id_carrera, id_alumno], (err, result) => {
+  db.query('UPDATE alumno SET rut = ?, nombre = ?, correo = ?, password = ? , id_carrera = ? WHERE id_alumno = ?', [rut, nombre, correo, passwordEncriptado, id_carrera, id_alumno], (err, result) => {
       if (err) {
           console.log(err);
       } else {
@@ -252,7 +263,7 @@ app.put('/updateAlu', (req, res) => {
 
 app.delete('/deleteAlu/:id_alumno', (req, res) => {
   const id_alumno = req.params.id_alumno;
-  connection.query('DELETE FROM alumno WHERE id_alumno = ?', id_alumno, (err, result) => {
+  db.query('DELETE FROM alumno WHERE id_alumno = ?', id_alumno, (err, result) => {
       if (err) {
           console.log(err);
       } else {
@@ -262,7 +273,7 @@ app.delete('/deleteAlu/:id_alumno', (req, res) => {
 })
 
 app.get('/obtener-carreras', (req, res) => {
-  connection.query('SELECT * FROM carrera', (err, result) => {
+  db.query('SELECT * FROM carrera', (err, result) => {
       if (err) {
           console.log(err);
       } else {
@@ -272,7 +283,7 @@ app.get('/obtener-carreras', (req, res) => {
 });
 
 app.get('/exportar-alumnos', (req, res) => {
-  connection.query('SELECT * FROM alumno', (err, result) => {
+  db.query('SELECT * FROM alumno', (err, result) => {
       if (err) {
           console.log(err);
           res.status(500).json({ success: false, message: 'Error en la exportación' });
@@ -299,4 +310,4 @@ app.get('/exportar-alumnos', (req, res) => {
   });
 });
 
-app.listen(4000, () => console.log("Servidor en localhost:4000"));
+app.listen(3001, () => console.log("Servidor en localhost:3001"));
