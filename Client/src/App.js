@@ -11,7 +11,6 @@ import InicioAdmin from "./pages/Inicio";
 import Solicitudes from "./pages/Solicitudes";
 import Form from "./pages/Form";
 import Filtros from "./pages/Filtros";
-import Mantenedores from "./pages/Mantenedores";
 import ProfeCrud from "./pages/ProfeCrud";
 import AlumnoCrud from "./pages/AlumnoCrud";
 
@@ -56,10 +55,6 @@ function App() {
           title = "";
           metaDescription = "";
           break;
-      case "/Mantenedores":
-            title = "";
-            metaDescription = "";
-            break;
       case "/ProfeCrud":
             title = "";
             metaDescription = "";
@@ -95,7 +90,6 @@ function App() {
       <Route path="/solicitudes" element={<Solicitudes />} />
       <Route path="/InicioAdmin" element={<InicioAdmin />} />
       <Route path="/Filtros" element={<Filtros />} />
-      <Route path="/Mantenedores" element={<Mantenedores />} />
       <Route path="/ProfeCrud" element={<ProfeCrud />} />
       <Route path="/AlumnoCrud" element={<AlumnoCrud />} />
     </Routes>
