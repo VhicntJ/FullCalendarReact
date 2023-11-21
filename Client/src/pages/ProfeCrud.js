@@ -33,7 +33,7 @@ function App() {
   }
   
   const getProfesores = () => {
-    Axios.get("http://localhost:3001/profesores").then ((response) => {
+    Axios.get("http://localhost:3001/profesores2").then ((response) => {
       setProfesoresList(response.data);
     });
   }
