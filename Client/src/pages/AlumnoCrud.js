@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import  Axios  from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from 'sweetalert2';
+import { saveAs } from 'file-saver';
 
 function App() {
   const [rut, setRut] = useState(''); // El primer valor es el estado, el segundo es la función que lo actualiza
@@ -122,24 +123,21 @@ function App() {
         });
       });
     }});
-  } 
+  }
+
   const exportarCSV = async () => {
     try {
       const response = await Axios.get('http://localhost:3001/exportar-alumnos', {
-        responseType: 'blob', // Indicar que esperamos una respuesta de tipo blob
+        responseType: 'blob',
+        timeout: 10000,
       });
-
-      // Crear un objeto URL para el blob y crear un enlace temporal
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'alumnos_exportados.csv';
-
-      // Hacer clic en el enlace para iniciar la descarga
-      a.click();
-
-      // Liberar el objeto URL creado
-      window.URL.revokeObjectURL(url);
+  
+      if (response.status === 200) {
+        const blob = new Blob([response.data], { type: 'text/csv' });
+        saveAs(blob, 'alumnos_exportados.csv');
+      } else {
+        console.error('Error en la exportación CSV:', response.status);
+      }
     } catch (error) {
       console.error('Error en la exportación CSV:', error);
     }

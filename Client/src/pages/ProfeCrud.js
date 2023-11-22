@@ -2,8 +2,8 @@ import './Crud.css';
 import React, { useState, useEffect } from 'react';
 import  Axios  from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Swal from 'sweetalert2'
-
+import Swal from 'sweetalert2';
+import { saveAs } from 'file-saver';
 
 function App() {
   const [id_profesor, setId_profesor] = useState(''); // El primer valor es el estado, el segundo es la función que lo actualiza
@@ -73,10 +73,10 @@ function App() {
     });
   }
 
-  const deleteProfesor = (val)=> {
+  const hideProfesor = (val)=> {
     Swal.fire({
       icon: 'warning',
-      title: 'Confirmar eliminado?',
+      title: 'Confirmar ocultar?',
       html: "<i>Realmente desea eliminar a <strong>"+val.nombre+"</strong>?</i>",
       showCancelButton: true,
       showConfirmButton: true,
@@ -84,7 +84,7 @@ function App() {
       cancelButtonColor: '#d33',
     }).then ((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:3001/deleteProfe/${val.id_profesor}`).then((res) => {
+        Axios.put(`http://localhost:3001/hideProfe/${val.id_profesor}`).then((res) => {
           getProfesores();
           limpiarCampos();
           Swal.fire({
@@ -109,20 +109,16 @@ function App() {
   const exportarCSV = async () => {
     try {
       const response = await Axios.get('http://localhost:3001/exportar-profesores', {
-        responseType: 'blob', // Indicar que esperamos una respuesta de tipo blob
+        responseType: 'blob',
+        timeout: 10000,
       });
-
-      // Crear un objeto URL para el blob y crear un enlace temporal
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'profesores_exportados.csv';
-
-      // Hacer clic en el enlace para iniciar la descarga
-      a.click();
-
-      // Liberar el objeto URL creado
-      window.URL.revokeObjectURL(url);
+  
+      if (response.status === 200) {
+        const blob = new Blob([response.data], { type: 'text/csv' });
+        saveAs(blob, 'profesores_exportados.csv');
+      } else {
+        console.error('Error en la exportación CSV:', response.status);
+      }
     } catch (error) {
       console.error('Error en la exportación CSV:', error);
     }
@@ -170,21 +166,27 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {profesoresList.map((val, key) => {
-            return (
-              <tr>
-                <td>{val.rut_profesor}</td>
-                <td>{val.nombre}</td>
-                <td>{val.contrato}</td>
-                <td>{val.password}</td>
-                <td>
-                  <button className='btn-editar' onClick={() => {editarProfesores(val)}}>Editar</button>
-                  <button className='btn-eliminar' onClick={() => {deleteProfesor(val)}}>Eliminar</button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
+            {profesoresList.map((val, key) => {
+              return (
+                <tr key={key}>
+                  <td>{val.rut_profesor}</td>
+                  <td>{val.nombre}</td>
+                  <td>{val.contrato}</td>
+                  <td>{val.password}</td>
+                  <td>
+                    {val.estado ? (
+                      <div>
+                        <button className='btn-editar' onClick={() => {editarProfesores(val)}}>Editar</button>
+                        <button className='btn-eliminar' onClick={() => {hideProfesor(val)}}>Ocultar</button>
+                      </div>
+                    ) : (
+                      <span>Inactivo</span>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
        </table>
     </body>
     </html>

@@ -3,6 +3,8 @@ const cors = require("cors");
 const mysql = require("mysql");
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const crypto = require('crypto');
+const path = require('path');
+const os = require('os');
 
 const app = express();
 
@@ -169,44 +171,51 @@ app.put('/updateProfe', (req, res) => {
   });
 });
 
-app.delete('/deleteProfe/:id_profesor', (req, res) => {
+app.put('/hideProfe/:id_profesor', (req, res) => {
   const id_profesor = req.params.id_profesor;
-  db.query('DELETE FROM profesor WHERE id_profesor = ?', id_profesor, (err, result) => {
-      if (err) {
-          console.log(err);
-      } else {
-          res.send(result);
-      }
-  });
-}); 
+  const nuevoEstado = 0;  // Establece el nuevo estado (inactivo)
 
-app.get('/exportar-profesores', (req, res) => {
-  db.query('SELECT * FROM profesor', (err, result) => {
-      if (err) {
-          console.log(err);
-          res.status(500).json({ success: false, message: 'Error en la exportación' });
-      } else {
-          // Verificar que hay datos para exportar
-          if (result.length > 0) {
-              const csvWriter = createCsvWriter({
-                  path: 'profesores_exportados.csv',
-                  header: Object.keys(result[0]).map((columnName) => ({ id: columnName, title: columnName }))
-              });
-
-              csvWriter.writeRecords(result)
-                  .then(() => {
-                      res.status(200).json({ success: true, message: 'Exportación exitosa' });
-                  })
-                  .catch((error) => {
-                      console.error(error);
-                      res.status(500).json({ success: false, message: 'Error en la exportación' });
-                  });
-          } else {
-              res.status(500).json({ success: false, message: 'No hay datos para exportar' });
-          }
-      }
+  db.query('UPDATE profesor SET estado = ? WHERE id_profesor = ?', [nuevoEstado, id_profesor], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ success: false, message: 'Error al ocultar al profesor' });
+    } else {
+      res.status(200).json({ success: true, message: 'Profesor ocultado exitosamente' });
+    }
   });
 });
+
+app.get('/exportar-profesores', (req, res) => {
+    
+  const downloadsFolder = path.join(os.homedir(), 'Downloads');
+  const outputPath = path.join(downloadsFolder, 'profesores_exportados.csv');
+
+  db.query('SELECT * FROM profesor', (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ success: false, message: 'Error en la exportación' });
+    } else {
+      if (result.length > 0) {
+        const csvWriter = createCsvWriter({
+          path: outputPath,
+          header: Object.keys(result[0]).map((columnName) => ({ id: columnName, title: columnName })),
+        });
+
+        csvWriter.writeRecords(result)
+          .then(() => {
+            res.status(200).json({ success: true, message: 'Exportación exitosa' });
+          })
+          .catch((error) => {
+            console.error(error);
+            res.status(500).json({ success: false, message: 'Error en la exportación' });
+          });
+      } else {
+        res.status(500).json({ success: false, message: 'No hay datos para exportar' });
+      }
+    }
+  });
+});
+
 
 //ALUMNO
 
@@ -283,30 +292,32 @@ app.get('/obtener-carreras', (req, res) => {
 });
 
 app.get('/exportar-alumnos', (req, res) => {
-  db.query('SELECT * FROM alumno', (err, result) => {
-      if (err) {
-          console.log(err);
-          res.status(500).json({ success: false, message: 'Error en la exportación' });
-      } else {
-          // Verificar que hay datos para exportar
-          if (result.length > 0) {
-              const csvWriter = createCsvWriter({
-                  path: 'datos_exportados.csv',
-                  header: Object.keys(result[0]).map((columnName) => ({ id: columnName, title: columnName })),
-              });
+  const downloadsFolder = path.join(os.homedir(), 'Downloads');
+  const outputPath = path.join(downloadsFolder, 'alumnos_exportados.csv');
 
-              csvWriter.writeRecords(result)
-                  .then(() => {
-                      res.status(200).json({ success: true, message: 'Exportación exitosa' });
-                  })
-                  .catch((error) => {
-                      console.error(error);
-                      res.status(500).json({ success: false, message: 'Error en la exportación' });
-                  });
-          } else {
-              res.status(500).json({ success: false, message: 'No hay datos para exportar' });
-          }
+  db.query('SELECT * FROM alumno', (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ success: false, message: 'Error en la exportación' });
+    } else {
+      if (result.length > 0) {
+        const csvWriter = createCsvWriter({
+          path: outputPath,
+          header: Object.keys(result[0]).map((columnName) => ({ id: columnName, title: columnName })),
+        });
+
+        csvWriter.writeRecords(result)
+          .then(() => {
+            res.status(200).json({ success: true, message: 'Exportación exitosa' });
+          })
+          .catch((error) => {
+            console.error(error);
+            res.status(500).json({ success: false, message: 'Error en la exportación' });
+          });
+      } else {
+        res.status(500).json({ success: false, message: 'No hay datos para exportar' });
       }
+    }
   });
 });
 
