@@ -13,7 +13,7 @@ import Form from "./pages/Form";
 import Filtros from "./pages/Filtros";
 import ProfeCrud from "./pages/ProfeCrud";
 import AlumnoCrud from "./pages/AlumnoCrud";
-
+import PaginaAdmin from "./pages/PaginaAdmin";
 
 function App() {
   const action = useNavigationType();
@@ -63,6 +63,10 @@ function App() {
             title = "";
             metaDescription = "";
             break;
+      case "/PaginaAdmin":
+            title = "";
+            metaDescription = "";
+            break;
             
       
 
@@ -92,6 +96,7 @@ function App() {
       <Route path="/Filtros" element={<Filtros />} />
       <Route path="/ProfeCrud" element={<ProfeCrud />} />
       <Route path="/AlumnoCrud" element={<AlumnoCrud />} />
+      <Route path="/PaginaAdmin" element={<PaginaAdmin />} />
     </Routes>
   );
 }
