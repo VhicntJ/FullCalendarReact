@@ -41,7 +41,7 @@ function App() {
 
   const getAlumnos = () => {
     Axios.get('http://localhost:3001/alumnos').then((response) => {
-      setAlumnosList(response.data);
+      setAlumnosList(response.data.filter((alumno) => alumno.estado === 1));
     });
   }
 
@@ -101,7 +101,7 @@ function App() {
     setEditar(false);
   }
 
-  const deleteAlumno = (val)=>{
+  const hideAlu = (val)=>{
     Swal.fire({
       icon: 'warning',
       title: 'Confirmar eliminado?',
@@ -112,7 +112,7 @@ function App() {
       cancelButtonColor: '#d33',
     }).then((result) => {
       if (result.isConfirmed) {
-        Axios.delete(`http://localhost:3001/deleteAlu/${val.id_alumno}`).then((res)=>{
+        Axios.put(`http://localhost:3001/hideAlu/${val.id_alumno}`).then((res)=>{
         getAlumnos();
         limpiarCampos();
         Swal.fire({
@@ -123,7 +123,7 @@ function App() {
         });
       });
     }});
-  }
+  } 
 
   const exportarCSV = async () => {
     try {
@@ -197,17 +197,22 @@ function App() {
         <tbody>
           {AlumnosList.map((val, key) => {
             return (
-              <tr>
+              <tr key={key}>
                 <td>{val.rut}</td>
                 <td>{val.nombre}</td>
                 <td>{val.correo}</td>
                 <td>{val.password}</td>
                 <td>{val.carrera}</td>
-                
-              <td>
-                  <button className='btn-editar' onClick={()=>{editarAlumno(val); } }>Editar</button>
-                  <button className= 'btn-eliminar' onClick={()=>{deleteAlumno(val); } }>Eliminar</button>
-                </td>
+                <td>
+                    {val.estado ? (
+                      <div>
+                        <button className='btn-editar' onClick={() => {editarAlumno(val)}}>Editar</button>
+                        <button className='btn-eliminar' onClick={() => {hideAlu(val)}}>Ocultar</button>
+                      </div>
+                    ) : (
+                      <span>Inactivo</span>
+                    )}
+                  </td>
               </tr>
             );
           })}

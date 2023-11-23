@@ -270,16 +270,19 @@ app.put('/updateAlu', (req, res) => {
   });
 });
 
-app.delete('/deleteAlu/:id_alumno', (req, res) => {
+app.put('/hideAlu/:id_alumno', (req, res) => {
   const id_alumno = req.params.id_alumno;
-  db.query('DELETE FROM alumno WHERE id_alumno = ?', id_alumno, (err, result) => {
-      if (err) {
-          console.log(err);
-      } else {
-          res.send(result);
-      }
-  })
-})
+  const nuevoEstado = 0;  // Establece el nuevo estado (inactivo)
+
+  db.query('UPDATE alumno SET estado = ? WHERE id_alumno = ?', [nuevoEstado, id_alumno], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ success: false, message: 'Error al ocultar al alumno' });
+    } else {
+      res.status(200).json({ success: true, message: 'Alumno ocultado exitosamente' });
+    }
+  });
+});
 
 app.get('/obtener-carreras', (req, res) => {
   db.query('SELECT * FROM carrera', (err, result) => {

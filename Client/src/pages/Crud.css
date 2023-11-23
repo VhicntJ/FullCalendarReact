@@ -6,7 +6,7 @@ body {
 }
 
 header {
-  background-color: #ff5200;
+  background-color:  rgb(0, 38, 250);
   color: #fff;
   text-align: center;
   padding: 10px;
@@ -61,7 +61,7 @@ th, td {
 }
 
 th {
-  background-color: #ff5200;
+  background-color:  rgb(0, 38, 250);
   color: #fff;
 }
 
