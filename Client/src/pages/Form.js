@@ -1,7 +1,44 @@
 import * as React from 'react';
 import './index.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 
 export default function Form(){
+    const [rut, setRut] = useState("");
+    const [password, setPasword] = useState("");
+    const [loginStatus, setLoginStatus] = useState("");
+    axios.defaults.withCredentials = true;
+    
+    const login = async () => {
+        try {
+          const response = await axios.post('http://localhost:3001/login', {
+            rut: rut,
+            password: password
+          });
+    
+          if (response.data.message) {
+            // Handle error messages from the server
+            setLoginStatus(response.data.message);
+          } else {
+            // Handle successful login
+            setLoginStatus(`Bienvenido, ${response.data[0].nombre}`); // Change this according to your response structure
+          }
+        } catch (error) {
+          // Handle network errors or other issues
+          console.error('Error during login:', error);
+        }
+    };
+    
+    useEffect(() => {
+        axios.get('http://localhost:3001/login').then((response) => {
+            if (response.data && response.data.loggedIn === true && response.data.user && response.data.user[0]) {
+                setLoginStatus(response.data.user[0].rut);
+            }  
+        });
+       
+    }, []);
+   
     return(
         <div className="flex w_full h-screen">
         <div className="w-full flex items-center justify-center lg:w-1/2">
@@ -14,6 +51,10 @@ export default function Form(){
                     <input
                         className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
                         placeholder='Ingresa tu Rut'
+                        type="text"
+                        value={rut} onChange={(e) => setRut(e.target.value)}
+                
+                        
                     />
                 </div>
                 <div>
@@ -22,6 +63,8 @@ export default function Form(){
                         className='w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent'
                         placeholder='Ingresa tu contraseña'
                         type="password"
+                        value={password} onChange={(e) => setPasword(e.target.value)}
+
                     />
                 </div>
                 <div className='mt-8 flex justify-between item-center'>
@@ -35,10 +78,16 @@ export default function Form(){
                     <button className='font-medium text-base text-blue-20'>Recuperar Contraseña</button>
                 </div>
                 <div className='mt-8 flex flex-col gap-y-4'>
-                    <button className='active:scale-[.98] active-75 hover:scale[1.01] ease-in-out transition-all py-3 rounded-xl bg-blue-500 text-white text-lg font-bold'>Iniciar Sesion</button>
+                <button className='active:scale-[.98] active-75 hover:scale[1.01] ease-in-out transition-all py-3 rounded-xl bg-blue-500 text-white text-lg font-bold' onClick={login}>
+                    Iniciar Sesión
+                </button>
+
                     <button>
                         Inicia sesion con Correo institucional
-                        </button>
+                    </button>
+                </div>
+                <div>
+                    <h1>{loginStatus}</h1>
                 </div>
             </div>
         </div>

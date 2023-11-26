@@ -1,15 +1,40 @@
-const express = require("express");
-const cors = require("cors");
-const mysql = require("mysql");
+const express = require('express');
+const session = require('express-session');
+const app = express();
+const mysql = require('mysql');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const crypto = require('crypto');
+const cors = require('cors');
 const path = require('path');
 const os = require('os');
 
-const app = express();
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
+
+app.use(cors({
+  origin: ['http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 
 app.use(express.json());
-app.use(cors());
+
+app.use(cookieParser());
+
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(session({
+  key: "userId",
+  secret: "subscribe",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+      expires: 60 * 60 * 24,
+  },
+}));
 
 const db = mysql.createConnection({
   host: 'localhost',
@@ -127,17 +152,15 @@ app.post('/createProfe', (req, res) => {
   const contrato = req.body.contrato;
   const password = req.body.password;
 
-  // Encripta el contrato usando SHA256
-  const passwordProfe = crypto.createHash('sha256').update(password).digest('hex');
-  console.log("Valor encriptado: ", passwordProfe); // Agrega esta línea para verificar el valor encriptado en la consola
-
-  db.query('INSERT INTO profesor (rut_profesor,nombre, contrato, password) VALUES (?,?,?,?)', [rut_profesor ,nombre, contrato, passwordProfe], (err, result) => {
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    db.query('INSERT INTO profesor (rut_profesor,nombre, contrato, password) VALUES (?,?,?,?)', [rut_profesor ,nombre, contrato, hash ], (err, result) => {
       if (err) {
           console.log(err);
       } else {
           res.send("profesor registrado correctamente");
       }
   });
+});
 });
 
 app.get('/profesores2', (req, res) => {
@@ -158,10 +181,8 @@ app.put('/updateProfe', (req, res) => {
   const contrato = req.body.contrato;
   const password = req.body.password;
 
-  // Encripta el contrato usando SHA256
-  const passwordProfe = crypto.createHash('sha256').update(password).digest('hex');
-  console.log("Valor encriptado: ", passwordProfe); // Agrega esta línea para verificar el valor encriptado en la consola
-  db.query('UPDATE profesor SET rut_profesor=?, nombre = ?, contrato = ?, password = ? WHERE id_profesor = ?', [rut_profesor,nombre, contrato, passwordProfe, id_profesor],
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    db.query('UPDATE profesor SET rut_profesor=?, nombre = ?, contrato = ?, password = ? WHERE id_profesor = ?', [rut_profesor,nombre, contrato, hash, id_profesor],
   (err, result) => {
       if (err) {
           console.log(err);
@@ -169,6 +190,7 @@ app.put('/updateProfe', (req, res) => {
           res.send(result);
       }
   });
+});
 });
 
 app.put('/hideProfe/:id_profesor', (req, res) => {
@@ -226,17 +248,15 @@ app.post('/createAlu', (req, res) => {
   const password = req.body.password;
   const id_carrera = req.body.id_carrera;
 
-  // Encripta el contrato usando SHA256
-  const passwordEncriptado = crypto.createHash('sha256').update(password).digest('hex');
-  console.log("Valor encriptado: ", passwordEncriptado); // Agrega esta línea para verificar el valor encriptado en la consola
-  
-  db.query('INSERT INTO alumno (rut, nombre, correo, password, id_carrera) VALUES (?,?,?,?,?)', [rut, nombre, correo, passwordEncriptado, id_carrera], (err, result) => {
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    db.query('INSERT INTO alumno (rut, nombre, correo, password, id_carrera) VALUES (?,?,?,?,?)', [rut, nombre, correo, hash, id_carrera], (err, result) => {
       if (err) {
           console.log(err);
       } else {
           res.send("Alumno registrado correctamente");
       }
   });
+});
 });
 
 app.get('/alumnos', (req, res) => {
@@ -256,18 +276,16 @@ app.put('/updateAlu', (req, res) => {
   const correo = req.body.correo;
   const password = req.body.password;
   const id_carrera = req.body.id_carrera;
-
-  // Encripta el contrato usando SHA256
-  const passwordEncriptado = crypto.createHash('sha256').update(password).digest('hex');
-  console.log("Valor encriptado: ", passwordEncriptado); // Agrega esta línea para verificar el valor encriptado en la consola
-  
-  db.query('UPDATE alumno SET rut = ?, nombre = ?, correo = ?, password = ? , id_carrera = ? WHERE id_alumno = ?', [rut, nombre, correo, passwordEncriptado, id_carrera, id_alumno], (err, result) => {
+  // Encripta el password usando bcrypt
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    db.query('UPDATE alumno SET rut = ?, nombre = ?, correo = ?, password = ? , id_carrera = ? WHERE id_alumno = ?', [rut, nombre, correo, hash, id_carrera, id_alumno], (err, result) => {
       if (err) {
           console.log(err);
       } else {
           res.send(result);
       }
-  });
+  })
+})
 });
 
 app.put('/hideAlu/:id_alumno', (req, res) => {
@@ -322,6 +340,92 @@ app.get('/exportar-alumnos', (req, res) => {
       }
     }
   });
+});
+
+//LOGIN
+app.post('/login', async (req, res) => {
+  const rut = req.body.rut;
+  const password = req.body.password;
+
+  try {
+    // Consulta a la base de datos para alumno
+    const resultsAlumno = await dbQuery('SELECT * FROM alumno WHERE rut = ?', [rut]);
+    if (resultsAlumno.length > 0) {
+      const passwordsMatch = await bcrypt.compare(password, resultsAlumno[0].password);
+      if (passwordsMatch) {
+        req.session.alumno = resultsAlumno;
+        res.json(resultsAlumno);
+        return; // Importante: terminar la función después de enviar la respuesta
+      } else {
+        res.json({ message: 'Usuario y/o contraseña incorrectos' });
+        return;
+      }
+    } else {
+      // No existe un usuario con el rut dado en la tabla de alumnos
+      // Puedes manejarlo según tus necesidades
+    }
+
+    // Consulta a la base de datos para profesor
+    const resultsProfesor = await dbQuery('SELECT * FROM profesor WHERE rut_profesor = ?', [rut]);
+    if (resultsProfesor.length > 0) {
+      const passwordsMatch = await bcrypt.compare(password, resultsProfesor[0].password);
+      if (passwordsMatch) {
+        req.session.profesor = resultsProfesor;
+        res.json(resultsProfesor);
+        return; // Importante: terminar la función después de enviar la respuesta
+      } else {
+        res.json({ message: 'Usuario y/o contraseña incorrectos' });
+        return;
+      }
+    } else {
+      // No existe un usuario con el rut dado en la tabla de profesores
+      // Puedes manejarlo según tus necesidades
+    }
+
+    // Consulta a la base de datos para administrador
+    const resultsAdmin = await dbQuery('SELECT * FROM administrador WHERE rut_administrador = ?', [rut]);
+    if (resultsAdmin.length > 0) {
+      const passwordsMatch = await bcrypt.compare(password, resultsAdmin[0].password);
+      if (passwordsMatch) {
+        req.session.administrador = resultsAdmin;
+        res.json(resultsAdmin);
+        return; // Importante: terminar la función después de enviar la respuesta
+      } else {
+        res.json({ message: 'Usuario y/o contraseña incorrectos' });
+        return;
+      }
+    } else {
+      // No existe un usuario con el rut dado en la tabla de administradores
+      // Puedes manejarlo según tus necesidades
+    }
+
+    // Si llegamos aquí, significa que no se encontró un usuario en ninguna de las tablas
+    res.json({ message: 'Usuario no existe' });
+  } catch (error) {
+    console.error('Error en la consulta a la base de datos:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+// Función de utilidad para realizar consultas a la base de datos
+function dbQuery(sql, values) {
+  return new Promise((resolve, reject) => {
+    db.query(sql, values, (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
+
+app.get('/login', (req, res) => {
+  if (req.session.user) {
+    res.send({ loggedIn: true, rut: req.session.rut });
+  } else {
+    res.send({ loggedIn: false });
+  }
 });
 
 app.listen(3001, () => console.log("Servidor en localhost:3001"));
