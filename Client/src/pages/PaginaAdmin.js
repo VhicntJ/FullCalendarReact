@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { Link } from 'react-router-dom';
 import './estilos.css';
 import ProfeCrud from './ProfeCrud';
@@ -7,15 +7,197 @@ import csv from './csv.png'
 import calendario from './calendario.png'
 import agregar_contacto from './agregar_contacto.png'
 import conversacion from './conversacion.png'
+import AlumnoCrud from './AlumnoCrud';
+import graduado from './graduado.png'
+import profesor from './profesor.png'
 
 
 /* <Filtros />*/
 
 function Admins() {
+  const [showDiv7, setShowDiv7] = useState(true);
+  const [showDiv7_5, setShowDiv7_5] = useState(false);
+  const [showDiv8, setShowDiv8] = useState(true);//listado horarios}
+  const [showDiv8_5, setShowDiv8_5] = useState(false);
+  const [showDiv9, setShowDiv9] = useState(true); //csv
+  const [showDiv10, setShowDiv10] = useState(true); //solicitudes
+  const [showDiv11, setShowDiv11] = useState(true);
+  const [showDiv11_5, setShowDiv11_5] = useState(false);
+  const [showDiv12, setShowDiv12] = useState(true);//listado horarios
+  const [showDiv12_5, setShowDiv12_5] = useState(false);//listado horarios
+  const [showDiv13, setShowDiv13] = useState(true); //csv
+  const [showDiv14, setShowDiv14] = useState(true); //solicitudes
+  const [showDiv15, setShowDiv15] = useState(true); //csv
+  const [showDiv16, setShowDiv16] = useState(true); //solicitudes
+  const [showDiv17, setShowDiv17] = useState(true); //listado horarios
+  const [showDiv17_5, setShowDiv17_5] = useState(false); //listado horarios
+  const [showDiv18, setShowDiv18] = useState(true);
+  const [showDiv18_5, setShowDiv18_5] = useState(false);
+  const [showFiltros, setShowFiltros] = useState(false);
+  const [showProfeCrud, setShowProfeCrud] = useState(false);
+  const [showAlumnoCrud, setShowAlumnoCrud] = useState(false);
+  const [showSolicitudes, setShowSolicitudes] = useState(false);
+  const [show2Crud, setShow2Crud] = useState(false);
+
+  const handleDiv7Click = () => {
+    setShowDiv7(false);
+    setShowDiv7_5(false);
+    setShowDiv8(false);//listado horarios
+    setShowDiv8_5(false);//listado horarios
+    setShowDiv9(false);//csv
+    setShowDiv10(false);//solicitudes
+    setShowDiv11(false);
+    setShowDiv11_5(false);
+    setShowDiv12(false);//listado horarios
+    setShowDiv12_5(false);//listado horarios  
+    setShowDiv13(false);//csv
+    setShowDiv14(false);//solicitudes
+    setShowDiv15(false);//csv
+    setShowDiv16(false);//solicitudes
+    setShowDiv17(false);//listado horarios
+    setShowDiv17_5(false);//listado horarios
+    setShowDiv18(false);
+    setShowDiv18_5(false);
+    setShowFiltros(false);
+    setShowProfeCrud(false);
+    setShowAlumnoCrud(true);
+    setShowSolicitudes(false);
+    setShow2Crud(false);
+  };
+
+  const handleDiv8Click = () => {
+    setShowDiv7(false);
+    setShowDiv7_5(false);
+    setShowDiv8(false);//listado horarios
+    setShowDiv8_5(false);//listado horarios
+    setShowDiv9(false);//csv
+    setShowDiv10(false);//solicitudes
+    setShowDiv11(false);
+    setShowDiv11_5(false);
+    setShowDiv12(false);//listado horarios
+    setShowDiv12_5(false);//listado horarios  
+    setShowDiv13(false);//csv
+    setShowDiv14(false);//solicitudes
+    setShowDiv15(false);//csv
+    setShowDiv16(false);//solicitudes
+    setShowDiv17(false);//listado horarios
+    setShowDiv17_5(false);//listado horarios
+    setShowDiv18(false);
+    setShowDiv18_5(false);
+    setShowFiltros(true);
+    setShowProfeCrud(false);
+    setShowAlumnoCrud(false);
+    setShowSolicitudes(false);
+    setShow2Crud(false);
+  };
+
+  const handleDiv9Click = () => {
+    setShowDiv7(false);
+    setShowDiv7_5(false);
+    setShowDiv8(false);//listado horarios
+    setShowDiv8_5(false);//listado horarios
+    setShowDiv9(false);//csv
+    setShowDiv10(false);//solicitudes
+    setShowDiv11(false);
+    setShowDiv11_5(false);
+    setShowDiv12(false);//listado horarios 
+    setShowDiv12_5(false);//listado horarios 
+    setShowDiv13(false);//csv
+    setShowDiv14(false);//solicitudes
+    setShowDiv15(false);//csv
+    setShowDiv16(false);//solicitudes
+    setShowDiv17(false);//listado horarios
+    setShowDiv17_5(false);//listado horarios
+    setShowDiv18(false);
+    setShowDiv18_5(false);
+    setShowFiltros(false);
+    setShowProfeCrud(true);
+    setShowAlumnoCrud(false);
+    setShowSolicitudes(false);
+    setShow2Crud(false);
+  };
+
+  const handleDiv10Click = () => {
+    setShowDiv7(false);
+    setShowDiv7_5(false);
+    setShowDiv8(false);//listado horarios
+    setShowDiv8_5(false);//listado horarios
+    setShowDiv9(false);//csv
+    setShowDiv10(false);//solicitudes
+    setShowDiv11(false);
+    setShowDiv11_5(false);
+    setShowDiv12(false);//listado horarios
+    setShowDiv12_5(false);//listado horarios  
+    setShowDiv13(false);//csv
+    setShowDiv14(false);//solicitudes
+    setShowDiv15(false);//csv
+    setShowDiv16(false);//solicitudes
+    setShowDiv17(false);//listado horarios
+    setShowDiv17_5(false);//listado horarios
+    setShowDiv18(false);
+    setShowDiv18_5(false);
+    setShowFiltros(false);
+    setShowProfeCrud(false);
+    setShowAlumnoCrud(false);
+    setShowSolicitudes(true);
+    setShow2Crud(false);
+  };
+  const handleDosCrud = () => {
+    setShowDiv7(false);
+    setShowDiv7_5(true);
+    setShowDiv8(false);//listado horarios
+    setShowDiv8_5(true);//listado horarios
+    setShowDiv9(false);//csv
+    setShowDiv10(false);//solicitudes
+    setShowDiv11(false);
+    setShowDiv11_5(true);
+    setShowDiv12(false);//listado horarios
+    setShowDiv12_5(true);//listado horarios  
+    setShowDiv13(false);//csv
+    setShowDiv14(false);//solicitudes
+    setShowDiv15(false);//csv
+    setShowDiv16(false);//solicitudes
+    setShowDiv17(false);//listado horarios
+    setShowDiv17_5(true);//listado horarios
+    setShowDiv18(false);
+    setShowDiv18_5(true);
+    setShowFiltros(false);
+    setShowProfeCrud(false);
+    setShowAlumnoCrud(false);
+    setShowSolicitudes(false);
+    setShow2Crud(false);
+  };
+
+  const handleVolverInicioClick = () => {
+    setShowDiv7(true);
+    setShowDiv7_5(false);
+    setShowDiv8(true);
+    setShowDiv8_5(false);
+    setShowDiv9(true);
+    setShowDiv10(true);
+    setShowDiv11(true);
+    setShowDiv11_5(false);
+    setShowDiv12(true);
+    setShowDiv12_5(false);
+    setShowDiv13(true);
+    setShowDiv14(true);
+    setShowDiv15(true);
+    setShowDiv16(true);
+    setShowDiv17(true);
+    setShowDiv17_5(false);
+    setShowDiv18(true);
+    setShowDiv18_5(false);
+    setShowFiltros(false);
+    setShowProfeCrud(false);
+    setShowAlumnoCrud(false);
+    setShowSolicitudes(false);
+    setShow2Crud(false);
+  };
+  
 return (
 <div className="parent">
 <div className="div1">1</div>
-<div className="div2"><button className="buttonInicio">
+<div className="div2"><button className="buttonInicio" onClick={handleVolverInicioClick}>
 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>
   Volver Inicio
 </button> <button className="buttonInicio">
@@ -28,7 +210,8 @@ return (
   
   <div className="textCerrarS">Cerrar Sesion</div>
 </button> </div>
-<div className="div4">4</div>
+<div className={`div4`}>{/* Contenido del div4 */}{showFiltros ? (<Filtros />) : showProfeCrud ? (<ProfeCrud />) :showAlumnoCrud ? (<AlumnoCrud />):showSolicitudes ? (/*Cambiar a pagina solicitudes*/<ProfeCrud />) : null} 
+      </div>
 <div className="div5">5 </div>
 <div className="div6"><button id="btn-message" className="button-message">
 	<div className="content-avatar">
@@ -43,26 +226,25 @@ return (
 		<div className="user-id"></div>
 	</div>
 </button></div>
-<Link to="/ProfeCrud" className="div7">
-        
-      </Link>
-      <Link to="/Filtros" className="div8">
-        8
-      </Link>
-      <Link to="/csv" className="div9">
-        9
-      </Link>
-      <Link to="/ruta-del-div-10" className="div10"> 
-        10
-      </Link>
-<div className="div11">Cruds</div>
-<div className="div12">Listado Horarios </div>
-<div className="div13">importar/exportar CSV </div>
-<div className="div14">Solicitudes </div>
-<div className="div15"><img src={csv}  alt="csv" className='imagencsv' /></div>
-<div className="div16"><img src={conversacion}  alt="conversacion" className='imagencsv' /></div>
-<div className="div17"><img src={calendario}  alt="calendario" className='imagencsv' /> </div>
-<div className="div18"><img src={agregar_contacto}  alt="agregar_contacto" className='imagencsv' /> </div>
+<div className={`div7 ${showDiv7 ? '' : 'fade-out'}`} onClick={handleDosCrud}>{}</div>
+<div id='2do' className={`div7_5 ${showDiv7_5 ? '' : 'fade-out'}`} onClick={handleDiv7Click /*Alumno*/}>{}</div>
+<div className={`div8 ${showDiv8 ? '' : 'fade-out'}`} onClick={handleDiv8Click}>{/* Contenido del div8 */}</div>
+<div className={`div8_5 ${showDiv8_5 ? '' : 'fade-out'}`} onClick={handleDiv9Click/*Profesores*/}>{/* Contenido del div8 */}</div>
+<div className={`div9 ${showDiv9 ? '' : 'fade-out'}`} onClick={handleDiv9Click/*Exportar/importar CSV*/}>{}</div>
+<div className={`div10 ${showDiv10 ? '' : 'fade-out'}`} onClick={handleDiv10Click/*Solicitudes*/}>{}</div>
+<div className={`div11 ${showDiv11 ? '' : 'fade-out'}`}onClick={handleDosCrud}>Crud{/* Contenido del div11 */}</div>
+<div className={`div11_5 ${showDiv11_5 ? '' : 'fade-out'}`}onClick={handleDiv7Click /*Alumno*/}>Alumno{/* Contenido del div11 */}</div>
+<div className={`div12 ${showDiv12 ? '' : 'fade-out'}`}onClick={handleDiv8Click}>Listado Horarios </div>
+<div className={`div12_5 ${showDiv12_5 ? '' : 'fade-out'}`}onClick={handleDiv9Click/*Profesores*/}>Profesor </div>
+<div className={`div13 ${showDiv13 ? '' : 'fade-out'}`}onClick={handleDiv9Click/*Exportar/importar CSV*/}>Exportar/importar CSV</div>
+<div className={`div14 ${showDiv14 ? '' : 'fade-out'}`}onClick={handleDiv10Click/*Solicitudes*/}>{}Solicitudes</div>
+<div className={`div15 ${showDiv15 ? '' : 'fade-out'}`}onClick={handleDiv9Click/*Exportar/importar CSV*/}><img src={csv}  alt="csv" className='imagencsv' /></div>
+<div className={`div16 ${showDiv16 ? '' : 'fade-out'}`}onClick={handleDiv10Click/*Solicitudes*/}><img src={conversacion}  alt="conversacion" className='imagencsv' /></div>
+<div className={`div17 ${showDiv17 ? '' : 'fade-out'}`}onClick={handleDiv8Click}><img src={calendario}  alt="calendario" className='imagencsv' /> </div>
+<div className={`div17_5 ${showDiv17_5 ? '' : 'fade-out'}`}onClick={handleDiv9Click/*Profesores*/}><img src={profesor}  alt="profesor" className='imagencsv' /> </div>
+<div className={`div18 ${showDiv18 ? '' : 'fade-out'}`}onClick={handleDosCrud}><img src={agregar_contacto}  alt="agregar_contacto" className='imagencsv'/>{/* Contenido del div18 */}</div>
+<div className={`div18_5 ${showDiv18_5 ? '' : 'fade-out'}`}onClick={handleDiv7Click /*Alumno*/}><img src={graduado}  alt="alumnos" className='imagencsv'/>{/* Contenido del div18 */}</div>
+
 <div className="div19">19 Notificaciones</div>
 </div>
   );
