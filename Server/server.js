@@ -127,10 +127,10 @@ app.get('/facultades', (req, res) => {
 // Agrega una nueva ruta para obtener eventos
 app.get('/eventos', (req, res) => {
   const query = `
-  SELECT eventos.id_evento, eventos.id_asignatura, horarios.start, horarios.end, eventos.id_sala, eventos.cupos, eventos.seccion, eventos.fecha
-  FROM eventos
-  JOIN horarios ON eventos.id_horario = horarios.id_horario;
-`; // Ajusta según tu esquema de base de datos
+  SELECT eventos.id_evento, eventos.id_asignatura, asignatura.nombre AS nombre_asignatura, horarios.start, horarios.end, eventos.id_sala, eventos.cupos, eventos.seccion, eventos.fecha
+FROM eventos
+JOIN horarios ON eventos.id_horario = horarios.id_horario
+JOIN asignatura ON eventos.id_asignatura = asignatura.id_asignatura;`;  // Ajusta según tu esquema de base de datos
 
   db.query(query, (error, results) => {
     if (error) {
