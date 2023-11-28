@@ -13,6 +13,9 @@ const saltRounds = 10;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
+const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
+
 
 app.use(cors({
   origin: ['http://localhost:3000'],
@@ -443,3 +446,142 @@ app.post('/logout', (req, res) => {
 });
 
 app.listen(3001, () => console.log("Servidor en localhost:3001"));
+
+
+//FORGOT
+
+app.post('/forgot', async (req, res) => {
+  const correo = req.body.correo;
+  
+  try {
+    // Query for alumno
+    const alumnoResults = await queryDatabase('SELECT * FROM alumno WHERE correo = ?', [correo]);
+    if (alumnoResults.length > 0) {
+      const token = jwt.sign({ id_alumno: alumnoResults[0].id_alumno }, 'tu-secreto', { expiresIn: '20min' });
+
+      await sendResetEmail(correo, 'alumno', alumnoResults[0].id_alumno, token);
+
+      res.json({ message: 'Se ha enviado un correo electrónico con las instrucciones para restablecer la contraseña.' });
+      return;
+    }
+
+    // Query for profesor
+    const profesorResults = await queryDatabase('SELECT * FROM profesor WHERE correo = ?', [correo]);
+    if (profesorResults.length > 0) {
+      const token = jwt.sign({ id_profesor: profesorResults[0].id_profesor }, 'tu-secreto', { expiresIn: '20min' });
+
+      await sendResetEmail(correo, 'profesor', profesorResults[0].id_profesor, token);
+
+      res.json({ message: 'Se ha enviado un correo electrónico con las instrucciones para restablecer la contraseña.' });
+      return;
+    }
+
+    // Query for administrador
+    const administradorResults = await queryDatabase('SELECT * FROM administrador WHERE correo = ?', [correo]);
+    if (administradorResults.length > 0) {
+      const token = jwt.sign({ id_administrador: administradorResults[0].id_administrador }, 'tu-secreto', { expiresIn: '20min' });
+
+      await sendResetEmail(correo, 'administrador', administradorResults[0].id_administrador, token);
+
+      res.json({ message: 'Se ha enviado un correo electrónico con las instrucciones para restablecer la contraseña.' });
+      return;
+    }
+
+    // If no matching user found
+    res.status(500).json({ error: 'No existe un usuario con el correo ingresado.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al procesar la solicitud.' });
+  }
+});
+
+async function queryDatabase(sql, params) {
+  return new Promise((resolve, reject) => {
+    db.query(sql, params, (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
+
+async function sendResetEmail(correo, userType, userId, token) {
+  const transporter = nodemailer.createTransport({
+    host: '127.0.0.1',
+    port: 25,
+    secure: false,
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  const mailOptions = {
+    from: 'Papercut@papercut.com',
+    to: correo,
+    subject: 'Restablecer contraseña',
+    text: `Para restablecer tu contraseña, haz click en el siguiente enlace: http://localhost:3000/Reset/${userType}/${userId}/${token}`
+  };
+
+  return new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        reject(error);
+      } else {
+        console.log('Correo enviado: ' + info.response);
+        resolve();
+      }
+    });
+  });
+}
+
+
+// RESET
+app.post('/reset/:userType/:id/:token', (req, res) => {
+  const { password } = req.body;
+  const { userType, id, token } = req.params;
+
+  jwt.verify(token, 'tu-secreto', async (error, decodedToken) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error al procesar la solicitud.' });
+      return;
+    } else {
+      bcrypt.hash(password, saltRounds, async (error, hash) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ error: 'Error al procesar la solicitud.' });
+          return;
+        } else {
+          try {
+            let sql;
+            let params;
+            if (userType === 'alumno') {
+              sql = 'UPDATE alumno SET password = ? WHERE id_alumno = ?';
+              params = [hash, id];
+            } else if (userType === 'profesor') {
+              sql = 'UPDATE profesor SET password = ? WHERE id_profesor = ?';
+              params = [hash, id];
+            } else if (userType === 'administrador') {
+              sql = 'UPDATE administrador SET password = ? WHERE id_administrador = ?';
+              params = [hash, id];
+            } else {
+              res.status(500).json({ error: 'Error al procesar la solicitud.' });
+              return;
+            }
+
+            await queryDatabase(sql, params);
+
+            res.json({ message: 'Contraseña restablecida exitosamente.' });
+          } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Error al procesar la solicitud.' });
+          }
+        }
+      });
+    }
+  });
+
+});
+

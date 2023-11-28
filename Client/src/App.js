@@ -14,6 +14,8 @@ import Filtros from "./pages/Filtros";
 import ProfeCrud from "./pages/ProfeCrud";
 import AlumnoCrud from "./pages/AlumnoCrud";
 import PaginaAdmin from "./pages/PaginaAdmin";
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   const action = useNavigationType();
@@ -97,6 +99,8 @@ function App() {
       <Route path="/ProfeCrud" element={<ProfeCrud />} />
       <Route path="/AlumnoCrud" element={<AlumnoCrud />} />
       <Route path="/PaginaAdmin" element={<PaginaAdmin />} />
+      <Route path="/forgot" element={<ForgotPassword />} />
+      <Route path="/reset/:userType/:id/:token" element={<ResetPassword />} />
     </Routes>
   );
 }
