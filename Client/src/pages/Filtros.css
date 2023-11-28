@@ -9,7 +9,6 @@ body {
 
 header {
   background-color: #ff5100;
-  padding: 0.7em;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,6 +22,7 @@ header {
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  color: #000000;
 }
 
 .arriba {
@@ -33,6 +33,7 @@ header {
 .imagen {
   margin-right: 68vh;
   width: 25vh;
+  
 }
 
 /* Estilos para los dropdowns */
@@ -44,6 +45,7 @@ select {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
 
 /* Estilo cuando el dropdown está enfocado */
 select:focus {

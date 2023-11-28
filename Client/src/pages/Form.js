@@ -23,6 +23,7 @@ export default function Form(){
           } else {
             // Handle successful login
             setLoginStatus(`Bienvenido, ${response.data[0].nombre}`); // Change this according to your response structure
+            navigate('/PaginaAdmin'); // Change this according to your response structure
           }
         } catch (error) {
           // Handle network errors or other issues

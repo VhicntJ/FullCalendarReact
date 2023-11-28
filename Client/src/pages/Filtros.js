@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Filtros.css';
-import logo from './Logo UCEN_.png';
+import logo from './Logo.png';
 import CalendarioDemo from './CalendarioDemo';
 
 
@@ -34,7 +34,7 @@ function App() {
   }, []);
 
   const getSalas = () => {
-    axios.get('http://localhost:4000/salas')
+    axios.get('http://localhost:3001/salas')
       .then((response) => {
         setSalasList(response.data);
       })
@@ -44,7 +44,7 @@ function App() {
   };
 
   const getCarreras = () => {
-    axios.get('http://localhost:4000/carreras')
+    axios.get('http://localhost:3001/carreras')
       .then((response) => {
         setCarrerasList(response.data);
       })
@@ -54,7 +54,7 @@ function App() {
   };
 
   const getNiveles = () => {
-    axios.get('http://localhost:4000/niveles')
+    axios.get('http://localhost:3001/niveles')
       .then((response) => {
         setNivelesList(response.data);
       })
@@ -64,7 +64,7 @@ function App() {
   };
 
   const getProfesores = () => {
-    axios.get('http://localhost:4000/profesores')
+    axios.get('http://localhost:3001/profesores')
       .then((response) => {
         setProfesoresList(response.data);
       })
@@ -74,7 +74,7 @@ function App() {
   };
 
   const getAsignaturas = () => {
-    axios.get('http://localhost:4000/asignaturas')
+    axios.get('http://localhost:3001/asignaturas')
       .then((response) => {
         setAsignaturasList(response.data);
       })
@@ -84,7 +84,7 @@ function App() {
   };
 
   const getFacultades = () => {
-    axios.get('http://localhost:4000/facultades')
+    axios.get('http://localhost:3001/facultades')
       .then((response) => {
         setFacultadesList(response.data);
       })
@@ -157,7 +157,7 @@ function App() {
           >
             <option value=''>Seleccione un profesor</option>
             {profesoresList.map((profesor) => (
-              <option key={profesor.rut_profesor} value={profesor.rut_profesor}>
+              <option key={profesor.id_profesor} value={profesor.id_profesor}>
                 {profesor.nombre}
               </option>
             ))}

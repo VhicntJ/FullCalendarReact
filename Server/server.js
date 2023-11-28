@@ -428,4 +428,18 @@ app.get('/login', (req, res) => {
   }
 });
 
+//codigo PARA SALIR SESION
+
+app.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session:', err);
+      res.status(500).json({ error: 'Error destroying session' });
+    } else {
+      res.clearCookie('connect.sid'); // Clear the session cookie
+      res.json({ message: 'Logout successful' });
+    }
+  });
+});
+
 app.listen(3001, () => console.log("Servidor en localhost:3001"));

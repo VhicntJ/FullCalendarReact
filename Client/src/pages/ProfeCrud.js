@@ -48,7 +48,6 @@ function App() {
     setNombre(val.nombre);
     setContrato(val.contrato);
     setId_profesor(val.id_profesor);
-    setPassword(val.password);
     setEditar(true);
     
   }

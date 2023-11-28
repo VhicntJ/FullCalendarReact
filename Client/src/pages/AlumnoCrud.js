@@ -67,7 +67,6 @@ function App() {
     setCorreo(val.correo);
     setCarrera(val.carrera);
     setId_alumno(val.id_alumno);
-    setPassword(val.password);
     setEditar(true);
   }
 
