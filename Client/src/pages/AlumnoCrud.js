@@ -25,7 +25,7 @@ function App() {
       nombre: nombre,
       correo: correo,
       password: password,
-      carrera: carrera,
+      id_carrera: carrera,
 
     }).then(() => {
       getAlumnos();
@@ -41,13 +41,11 @@ function App() {
 
   const getAlumnos = () => {
     Axios.get('http://localhost:3001/alumnos').then((response) => {
+      console.log(response.data);
       setAlumnosList(response.data.filter((alumno) => alumno.estado === 1));
     });
   }
 
-  useEffect(() => {
-    getAlumnos();
-  });
   
   useEffect(() => {
     // Hacer una solicitud para obtener las opciones de carreras desde el servidor
@@ -58,6 +56,7 @@ function App() {
       .catch(error => {
         console.error('Error al obtener las opciones de carreras:', error);
       });
+      getAlumnos();
   }, []);
 
 
@@ -158,7 +157,7 @@ function App() {
         <label>Nombre<input type="text" class='form-control'value = {nombre} placeholder="Ingrese nombre" onChange={(event) => {setNombre(event.target.value);}} /></label>
         <label>Correo<input type='text' class='form-control' value = {correo}placeholder= 'Ingrese correo' onChange={(event)=>{setCorreo(event.target.value);}} /></label>
         <label>Contraseña<input type='text' class='form-control' value = {password}placeholder= 'Ingrese contraseña' onChange={(event)=>{setPassword(event.target.value);}} /></label>    
-        <label>Carrera <select className="form-control"  value={carrera} onChange={(event) => { setCarrera(event.target.value); }}> 
+        <label>Carrera <select className="form-control"  value={carrera} onChange={(event) => { setCarrera(event.target.value);}}> 
         <option>Seleccionar Carrera</option>{opcionesCarreras.map((carrera) => ( <option key={carrera.id_carrera} value={carrera.id_carrera}> {carrera.nombre}</option>))}
         
   </select>

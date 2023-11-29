@@ -2,12 +2,15 @@ import * as React from 'react';
 import './index.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Form(){
+    const navigate = useNavigate();
     const [rut, setRut] = useState("");
     const [password, setPasword] = useState("");
     const [loginStatus, setLoginStatus] = useState("");
+    
     axios.defaults.withCredentials = true;
     
     const login = async () => {
@@ -21,9 +24,18 @@ export default function Form(){
             // Handle error messages from the server
             setLoginStatus(response.data.message);
           } else {
+            if (response.data.isAdmin) {
+                 // Change this according to your response structure
+                 navigate('/PaginaAdmin');}
+            else if (response.data.isProfesor) {
+                navigate('/PaginaProfesor');
+            }
+            else{
+                navigate('/PaginaAlumno');
+            }
             // Handle successful login
-            setLoginStatus(`Bienvenido, ${response.data[0].nombre}`); // Change this according to your response structure
-            navigate('/PaginaAdmin'); // Change this according to your response structure
+            setLoginStatus(`Bienvenido, ${response.data[0].nombre}`);
+             // Change this according to your response structure
           }
         } catch (error) {
           // Handle network errors or other issues

@@ -263,7 +263,7 @@ app.post('/createAlu', (req, res) => {
 });
 
 app.get('/alumnos', (req, res) => {
-  db.query('SELECT * FROM alumno', (err, result) => {
+  db.query('SELECT alumno.rut, alumno.nombre,alumno.correo,alumno.password,(carrera.nombre)as carrera , alumno.estado FROM `alumno` INNER JOIN carrera on alumno.id_carrera = carrera.id_carrera', (err, result) => {
       if (err) {
           console.log(err);
       } else {
@@ -391,7 +391,8 @@ app.post('/login', async (req, res) => {
       const passwordsMatch = await bcrypt.compare(password, resultsAdmin[0].password);
       if (passwordsMatch) {
         req.session.administrador = resultsAdmin;
-        res.json(resultsAdmin);
+        res.json({ isAdmin: true, ...resultsAdmin[0] });   
+        //res.json(resultsAdmin);
         return; // Importante: terminar la función después de enviar la respuesta
       } else {
         res.json({ message: 'Usuario y/o contraseña incorrectos' });

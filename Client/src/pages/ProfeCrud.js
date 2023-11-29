@@ -34,6 +34,7 @@ function App() {
   
   const getProfesores = () => {
     Axios.get("http://localhost:3001/profesores2").then ((response) => {
+      console.log(response);
       setProfesoresList(response.data);
     });
   }
@@ -134,10 +135,10 @@ function App() {
         <h1>Gestion de Profesores</h1>
       </header>
       <div className="formulario">
-        <label>Rut <input type="text" name="rut" value={rut_profesor} onChange={(event) => {setRut_profesor(event.target.value)}}/> </label>
-        <label>Nombre <input type="text" name="nombre" value={nombre} onChange={(event) => {setNombre(event.target.value)}}/> </label>
-        <label>Contrato <input type="text" name="contrato" value={contrato} onChange={(event) => {setContrato(event.target.value)}}/> </label>
-        <label>Contraseña <input type="text" name="password" value={password} onChange={(event) => {setPassword(event.target.value)}}/> </label>
+        <label>Rut <input type="text" class='form-control' value={rut_profesor} onChange={(event) => {setRut_profesor(event.target.value)}}/> </label>
+        <label>Nombre <input type="text"class='form-control' value={nombre} onChange={(event) => {setNombre(event.target.value)}}/> </label>
+        <label>Contrato <input type="text" class='form-control' value={contrato} onChange={(event) => {setContrato(event.target.value)}}/> </label>
+        <label>Contraseña <input type="text" class='form-control' value={password} onChange={(event) => {setPassword(event.target.value)}}/> </label>
       </div>
       <div className="botones">
         {
