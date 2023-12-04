@@ -2,26 +2,29 @@ import React from "react";
 import './index.css';
 import { useState} from 'react';
 import axios from 'axios';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useNavigate, useParams, Link} from 'react-router-dom';
+import Swal from 'sweetalert2';
 
-export default function ResetPassword(){
+function ResetPassword() {
     const [password, setPassword] = useState("");
-    const navigate = useNavigate()
-    const {userType, id, token} = useParams();
-    console.log(userType, id, token);
-    axios.defaults.withCredentials = true;
+    const navigate = useNavigate();
+    const { userType, id, token } = useParams();
 
-    const reset =  (e) => {
+    axios.defaults.withCredentials = true;
+    const reset = (e) => {
         e.preventDefault();
-        console.log(userType, id, token); // Agrega esta línea para depurar
+        console.log(userType, id, token);
         axios.post(`http://localhost:3001/reset/${userType}/${id}/${token}`, { password }).then((response) => {
-            if (response.data.status === 'Success') {
+            Swal.fire({
+                title: "<strong>Contraseña restablecida</strong>",
+                html: `<i>La contraseña del usuario ha sido restablecida.</i>`,
+                icon: 'success',
+                timer:3000
+            })
+            if (response.data.Status === 'Success') {
                 navigate('/login')
             }
-        }).catch((error) => {
-            // Manejar el error
-            console.error(error);
-        });
+        }).catch(error => console.log(error));
     }
   
     return(
@@ -42,8 +45,12 @@ export default function ResetPassword(){
                 </div>
                 <div className='mt-8 flex flex-col gap-y-4'>
                 <button className='active:scale-[.98] active-75 hover:scale[1.01] ease-in-out transition-all py-3 rounded-xl bg-blue-500 text-white text-lg font-bold' type="submit" onClick={reset} >
-    
                     Reestablecer contraseña
+                </button>
+                <button className='font-medium text-base text-blue-20'>
+                    <Link to={"/login"}>
+                        volver al inicio
+                    </Link>
                 </button>
                 </div>
                 <div>
@@ -60,3 +67,4 @@ export default function ResetPassword(){
     )
 
 }
+export default ResetPassword;

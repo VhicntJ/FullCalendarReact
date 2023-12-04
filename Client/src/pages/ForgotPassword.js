@@ -2,21 +2,27 @@ import React from 'react';
 import './index.css';
 import { useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 
 export default function ForgotPassword(){
-    const [correo, setCorreo] = useState("");
-    const navigate = useNavigate()
-    axios.defaults.withCredentials = true;
+  const [correo, setCorreo] = useState("");
+  const navigate = useNavigate()
+  axios.defaults.withCredentials = true;
 
-    const forgot =  (e) => {
-      e.preventDefault();
-      axios.post('http://localhost:3001/forgot', { correo }).then((response) => {
-        if (response.data.status === 'Success') {
-          navigate('/login')
-        }
+  const forgot =  (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:3001/forgot', { correo }).then((response) => {
+      Swal.fire({
+        title: "<strong>Correo enviado</strong>",
+        html: `<i>Se ha enviado un correo a <strong>${correo}</strong> con las instrucciones para restablecer la contraseña.</i>`,
+        icon: 'success',
+        timer:3000
+      })
+      if (response.data.status === 'Success') {
+        navigate('/login')
+      }
       }).catch(error => console.log(error));
     }
 

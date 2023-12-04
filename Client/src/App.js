@@ -16,6 +16,7 @@ import AlumnoCrud from "./pages/AlumnoCrud";
 import PaginaAdmin from "./pages/PaginaAdmin";
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import Admin from './components/Admin';
 
 function App() {
   const action = useNavigationType();
@@ -101,6 +102,8 @@ function App() {
       <Route path="/PaginaAdmin" element={<PaginaAdmin />} />
       <Route path="/forgot" element={<ForgotPassword />} />
       <Route path="/reset/:userType/:id/:token" element={<ResetPassword />} />
+      <Route path="/Admin" element={<Admin/>} />
+
     </Routes>
   );
 }
