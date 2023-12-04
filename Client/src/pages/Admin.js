@@ -5,6 +5,7 @@ import './Admin.css';
 import axios from 'axios';
 import ProfeCrud from './ProfeCrud';
 import AlumnoCrud from './AlumnoCrud';
+import filtro from './Filtros'
 
 function Header() {
   const navigate = useNavigate();
@@ -36,6 +37,15 @@ function Header() {
   const ocultarAlumnoCrud = () => {
     setMostrarAlumnoCrud(false);
   }
+
+  const mostrarHorarioYVolver = () => {
+    setMostrarAlumnoCrud(true);
+  }
+
+  const ocultarHorario = () => {
+    setMostrarAlumnoCrud(false);
+  }
+
 
   return (
     <html>
@@ -107,6 +117,12 @@ function Header() {
                     <div className="card-body">
                       <h5 className="card-title">Horarios</h5>
                       <p className="card-text">Aqui podras ver los horarios de todas las carreras </p>
+                      {!mostrarHorario && ( 
+                        <button className="btn btn-primary" onClick={mostrarHorarioYVolver}>Ir</button>
+                        )}
+                      {mostrarHorario && (
+                        <button className="btn btn-secondary mx-2" onClick={ocultarHorario}>Volver</button>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -127,6 +143,7 @@ function Header() {
                   {/* Renderiza el componente ProfeCrud fuera del Div Gigante pero condicionalmente */}
                   {mostrarProfeCrud && <ProfeCrud />}
                   {mostrarAlumnoCrud && <AlumnoCrud />}
+                  {mostrarHorario && <filtro />}
                 </div>
               </div>
               
