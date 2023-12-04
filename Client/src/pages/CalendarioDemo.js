@@ -5,7 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { INITIAL_EVENTS, createEventId } from './event-utils'
-import bootstrapPlugin from '@fullcalendar/bootstrap';
+import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -15,8 +15,42 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
-
+<CalendarioDemo_copy
+  selectedSala={selectedSala}
+  selectedCarrera={selectedCarrera}
+  selectedNivel={selectedNivel}
+  selectedProfesor={selectedProfesor}
+  selectedAsignatura={selectedAsignatura}
+  selectedFacultad={selectedFacultad}
+/>
 export default class DemoApp extends React.Component {
+  
+  
+
+  customSlotLabelContent = (slotInfo) => {
+    const blockNumber = slotInfo.date.getHours() - 7; // Resta 7 para ajustar desde las 8:15
+    const blockText = ``;
+    return <span>{blockText}</span>;
+  };
+  customSlotLabelMount = (arg) => {
+    const blockNumber = arg.date.getHours() - 7; // Resta 7 para ajustar desde las 8:15
+    const blockText = ``;
+    const label = document.createElement('div');
+    label.innerHTML = `<span>${blockText}</span>`;
+    arg.el.appendChild(label);
+  };
+
+  componentDidMount() {
+    // Cargar eventos desde la API y establecerlos directamente en FullCalendar
+    this.fetchEventsFromAPI().then(apiEvents => {
+      console.log('Eventos cargados desde la APIARRIBA:', apiEvents);
+  
+      this.setState(prevState => ({
+        currentEvents: [...prevState.currentEvents, ...apiEvents],
+      }));
+    });
+  }
+  
 
   state = {
     weekendsVisible: true,
@@ -24,7 +58,6 @@ export default class DemoApp extends React.Component {
     showModal: false, // Nueva propiedad para manejar la visibilidad del modal
     selectedEvent: null // Nueva propiedad para almacenar el evento seleccionado
   }
-
   render() {
     return (
     
@@ -34,11 +67,11 @@ export default class DemoApp extends React.Component {
         <div className='demo-app-main'>
         
           <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin,bootstrapPlugin]}
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin,bootstrap5Plugin]}
             headerToolbar={{
               left: '',
               center: '',
-              right: 'timeGridWeek'
+              right: ''
             }}
             locale={'es'}
             dayHeaderFormat={{ weekday: 'long' }}
@@ -50,20 +83,27 @@ export default class DemoApp extends React.Component {
             selectable={true}
             selectMirror={true}
             dayMaxEvents={true}
+            
+            slotLabelContent={this.customSlotLabelContent}
+            schedulerLicenseKey='CC-Attribution-NonCommercial-NoDerivatives'
+            themeSystem='bootstrap5'
             weekends={this.state.weekendsVisible}
-            initialEvents={[...INITIAL_EVENTS, ...this.state.currentEvents]} // alternatively, use the `events` setting to fetch from a feed
+            events={[...INITIAL_EVENTS, ...this.state.currentEvents]} // alternatively, use the `events` setting to fetch from a feed
+            
             select={this.handleDateSelect}
             eventContent={renderEventContent} // custom render function
             eventClick={this.handleEventClick}
-            eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
+            //eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
             allDaySlot={false}
-            slotDuration={'01:20:00'} // Duración de los bloques
-            
-            
+
+            //slotLabelDidMount={this.customSlotLabelMount}
+            slotLabelInterval={'01:20:00'} // Intervalo de los bloques
+            slotDuration={"00:10:00"}
             slotMinTime='08:15:00' // Hora de inicio
             slotMaxTime='23:00:00' // Hora de fin
+                        
           // Agregar un eventRender para modificar visualmente los bloques
-          eventRender={this.adjustEventRendering}
+          //eventRender={this.adjustEventRendering}
             /* you can update a remote database when these fire:
             eventAdd={function(){}}
             eventChange={function(){}}
@@ -81,34 +121,16 @@ export default class DemoApp extends React.Component {
     const eventStart = info.event.start;
     const eventEnd = info.event.end;
   }  
-/*
-  renderSidebar() {
-    return (
-      <div className='demo-app-sidebar'>
-        <div className='demo-app-sidebar-section'>
-          <h2>Instrucciones</h2>
-          <ul>
-            <li>Selecciona un bloque especifico y podras agregar un</li>
-            <li>Puedes mantener, mover y estirar eventos para abarcar mas horas</li>
-            <li>Click en un evento para eliminarlo</li>
-          </ul>
-        </div>
-        <div className='demo-app-sidebar-section'>
-          <h2>Todos los eventos ({this.state.currentEvents.length})</h2>
-          <ul>
-            {this.state.currentEvents.map(renderSidebarEvent)}
-          </ul>
-        </div>
-      </div>
-    )
-  }
-*/
+
   renderEventModal() {
     const { showModal, selectedEvent } = this.state;
   
     if (!showModal || !selectedEvent) {
       return null; // No hay evento seleccionado, no renderizar el modal
     }
+  
+    const isRecreo = selectedEvent.title === 'RECREO';
+  
     return (
       <Modal show={showModal} onHide={this.handleCloseModal}>
         <Modal.Header>
@@ -118,62 +140,89 @@ export default class DemoApp extends React.Component {
           </Button>
         </Modal.Header>
         <Modal.Body>
-          <p><strong>Fecha:</strong> {selectedEvent.start.toLocaleString()}</p>
-          <p><strong>Nombre Asignatura:</strong> {selectedEvent.title}</p>
-          <p><strong>ID Asignatura:</strong> {selectedEvent.id_asignatura}</p>
-          <p><strong>Carrera 1:</strong> {selectedEvent.id_asignatura}</p>
-          <p><strong>Carrera 2:</strong> {selectedEvent.id_asignatura}</p>
-          <p><strong>ID de Sala:</strong> {selectedEvent.id_sala}</p>
-          <p><strong>Sección:</strong> {selectedEvent.seccion}</p>
-          <p><strong>Cupos:</strong> {selectedEvent.cupos}</p>
-          {/* Agrega más detalles según tus necesidades */}
+          {isRecreo ? (
+            <p>¡Es hora de descansar!</p>
+          ) : (
+            <>
+              <p><strong>Nombre Asignatura:</strong> {selectedEvent.title}</p>
+              <p><strong>ID Asignatura:</strong> {selectedEvent.extendedProps.id_asignatura}</p>
+              <p><strong>Carrera 1:</strong> {selectedEvent.extendedProps.id_asignatura}</p>
+              <p><strong>Carrera 2:</strong> {selectedEvent.extendedProps.id_asignatura}</p>
+              <p><strong>ID de Sala:</strong> {selectedEvent.extendedProps.id_sala}</p>
+              <p><strong>Sección:</strong> {selectedEvent.extendedProps.seccion}</p>
+              <p><strong>Cupos:</strong> {selectedEvent.extendedProps.cupos}</p>
+              <p><strong>Bloque:</strong> {selectedEvent.extendedProps.bloque}</p>
+              {/* Agrega más detalles según tus necesidades */}
+            </>
+          )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={this.handleDeleteEvent}>
-            Eliminar
-          </Button>
-        </Modal.Footer>
+        {!isRecreo && (
+          <Modal.Footer>
+            <Button variant="danger" onClick={this.handleDeleteEvent}>
+              Eliminar
+            </Button>
+          </Modal.Footer>
+        )}
       </Modal>
     );
   }
-  componentDidMount() {
-    // Cargar eventos iniciales
-    const initialEvents = [...INITIAL_EVENTS];
   
-    // Cargar eventos desde la API y combinar con los eventos iniciales
-    this.fetchEventsFromAPI().then(apiEvents => {
-      const combinedEvents = [...initialEvents, ...apiEvents];
-      this.setState({ currentEvents: combinedEvents });
-    });
-  }
   
-  async fetchEventsFromAPI() {
-    try {
-      const response = await fetch('http://localhost:4000/eventos');
-      const eventos = await response.json();
+
+  fetchEventsFromAPI() {
+    function obtenerNumeroDia(diaPalabra) {
+      const dias = {
+        domingo: "2023-12-03",
+        lunes: "2023-12-04",
+        martes: "2023-12-05",
+        miércoles: "2023-12-06",
+        jueves: "2023-12-07",
+        viernes: "2023-12-08",
+        sábado: "2023-12-09",
+      };
   
-      // Verificar que eventos sea un array
-      if (!Array.isArray(eventos)) {
-        console.error('La respuesta de la API no es un array:', eventos);
-        return []; // Devolver un array vacío si no es un array
-      }
+      // Convertir a minúsculas y eliminar posibles espacios extra al inicio y al final
+      const diaLowerCase = diaPalabra.trim().toLowerCase();
   
-      // Mapear los eventos para que se ajusten al formato esperado por FullCalendar
-      return eventos.map(event => ({
-        id: event.id_evento,
-        title: event.nombre_asignatura,
-        start: event.start,
-        end: event.end,
-        id_sala: event.id_sala,
-        cupos: event.cupos,
-        seccion: event.seccion,
-        fecha: event.fecha,
-      }));
-    } catch (error) {
-      console.error('Error al obtener eventos desde la API:', error);
-      return []; // Devolver un array vacío en caso de error
+      return dias[diaLowerCase];
     }
+  
+    return fetch('http://localhost:3001/eventos')
+      .then(response => response.json())
+      .then(eventos => {
+        if (!Array.isArray(eventos)) {
+          console.error('La respuesta de la API no es un array:', eventos);
+          return []; // Devolver un array vacío si no es un array
+        }
+        console.log('Datos originales de la API:', eventos);
+  
+        // Mapear los eventos para que se ajusten al formato esperado por FullCalendar
+        return eventos.map(event => {
+          const fecha = obtenerNumeroDia(event.fecha);
+          const start = `${fecha}T${event.start}`;
+          const end = `${fecha}T${event.end}`;
+  
+          return {
+            id: event.id_evento,
+            bloque: event.id_horario,
+            title: event.nombre_asignatura,
+            start,
+            end,
+            id_sala: event.id_sala,
+            cupos: event.cupos,
+            seccion: event.seccion,
+            id_asignatura: event.id_asignatura,
+            fecha,
+          };
+        });
+      })
+      .catch(error => {
+        console.error('Error al obtener eventos desde la API:', error);
+        return []; // Devolver un array vacío en caso de error
+      });
   }
+  
+
   
 
   handleCloseModal = () => {
@@ -181,11 +230,6 @@ export default class DemoApp extends React.Component {
       showModal: false,
       selectedEvent: null,
     });
-  }
-  handleWeekendsToggle = () => {
-    this.setState({
-      weekendsVisible: !this.state.weekendsVisible
-    })
   }
 
   handleDateSelect = async (selectInfo) => {
@@ -204,32 +248,44 @@ export default class DemoApp extends React.Component {
         key: createEventId(), // Agrega una clave única
       };
   
+      // Establecer la fecha de inicio en función del día de la semana
+      const startDay = selectInfo.start.getDay();
+      if (startDay >= 1 && startDay <= 6) { // Verificar si es de lunes a sábado
+        newEvent.start = selectInfo.startStr; // Usar la fecha seleccionada
+        newEvent.end = selectInfo.endStr;
+      } else {
+        // Calcular la fecha del próximo lunes
+        const nextMonday = new Date(selectInfo.start);
+        nextMonday.setDate(selectInfo.start.getDate() + (1 + 7 - startDay) % 7);
+        newEvent.start = formatDate(nextMonday, { timeZone: 'UTC' });
+        newEvent.end = formatDate(new Date(nextMonday.getTime() + selectInfo.end - selectInfo.start), { timeZone: 'UTC' });
+      }
+  
       // Agregar el nuevo evento a la lista existente de eventos
       this.setState((prevState) => ({
         currentEvents: [...prevState.currentEvents, newEvent],
       }));
-      
+  
       calendarApi.addEvent({ ...newEvent, id: newEvent.id });
-      console.log('Nueva clave única:', newEvent.key);
-
   
       // Ahora puedes guardar este nuevo evento en tu base de datos
       try {
-        await axios.post('http://localhost:4000/eventos', newEvent);
+        await axios.post('http://localhost:3001/eventos', newEvent);
       } catch (error) {
         console.error('Error al guardar el nuevo evento:', error);
       }
     }
   };
-  /*
-      handleEventClick = (clickInfo) => {
-    if (confirm(`¿Estas seguro de eliminar este evento? '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove()
-    }
-  } */
+
 
   handleEventClick = (clickInfo) => {
     const selectedEvent = clickInfo.event;
+  
+    // Verificar si el evento es un "Recreo"
+    if (selectedEvent.title === '') {
+      return; // No hacer nada si es un "Recreo"
+    }
+  
     this.setState({
       showModal: true,
       selectedEvent,
@@ -246,30 +302,30 @@ export default class DemoApp extends React.Component {
       });
     }
   }
-  
-
-  handleEvents = (events) => {
-
-
-
-    
+  handleEvents = (events) => {   
     this.setState({
       currentEvents: events
 
     })
   }
-
 }
 // Renderiza el contenido de los eventos
 function renderEventContent(eventInfo) {
   return (
     <>
-      <b>{eventInfo.timeText}</b>
-      <i className='grid'>{eventInfo.event.title}</i>
-      <p>Más información: {eventInfo.event.extendedProps.description}</p>
+      <b className='grid height:50px'>{eventInfo.timeText}</b>
+      {eventInfo.event.title && ( // Verifica si el título no está vacío
+        <>
+          <i className='grid height:50px'>{eventInfo.event.title}</i>
+          <p>Sección: {eventInfo.event.extendedProps.seccion}</p>
+          <p>Sala: {eventInfo.event.extendedProps.id_sala}</p>
+          <p>Bloque: {eventInfo.event.extendedProps.bloque}</p>
+        </>
+      )}
     </>
   );
 }
+
  
 /*
 function renderSidebarEvent(event, index) {

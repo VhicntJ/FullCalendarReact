@@ -26,7 +26,7 @@ export default function Form(){
           } else {
             if (response.data.isAdmin) {
                  // Change this according to your response structure
-                 navigate('/PaginaAdmin');}
+                 navigate('/Admin');}
             else if (response.data.isProfesor) {
                 navigate('/PaginaProfesor');
             }

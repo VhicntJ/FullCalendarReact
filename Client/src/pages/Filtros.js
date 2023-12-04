@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Filtros.css';
-import logo from './Logo.png';
+import logo from './Logo UCEN_.png';
 import CalendarioDemo from './CalendarioDemo';
-
+import CalendarioDemo_copy from './CalendarioDemo_copy';
 
 function App() {
   const [salasList, setSalasList] = useState([]);
@@ -193,7 +193,13 @@ function App() {
             ))}
           </select>
         </div>
-        <CalendarioDemo/>
+        <CalendarioDemo_copy
+          selectedSala={selectedSala}
+          selectedCarrera={selectedCarrera}
+          selectedNivel={selectedNivel}
+          selectedProfesor={selectedProfesor}
+          selectedAsignatura={selectedAsignatura}
+          selectedFacultad={selectedFacultad}/>
       </main>
     </div>
   );

@@ -13,7 +13,6 @@ import Form from "./pages/Form";
 import Filtros from "./pages/Filtros";
 import ProfeCrud from "./pages/ProfeCrud";
 import AlumnoCrud from "./pages/AlumnoCrud";
-import PaginaAdmin from "./pages/PaginaAdmin";
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Admin from './components/Admin';
@@ -66,7 +65,7 @@ function App() {
             title = "";
             metaDescription = "";
             break;
-      case "/PaginaAdmin":
+      case "/Admin":
             title = "";
             metaDescription = "";
             break;
@@ -99,7 +98,7 @@ function App() {
       <Route path="/Filtros" element={<Filtros />} />
       <Route path="/ProfeCrud" element={<ProfeCrud />} />
       <Route path="/AlumnoCrud" element={<AlumnoCrud />} />
-      <Route path="/PaginaAdmin" element={<PaginaAdmin />} />
+      <Route path="/Admin" element={<Admin />} />
       <Route path="/forgot" element={<ForgotPassword />} />
       <Route path="/reset/:userType/:id/:token" element={<ResetPassword />} />
       <Route path="/Admin" element={<Admin/>} />
