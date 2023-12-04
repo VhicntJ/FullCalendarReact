@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-11-2023 a las 03:03:54
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 04-12-2023 a las 22:24:03
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -65,7 +65,11 @@ CREATE TABLE `alumno` (
 INSERT INTO `alumno` (`id_alumno`, `rut`, `nombre`, `correo`, `password`, `id_carrera`, `estado`) VALUES
 (1, '20908852-5', 'BENJAMIN BRAVO', 'benja.b@ucen.cl', '$2b$10$gZb1CpV152tGIkW/yAlP8.BEcbowEFhVk9a.ltxdYBPOhYYSMz3DK', NULL, 1),
 (8, '20655755-9', 'EDUARDO TAPIA', 'edutapia@ucen.cl', '$2b$10$bMzo199iUnV4Hkr7MCPToeWl5M3P5L2zlfTT2XUvrdafz39gsB61W', NULL, 1),
-(10, '20913811-5', 'DAMIAN VELASCO ', 'd@gmail.cl', '$2b$10$I85AqXc3F7dSzUR9v7VlwO7oLsYd54s3/YrEMY5Byl/XFKxkMQJoe', NULL, 1);
+(10, '20913811-5', 'DAMIAN VELASCO ', 'd@gmail.cl', '$2b$10$I85AqXc3F7dSzUR9v7VlwO7oLsYd54s3/YrEMY5Byl/XFKxkMQJoe', NULL, 1),
+(16, '', '', '', '$2b$10$SyNBSTzsSK.uKedcp3pkYuyQAz3zL2Qiruj67H4aqUvuYPnkqaoQC', NULL, 1),
+(17, '21312', 'dassd', 'asdas', '$2b$10$tkq5b46hP4Bf2uhL4VETAuH.iNFcrWkXPHLuW2dqkjPYr5nmqXOBe', NULL, 1),
+(18, 'asd', 'asd', 'ads', '$2b$10$YNKrXB8dBd7pKqg/4gmJKurlO2c9yB6DFqIU6Xj7WawSahcRIOUAC', 998, 1),
+(19, '20923543-6', 'bern', 'A2212', '$2b$10$9smiaHLqNhdGOz1jTHmLkuMzn2lrJYKknZqkgxlmRK/MkqL/OtoPC', 1000, 1);
 
 -- --------------------------------------------------------
 
@@ -235,7 +239,7 @@ CREATE TABLE `eventos` (
   `id_sala` varchar(50) DEFAULT NULL,
   `cupos` int(10) DEFAULT NULL,
   `seccion` varchar(50) DEFAULT NULL,
-  `fecha` date DEFAULT NULL
+  `fecha` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -243,7 +247,15 @@ CREATE TABLE `eventos` (
 --
 
 INSERT INTO `eventos` (`id_evento`, `id_asignatura`, `id_horario`, `id_sala`, `cupos`, `seccion`, `fecha`) VALUES
-(1, 19076, 6, 'A206', 40, '210', NULL);
+(1, 19068, 6, 'B308', 40, '201', 'lunes'),
+(2, 19086, 7, 'B308', 30, '201', 'lunes'),
+(3, 3364, 8, 'B308', 30, '201', 'lunes'),
+(4, 19068, 5, 'B509', 30, '201', 'martes'),
+(5, 19080, 6, 'B509', 30, '201', 'martes'),
+(6, 19086, 7, 'B307', 30, '201', 'martes'),
+(7, 19086, 8, 'B307', 30, '201', 'martes'),
+(8, 3364, 6, 'B405', 40, '201', 'miercoles'),
+(9, 19068, 5, 'LC2', 30, '201', 'jueves');
 
 -- --------------------------------------------------------
 
@@ -271,8 +283,8 @@ INSERT INTO `facultad` (`id_facultad`, `nombre_facultad`) VALUES
 
 CREATE TABLE `horarios` (
   `id_horario` int(11) NOT NULL,
-  `start` varchar(10) DEFAULT NULL,
-  `end` varchar(10) DEFAULT NULL
+  `start` varchar(20) DEFAULT NULL,
+  `end` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -287,18 +299,9 @@ INSERT INTO `horarios` (`id_horario`, `start`, `end`) VALUES
 (5, '14:15:00', '15:35:00'),
 (6, '15:45:00', '17:05:00'),
 (7, '17:15:00', '18:35:00'),
-(8, '18:45:00', '20:05:00'),
+(8, '18:50:00', '20:10:00'),
 (9, '20:15:00', '21:35:00'),
-(10, '21:45:00', '23:05:01');
-
---
--- Disparadores `horarios`
---
-DELIMITER $$
-CREATE TRIGGER `disparador_horarios` BEFORE DELETE ON `horarios` FOR EACH ROW DELETE FROM asignatura_horario 
-WHERE id_horario  = OLD.id_horario
-$$
-DELIMITER ;
+(10, '21:40:00', '23:00:00');
 
 -- --------------------------------------------------------
 
@@ -354,7 +357,8 @@ INSERT INTO `profesor` (`id_profesor`, `rut_profesor`, `nombre`, `contrato`, `co
 (2, '10-13', 'MARIO HERNAN HORTIZ BONILLA', 'Planta', '', '$2b$10$cFsfi07wWWnI2zXWJORkwOQDfT.L/pluwtRe6rTQkUljD7HyL8cue', 1),
 (3, '13-14', 'CLAUDIA MARCELA CONTRERAS GAHONA', 'Honorario', '', '$2b$10$048MDBs1yGlknNd9I0lU.OC0QSSXtIQdwUSlrRsY2BwZoMWKepw1y', 1),
 (4, '11-11', 'CHRISTIAN LUIS ACUNA OPAZO', 'Planta', '', '$2b$10$.UnTZluqTgZfyNOZA81zEu4MFri.1AH9B911gpu7MQL/.CTaoXPp2', 1),
-(5, '11-05', 'SEBASTIAN BAEZA DONOSO', 'Planta', '', '$2b$10$lNKMl3RlYfng0tEXCAOjku6mTWYQIuDtAMAb5RHUrIM78Q/wgHtam', 1);
+(5, '11-05', 'SEBASTIAN BAEZA DONOSO', 'Planta', '', '$2b$10$lNKMl3RlYfng0tEXCAOjku6mTWYQIuDtAMAb5RHUrIM78Q/wgHtam', 1),
+(13, '20912165-5', 'vice', 'Planta', '', '$2b$10$c65UDGmBqoC1ztU8b6GDX.ZhLxZ6Y3.VJt1/Be.qDH7VOs.9qjxPO', 1);
 
 -- --------------------------------------------------------
 
@@ -547,7 +551,7 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT de la tabla `alumno`
 --
 ALTER TABLE `alumno`
-  MODIFY `id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `carrera`
@@ -565,7 +569,7 @@ ALTER TABLE `carrera_asignatura`
 -- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `id_evento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_evento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `nivel`
@@ -577,7 +581,7 @@ ALTER TABLE `nivel`
 -- AUTO_INCREMENT de la tabla `profesor`
 --
 ALTER TABLE `profesor`
-  MODIFY `id_profesor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_profesor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `profesor_asignatura`
