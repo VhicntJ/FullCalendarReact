@@ -11,6 +11,7 @@ function Header() {
   const navigate = useNavigate();
   const [mostrarProfeCrud, setMostrarProfeCrud] = useState(false);
   const [mostrarAlumnoCrud, setMostrarAlumnoCrud] = useState(false);
+  const [mostrarHorario, setMostrarHorario] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -39,11 +40,11 @@ function Header() {
   }
 
   const mostrarHorarioYVolver = () => {
-    setMostrarAlumnoCrud(true);
+    setMostrarHorario(true);
   }
 
   const ocultarHorario = () => {
-    setMostrarAlumnoCrud(false);
+    setMostrarHorario(false);
   }
 
 

@@ -15,14 +15,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
-<CalendarioDemo_copy
-  selectedSala={selectedSala}
-  selectedCarrera={selectedCarrera}
-  selectedNivel={selectedNivel}
-  selectedProfesor={selectedProfesor}
-  selectedAsignatura={selectedAsignatura}
-  selectedFacultad={selectedFacultad}
-/>
+
 export default class DemoApp extends React.Component {
   
   
