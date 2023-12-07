@@ -3,7 +3,9 @@ import axios from 'axios';
 import './Filtros.css';
 import logo from './Logo UCEN_.png';
 import CalendarioDemo from './CalendarioDemo';
-
+import CalendarioDemo_copy from './CalendarioDemo_copy';
+// Agrega la siguiente línea para importar Bootstrap JS
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 function App() {
   const [salasList, setSalasList] = useState([]);
@@ -92,111 +94,135 @@ function App() {
         console.error('Error al obtener la lista de facultades:', error);
       });
   };
-
   return (
     <div className='App'>
-      <header>
-        <div className='arriba'>
-          <img className='imagen' src={logo} alt='logo' width={500} />
-          <h1>Horario</h1>
+<header className='p-1' style={{ backgroundColor: '#FF5200' }}>
+  <div className='container'>
+    <div className='row align-items-center'>
+      <div className='col'>
+      <img className='img-fluid' src={logo} alt='logo' style={{ maxWidth: '100%', maxHeight: '130px', height: 'auto' }} />
+      </div>
+      <div className='col'>
+        <h1 className='text-white fw-bold'>Horario</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+
+
+      <main className='container mt-2'>
+        <div className='bg-primary p-2'>
+          {/* Primera Fila de Dropdowns */}
+          <div className='row mb-2'>
+            <div className='col mb-2'>
+              <label htmlFor='salaDropdown' className='form-label text-white fw-bold'>Seleccionar Sala:</label>
+              <select
+                id='salaDropdown'
+                className='form-select text-dark'
+                onChange={(event) => setSelectedSala(event.target.value)}
+                value={selectedSala}
+              >
+                <option value=''>Seleccione una sala</option>
+                {salasList.map((sala) => (
+                  <option key={sala.id_sala} value={sala.id_sala}>
+                    {sala.id_sala}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className='col mb-2'>
+              <label htmlFor='carreraDropdown' className='form-label text-white fw-bold'>Seleccionar Carrera:</label>
+              <select
+                id='carreraDropdown'
+                className='form-select text-dark'
+                onChange={(event) => setSelectedCarrera(event.target.value)}
+                value={selectedCarrera}
+              >
+                <option value=''>Seleccione una carrera</option>
+                {carrerasList.map((carrera) => (
+                  <option key={carrera.id_carrera} value={carrera.id_carrera}>
+                    {carrera.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className='col mb-2'>
+              <label htmlFor='nivelDropdown' className='form-label text-white fw-bold'>Seleccionar Nivel:</label>
+              <select
+                id='nivelDropdown'
+                className='form-select'
+                onChange={(event) => setSelectedNivel(event.target.value)}
+                value={selectedNivel}
+              >
+                <option value=''>Seleccione un nivel</option>
+                {nivelesList.map((nivel) => (
+                  <option key={nivel.id_nivel} value={nivel.id_nivel}>
+                    {nivel.id_nivel}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+  
+          {/* Segunda Fila de Dropdowns */}
+          <div className='row'>
+            <div className='col mb-2'>
+              <label htmlFor='profesorDropdown' className='form-label text-white fw-bold'>Seleccionar Profesor:</label>
+              <select
+                id='profesorDropdown'
+                className='form-select'
+                onChange={(event) => setSelectedProfesor(event.target.value)}
+                value={selectedProfesor}
+              >
+                <option value=''>Seleccione un profesor</option>
+                {profesoresList.map((profesor) => (
+                  <option key={profesor.id_profesor} value={profesor.id_profesor}>
+                    {profesor.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className='col mb-2'>
+              <label htmlFor='asignaturaDropdown' className='form-label text-white fw-bold'>Seleccionar Asignatura:</label>
+              <select
+                id='asignaturaDropdown'
+                className='form-select'
+                onChange={(event) => setSelectedAsignatura(event.target.value)}
+                value={selectedAsignatura}
+              >
+                <option value=''>Seleccione una asignatura</option>
+                {asignaturasList.map((asignatura) => (
+                  <option key={asignatura.id_asignatura} value={asignatura.id_asignatura}>
+                    {asignatura.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className='col mb-2'>
+              <label htmlFor='facultadDropdown' className='form-label text-white fw-bold'>Seleccionar Facultad:</label>
+              <select
+                id='facultadDropdown'
+                className='form-select'
+                onChange={(event) => setSelectedFacultad(event.target.value)}
+                value={selectedFacultad}
+              >
+                <option value=''>Seleccione una facultad</option>
+                {facultadesList.map((facultad) => (
+                  <option key={facultad.id_facultad} value={facultad.id_facultad}>
+                    {facultad.nombre_facultad}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
-      </header>
-      <main>
-        <div className='filtros'>
-          {/* Dropdown de salas */}
-          <label htmlFor='salaDropdown'>Seleccionar Sala:</label>
-          <select
-            id='salaDropdown'
-            onChange={(event) => setSelectedSala(event.target.value)}
-            value={selectedSala}
-          >
-            <option value=''>Seleccione una sala</option>
-            {salasList.map((sala) => (
-              <option key={sala.id_sala} value={sala.id_sala}>
-                {sala.id_sala}
-              </option>
-            ))}
-          </select>
-
-          {/* Dropdown de carreras */}
-          <label htmlFor='carreraDropdown'>Seleccionar Carrera:</label>
-          <select
-            id='carreraDropdown'
-            onChange={(event) => setSelectedCarrera(event.target.value)}
-            value={selectedCarrera}
-          >
-            <option value=''>Seleccione una carrera</option>
-            {carrerasList.map((carrera) => (
-              <option key={carrera.id_carrera} value={carrera.id_carrera}>
-                {carrera.nombre}
-              </option>
-            ))}
-          </select>
-
-          {/* Dropdown de niveles */}
-          <label htmlFor='nivelDropdown'>Seleccionar Nivel:</label>
-          <select
-            id='nivelDropdown'
-            onChange={(event) => setSelectedNivel(event.target.value)}
-            value={selectedNivel}
-          >
-            <option value=''>Seleccione un nivel</option>
-            {nivelesList.map((nivel) => (
-              <option key={nivel.id_nivel} value={nivel.id_nivel}>
-                {nivel.id_nivel}
-              </option>
-            ))}
-          </select>
-
-          {/* Dropdown de profesores */}
-          <label htmlFor='profesorDropdown'>Seleccionar Profesor:</label>
-          <select
-            id='profesorDropdown'
-            onChange={(event) => setSelectedProfesor(event.target.value)}
-            value={selectedProfesor}
-          >
-            <option value=''>Seleccione un profesor</option>
-            {profesoresList.map((profesor) => (
-              <option key={profesor.id_profesor} value={profesor.id_profesor}>
-                {profesor.nombre}
-              </option>
-            ))}
-          </select>
-
-          {/* Dropdown de asignaturas */}
-          <label htmlFor='asignaturaDropdown'>Seleccionar Asignatura:</label>
-          <select
-            id='asignaturaDropdown'
-            onChange={(event) => setSelectedAsignatura(event.target.value)}
-            value={selectedAsignatura}
-          >
-            <option value=''>Seleccione una asignatura</option>
-            {asignaturasList.map((asignatura) => (
-              <option key={asignatura.id_asignatura} value={asignatura.id_asignatura}>
-                {asignatura.nombre}
-              </option>
-            ))}
-          </select>
-
-          {/* Dropdown de facultades */}
-          <label htmlFor='facultadDropdown'>Seleccionar Facultad:</label>
-          <select
-            id='facultadDropdown'
-            onChange={(event) => setSelectedFacultad(event.target.value)}
-            value={selectedFacultad}
-          >
-            <option value=''>Seleccione una facultad</option>
-            {facultadesList.map((facultad) => (
-              <option key={facultad.id_facultad} value={facultad.id_facultad}>
-                {facultad.nombre_facultad}
-              </option>
-            ))}
-          </select>
-        </div>
-        <CalendarioDemo/>
+        <CalendarioDemo_copy />
       </main>
     </div>
   );
+  
 }
 
 export default App;

@@ -3,8 +3,20 @@ body {
   margin: 0;
 }
 
+/* Agrega la siguiente línea para importar Bootstrap */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
 .App {
   text-align: center;
+}
+
+header {
+  background-color: var(--orange-500);
+  padding: 1rem; /* O ajusta según tus necesidades */
+  color: #fff; /* Color de texto blanco o ajusta según tus necesidades */
+}
+:root {
+  --orange-500: #FFA500;  /* Reemplaza esto con tu propio valor de color naranja */
 }
 
 header {
