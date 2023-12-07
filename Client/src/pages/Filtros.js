@@ -3,9 +3,7 @@ import axios from 'axios';
 import './Filtros.css';
 import logo from './Logo UCEN_.png';
 import CalendarioDemo from './CalendarioDemo';
-import CalendarioDemo_copy from './CalendarioDemo_copy';
-// Agrega la siguiente línea para importar Bootstrap JS
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 
 function App() {
   const [salasList, setSalasList] = useState([]);
@@ -108,10 +106,6 @@ function App() {
     </div>
   </div>
 </header>
-
-
-
-
       <main className='container mt-2'>
         <div className='bg-primary p-2'>
           {/* Primera Fila de Dropdowns */}
@@ -218,7 +212,14 @@ function App() {
             </div>
           </div>
         </div>
-        <CalendarioDemo_copy />
+        <CalendarioDemo
+          sala={selectedSala}
+          carrera={selectedCarrera}
+          nivel={selectedNivel}
+          profesor={selectedProfesor}
+          asignatura={selectedAsignatura}
+          facultad={selectedFacultad}
+          />
       </main>
     </div>
   );

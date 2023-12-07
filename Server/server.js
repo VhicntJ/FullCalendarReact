@@ -130,15 +130,17 @@ app.get('/facultades', (req, res) => {
 // Agrega una nueva ruta para obtener eventos
 app.get('/eventos', (req, res) => {
   const query = `
-    SELECT eventos.id_evento, eventos.id_asignatura, asignatura.nombre AS nombre_asignatura, horarios.start, horarios.end,horarios.id_horario, eventos.id_sala, eventos.cupos, eventos.seccion, eventos.fecha
+    SELECT eventos.id_evento, eventos.id_asignatura, asignatura.nombre AS nombre_asignatura, horarios.start, horarios.end,horarios.id_horario, eventos.id_sala, eventos.cupos, eventos.seccion, eventos.fecha,eventos.nivel_asignatura
     FROM eventos
     JOIN horarios ON eventos.id_horario = horarios.id_horario
-    JOIN asignatura ON eventos.id_asignatura = asignatura.id_asignatura;`;
+    JOIN asignatura ON eventos.id_asignatura = asignatura.id_asignatura;
+    `;
 
   db.query(query, (error, results) => {
     if (error) {
       res.status(500).json({ error: error.message });
     } else {
+      console.log('Resultados de la consulta:', results); // Agrega esta línea para imprimir los resultados en la consola del servidor
       res.json(results);
     }
   });

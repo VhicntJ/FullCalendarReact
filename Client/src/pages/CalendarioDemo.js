@@ -17,6 +17,23 @@ import axios from 'axios';
 
 
 export default class DemoApp extends React.Component {
+
+  obtenerNumeroDia = (diaPalabra) => {
+    const dias = {
+      domingo: "2023-12-03",
+      lunes: "2023-12-04",
+      martes: "2023-12-05",
+      miércoles: "2023-12-06",
+      jueves: "2023-12-07",
+      viernes: "2023-12-08",
+      sábado: "2023-12-09",
+    };
+
+    const diaLowerCase = diaPalabra.trim().toLowerCase();
+
+    return dias[diaLowerCase];
+  };
+
   
   
 
@@ -43,6 +60,84 @@ export default class DemoApp extends React.Component {
       }));
     });
   }
+  componentDidUpdate(prevProps) {
+    // Detectar cambios en las propiedades relacionadas con los filtros y realizar acciones si es necesario
+    if (this.props.sala !== prevProps.sala || this.props.carrera !== prevProps.carrera || this.props.nivel !== prevProps.nivel || this.props.profesor !== prevProps.profesor || this.props.asignatura !== prevProps.asignatura || this.props.facultad !== prevProps.facultad) {
+      // Realizar acciones, como recargar eventos con los nuevos filtros
+      this.fetchAndFilterEventsFromAPI();
+    }
+  }
+
+  fetchAndFilterEventsFromAPI = () => {
+    const {
+      sala,
+      carrera,
+      nivel,
+      profesor,
+      asignatura,
+      facultad,
+      
+    } = this.props;
+
+    fetch('http://localhost:3001/eventos')
+      .then((response) => response.json())
+      .then((eventos) => {
+                // Mapear los eventos para que se ajusten al formato esperado por FullCalendar
+                const formattedEvents = eventos.map((event) => {
+                  const fecha = this.obtenerNumeroDia(event.fecha);
+                  const start = `${fecha}T${event.start}`;
+                  const end = `${fecha}T${event.end}`;
+        
+                  return {
+                    id: event.id_evento,
+                    bloque: event.id_horario,
+                    title: event.nombre_asignatura,
+                    start,
+                    end,
+                    id_sala: event.id_sala,
+                    cupos: event.cupos,
+                    seccion: event.seccion,
+                    id_asignatura: event.id_asignatura,
+                    fecha,
+                    nivel: event.id_nivel,
+                  };
+                });
+                console.log('Eventos ANTES del filtro de asignatura:', formattedEvents);
+
+                const filteredEvents = formattedEvents.filter((event) => {
+                  const eventAsignatura = event.id_asignatura.toString(); // Convertir a cadena para comparación
+                  const isSelectedAsignatura = !asignatura || eventAsignatura === asignatura;
+                  return (
+                    (!sala || event.id_sala === sala) &&
+                    (!carrera || event.id_carrera === carrera) &&
+                    (!nivel || event.id_nivel === nivel) &&
+                    (!profesor || event.id_profesor === profesor) &&
+                    isSelectedAsignatura &&
+                    (!facultad || event.id_facultad === facultad)
+                  );
+                });
+                
+        console.log('Eventos después del filtro de asignatura:', filteredEvents);
+
+
+        this.setState({
+          currentEvents: filteredEvents,
+        });
+        console.log('filtro', filteredEvents);
+      })
+      .catch((error) => {
+        console.error('Error al obtener eventos desde la API:', error);
+      });
+  };
+    
+  
+    // Función para manejar cambios en los filtros
+    handleFilterChange = () => {
+      // Llamar a la función para obtener y filtrar eventos desde la API
+      this.fetchAndFilterEventsFromAPI();
+    };
+    
+  
   
 
   state = {
@@ -52,6 +147,8 @@ export default class DemoApp extends React.Component {
     selectedEvent: null // Nueva propiedad para almacenar el evento seleccionado
   }
   render() {
+    console.log("Sala seleccionada:", this.props.sala); // Cambia a this.props
+    console.log("asignatura seleccionada:", this.props.asignatura); // Cambia a this.props
     return (
     
       <div className='demo-app'>
@@ -60,6 +157,12 @@ export default class DemoApp extends React.Component {
         <div className='demo-app-main'>
         
           <FullCalendar
+          sala={this.state.selectedSala}
+          carrera={this.state.selectedCarrera}
+          nivel={this.state.selectedNivel}
+          profesor={this.state.selectedProfesor}
+          asignatura={this.state.selectedAsignatura}
+          facultad={this.state.selectedFacultad}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin,bootstrap5Plugin]}
             headerToolbar={{
               left: '',
@@ -78,7 +181,6 @@ export default class DemoApp extends React.Component {
             dayMaxEvents={true}
             
             slotLabelContent={this.customSlotLabelContent}
-            schedulerLicenseKey='CC-Attribution-NonCommercial-NoDerivatives'
             themeSystem='bootstrap5'
             weekends={this.state.weekendsVisible}
             events={[...INITIAL_EVENTS, ...this.state.currentEvents]} // alternatively, use the `events` setting to fetch from a feed
@@ -206,6 +308,7 @@ export default class DemoApp extends React.Component {
             seccion: event.seccion,
             id_asignatura: event.id_asignatura,
             fecha,
+            nivel: event.id_nivel,
           };
         });
       })
