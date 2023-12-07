@@ -100,6 +100,8 @@ export default class DemoApp extends React.Component {
                     id_asignatura: event.id_asignatura,
                     fecha,
                     nivel: event.id_nivel,
+                    profesor: event.id_profesor,
+                    profesor_nombre: event.nombre_profesor,
                   };
                 });
                 console.log('Eventos ANTES del filtro de asignatura:', formattedEvents);
@@ -107,13 +109,18 @@ export default class DemoApp extends React.Component {
                 const filteredEvents = formattedEvents.filter((event) => {
                   const eventAsignatura = event.id_asignatura.toString(); // Convertir a cadena para comparación
                   const isSelectedAsignatura = !asignatura || eventAsignatura === asignatura;
+                  const eventNivel = event.nivel.toString(); // Convertir a cadena para comparación
+                  const isSelectedNivel = !nivel || eventNivel === nivel;
+                  const eventProfesor = event.profesor.toString(); // Convertir a cadena para comparación
+                  const isSelectedProfesor = !profesor || eventProfesor === profesor;
                   return (
                     (!sala || event.id_sala === sala) &&
                     (!carrera || event.id_carrera === carrera) &&
-                    (!nivel || event.id_nivel === nivel) &&
-                    (!profesor || event.id_profesor === profesor) &&
+                    isSelectedNivel &&
+                    isSelectedProfesor &&
                     isSelectedAsignatura &&
-                    (!facultad || event.id_facultad === facultad)
+                    (!facultad || event.id_facultad === facultad) 
+                    
                   );
                 });
                 
@@ -149,6 +156,8 @@ export default class DemoApp extends React.Component {
   render() {
     console.log("Sala seleccionada:", this.props.sala); // Cambia a this.props
     console.log("asignatura seleccionada:", this.props.asignatura); // Cambia a this.props
+    console.log("nivel seleccionado:", this.props.nivel); // Cambia a this.props
+    console.log("profesor seleccionado:", this.props.profesor); // Cambia a this.props
     return (
     
       <div className='demo-app'>
@@ -309,6 +318,8 @@ export default class DemoApp extends React.Component {
             id_asignatura: event.id_asignatura,
             fecha,
             nivel: event.id_nivel,
+            profesor: event.id_profesor,
+            profesor_nombre: event.nombre_profesor,
           };
         });
       })

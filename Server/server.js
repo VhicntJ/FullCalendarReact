@@ -130,10 +130,12 @@ app.get('/facultades', (req, res) => {
 // Agrega una nueva ruta para obtener eventos
 app.get('/eventos', (req, res) => {
   const query = `
-    SELECT eventos.id_evento, eventos.id_asignatura, asignatura.nombre AS nombre_asignatura, horarios.start, horarios.end,horarios.id_horario, eventos.id_sala, eventos.cupos, eventos.seccion, eventos.fecha,eventos.nivel_asignatura
+    SELECT eventos.id_evento, eventos.id_asignatura, asignatura.nombre AS nombre_asignatura, horarios.start, horarios.end,horarios.id_horario, eventos.id_sala, eventos.cupos, eventos.seccion, eventos.fecha,asignatura.id_nivel,profesor_asignatura.id_profesor,profesor.nombre AS nombre_profesor
     FROM eventos
     JOIN horarios ON eventos.id_horario = horarios.id_horario
-    JOIN asignatura ON eventos.id_asignatura = asignatura.id_asignatura;
+    JOIN asignatura ON eventos.id_asignatura = asignatura.id_asignatura
+    JOIN profesor_asignatura ON asignatura.id_asignatura = profesor_asignatura.id_asignatura
+    JOIN profesor ON profesor_asignatura.id_profesor = profesor.id_profesor;
     `;
 
   db.query(query, (error, results) => {
