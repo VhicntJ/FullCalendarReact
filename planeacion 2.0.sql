@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-12-2023 a las 22:24:03
+-- Tiempo de generación: 08-12-2023 a las 03:30:07
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -70,6 +70,25 @@ INSERT INTO `alumno` (`id_alumno`, `rut`, `nombre`, `correo`, `password`, `id_ca
 (17, '21312', 'dassd', 'asdas', '$2b$10$tkq5b46hP4Bf2uhL4VETAuH.iNFcrWkXPHLuW2dqkjPYr5nmqXOBe', NULL, 1),
 (18, 'asd', 'asd', 'ads', '$2b$10$YNKrXB8dBd7pKqg/4gmJKurlO2c9yB6DFqIU6Xj7WawSahcRIOUAC', 998, 1),
 (19, '20923543-6', 'bern', 'A2212', '$2b$10$9smiaHLqNhdGOz1jTHmLkuMzn2lrJYKknZqkgxlmRK/MkqL/OtoPC', 1000, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `alumno_asignatura`
+--
+
+CREATE TABLE `alumno_asignatura` (
+  `id_alumno_asignatura` int(11) NOT NULL,
+  `id_alumno` int(11) DEFAULT NULL,
+  `id_asignatura` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `alumno_asignatura`
+--
+
+INSERT INTO `alumno_asignatura` (`id_alumno_asignatura`, `id_alumno`, `id_asignatura`) VALUES
+(1, 1, 19068);
 
 -- --------------------------------------------------------
 
@@ -239,23 +258,28 @@ CREATE TABLE `eventos` (
   `id_sala` varchar(50) DEFAULT NULL,
   `cupos` int(10) DEFAULT NULL,
   `seccion` varchar(50) DEFAULT NULL,
-  `fecha` varchar(20) DEFAULT NULL
+  `fecha` varchar(20) DEFAULT NULL,
+  `nivel_asignatura` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `eventos`
 --
 
-INSERT INTO `eventos` (`id_evento`, `id_asignatura`, `id_horario`, `id_sala`, `cupos`, `seccion`, `fecha`) VALUES
-(1, 19068, 6, 'B308', 40, '201', 'lunes'),
-(2, 19086, 7, 'B308', 30, '201', 'lunes'),
-(3, 3364, 8, 'B308', 30, '201', 'lunes'),
-(4, 19068, 5, 'B509', 30, '201', 'martes'),
-(5, 19080, 6, 'B509', 30, '201', 'martes'),
-(6, 19086, 7, 'B307', 30, '201', 'martes'),
-(7, 19086, 8, 'B307', 30, '201', 'martes'),
-(8, 3364, 6, 'B405', 40, '201', 'miercoles'),
-(9, 19068, 5, 'LC2', 30, '201', 'jueves');
+INSERT INTO `eventos` (`id_evento`, `id_asignatura`, `id_horario`, `id_sala`, `cupos`, `seccion`, `fecha`, `nivel_asignatura`) VALUES
+(1, 19068, 6, 'B308', 40, '201', 'lunes', NULL),
+(2, 19086, 7, 'B308', 30, '201', 'lunes', NULL),
+(3, 3364, 8, 'B308', 30, '201', 'lunes', NULL),
+(4, 19068, 5, 'B509', 30, '201', 'martes', NULL),
+(5, 19080, 6, 'B509', 30, '201', 'martes', NULL),
+(6, 19086, 7, 'B307', 30, '201', 'martes', NULL),
+(7, 19086, 8, 'B307', 30, '201', 'martes', NULL),
+(8, 3364, 6, 'B405', 40, '201', 'miercoles', NULL),
+(9, 19068, 5, 'LC2', 30, '201', 'jueves', NULL),
+(15, 19080, 1, 'B308', 30, '201', 'lunes', 8),
+(18, 19081, 2, 'B405', 40, '201', 'martes', 9),
+(22, 3346, 1, 'LC2', 40, '201', 'martes', 5),
+(30, 19083, 3, 'B408', 30, '201', 'jueves', NULL);
 
 -- --------------------------------------------------------
 
@@ -388,7 +412,8 @@ INSERT INTO `profesor_asignatura` (`id_profesor_asignatura`, `id_profesor`, `id_
 (11, 5, 4856),
 (12, 3, 3344),
 (13, 3, 3782),
-(14, 4, 19537);
+(14, 4, 19537),
+(15, 1, 19068);
 
 -- --------------------------------------------------------
 
@@ -454,6 +479,14 @@ ALTER TABLE `administrador`
 ALTER TABLE `alumno`
   ADD PRIMARY KEY (`id_alumno`),
   ADD KEY `id_carrera` (`id_carrera`);
+
+--
+-- Indices de la tabla `alumno_asignatura`
+--
+ALTER TABLE `alumno_asignatura`
+  ADD PRIMARY KEY (`id_alumno_asignatura`),
+  ADD KEY `id_alumno` (`id_alumno`),
+  ADD KEY `id_asignatura` (`id_asignatura`);
 
 --
 -- Indices de la tabla `asignatura`
@@ -554,6 +587,12 @@ ALTER TABLE `alumno`
   MODIFY `id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
+-- AUTO_INCREMENT de la tabla `alumno_asignatura`
+--
+ALTER TABLE `alumno_asignatura`
+  MODIFY `id_alumno_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `carrera`
 --
 ALTER TABLE `carrera`
@@ -569,7 +608,7 @@ ALTER TABLE `carrera_asignatura`
 -- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `id_evento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_evento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de la tabla `nivel`
@@ -587,7 +626,7 @@ ALTER TABLE `profesor`
 -- AUTO_INCREMENT de la tabla `profesor_asignatura`
 --
 ALTER TABLE `profesor_asignatura`
-  MODIFY `id_profesor_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_profesor_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `sede`
@@ -604,6 +643,13 @@ ALTER TABLE `sede`
 --
 ALTER TABLE `alumno`
   ADD CONSTRAINT `alumno_ibfk_1` FOREIGN KEY (`id_carrera`) REFERENCES `carrera` (`id_carrera`);
+
+--
+-- Filtros para la tabla `alumno_asignatura`
+--
+ALTER TABLE `alumno_asignatura`
+  ADD CONSTRAINT `alumno_asignatura_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `alumno` (`id_alumno`),
+  ADD CONSTRAINT `alumno_asignatura_ibfk_2` FOREIGN KEY (`id_asignatura`) REFERENCES `asignatura` (`id_asignatura`);
 
 --
 -- Filtros para la tabla `asignatura`
@@ -637,7 +683,8 @@ ALTER TABLE `carrera_sede`
 ALTER TABLE `eventos`
   ADD CONSTRAINT `eventos_ibfk_1` FOREIGN KEY (`id_asignatura`) REFERENCES `asignatura` (`id_asignatura`),
   ADD CONSTRAINT `eventos_ibfk_2` FOREIGN KEY (`id_horario`) REFERENCES `horarios` (`id_horario`),
-  ADD CONSTRAINT `eventos_ibfk_3` FOREIGN KEY (`id_sala`) REFERENCES `sala` (`id_sala`);
+  ADD CONSTRAINT `eventos_ibfk_3` FOREIGN KEY (`id_sala`) REFERENCES `sala` (`id_sala`),
+  ADD CONSTRAINT `fk_nivel_asignatura` FOREIGN KEY (`nivel_asignatura`) REFERENCES `asignatura` (`id_nivel`);
 
 --
 -- Filtros para la tabla `profesor_asignatura`
