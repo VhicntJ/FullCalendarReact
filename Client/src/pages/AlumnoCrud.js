@@ -12,21 +12,47 @@ function App() {
   const [carrera, setCarrera] = useState('');
   const [id_alumno, setId_alumno] = useState('');
   const [password, setPassword] = useState('');
-
+  const [search, setSearch] = useState('');
   const [editar, setEditar] = useState(false);
   const[AlumnosList, setAlumnosList] = useState([]);
-
   const [opcionesCarreras, setOpcionesCarreras] = useState([]);
   
 
   const add = () => {
+    // Validaciones básicas
+    if (!/^[a-zA-Z]+$/.test(nombre)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el nombre',
+        text: 'El nombre debe contener solo letras.',
+      });
+      return;
+    }
+
+    if (!/^\d+$/.test(rut)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el RUT',
+        text: 'El RUT debe contener solo números.',
+      });
+      return;
+    }
+
+    if (rut.length > 12) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el RUT',
+        text: 'El RUT debe tener un máximo de 12 caracteres.',
+      });
+      return;
+    }
+  
     Axios.post('http://localhost:3001/createAlu', {
       rut: rut,
       nombre: nombre,
       correo: correo,
       password: password,
       id_carrera: carrera,
-
     }).then(() => {
       getAlumnos();
       limpiarCampos();
@@ -38,7 +64,7 @@ function App() {
       })
     });
   }
-
+  
   const getAlumnos = () => {
     Axios.get('http://localhost:3001/alumnos').then((response) => {
       console.log(response.data);
@@ -46,7 +72,6 @@ function App() {
     });
   }
 
-  
   useEffect(() => {
     // Hacer una solicitud para obtener las opciones de carreras desde el servidor
     Axios.get('http://localhost:3001/obtener-carreras')
@@ -70,6 +95,34 @@ function App() {
   }
 
   const updateAlumno = () => {
+    // Validaciones básicas
+    if (!/^[a-zA-Z]+$/.test(nombre)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el nombre',
+        text: 'El nombre debe contener solo letras.',
+      });
+      return;
+    }
+
+    if (!/^\d+$/.test(rut)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el RUT',
+        text: 'El RUT debe contener solo números.',
+      });
+      return;
+    }
+
+    if (rut.length > 12) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el RUT',
+        text: 'El RUT debe tener un máximo de 12 caracteres.',
+      });
+      return;
+    }
+
     Axios.put('http://localhost:3001/updateAlu', {
       id_alumno: id_alumno,
       rut: rut,
@@ -141,7 +194,12 @@ function App() {
     }
   };
 
-        
+    // Filtrar la lista de profesores según el término de búsqueda
+  const filteredAlumnos = AlumnosList.filter(
+  (alumno) =>
+    alumno.nombre.toLowerCase().includes(search.toLowerCase()) ||
+    alumno.rut.includes(search)
+);
   return (
     <html>
     <head>
@@ -153,15 +211,13 @@ function App() {
         <h1>Gestion de Alumnos</h1>
       </header>
       <div className="formulario">
-        <label>Rut<input type ='text' class='form-control' value = {rut}placeholder='Ingrese rut' onChange={(event)=> {setRut(event.target.value);}}/></label>
-        <label>Nombre<input type="text" class='form-control'value = {nombre} placeholder="Ingrese nombre" onChange={(event) => {setNombre(event.target.value);}} /></label>
-        <label>Correo<input type='text' class='form-control' value = {correo}placeholder= 'Ingrese correo' onChange={(event)=>{setCorreo(event.target.value);}} /></label>
-        <label>Contraseña<input type='text' class='form-control' value = {password}placeholder= 'Ingrese contraseña' onChange={(event)=>{setPassword(event.target.value);}} /></label>    
+        <label>Rut{''}<input type ='text' class='form-control' value = {rut}placeholder='Ingrese rut' onChange={(event)=> {setRut(event.target.value);}}/></label>
+        <label>Nombre{''}<input type="text" class='form-control'value = {nombre} placeholder="Ingrese nombre" onChange={(event) => {setNombre(event.target.value);}} /></label>
+        <label>Correo{''}<input type='text' class='form-control' value = {correo}placeholder= 'Ingrese correo' onChange={(event)=>{setCorreo(event.target.value);}} /></label>
+        <label>Contraseña{''}<input type='text' class='form-control' value = {password}placeholder= 'Ingrese contraseña' onChange={(event)=>{setPassword(event.target.value);}} /></label>    
         <label>Carrera <select className="form-control"  value={carrera} onChange={(event) => { setCarrera(event.target.value);}}> 
-        <option>Seleccionar Carrera</option>{opcionesCarreras.map((carrera) => ( <option key={carrera.id_carrera} value={carrera.id_carrera}> {carrera.nombre}</option>))}
-        
-  </select>
-</label>
+        <option>Seleccionar Carrera</option>{opcionesCarreras.map((carrera) => ( <option key={carrera.id_carrera} value={carrera.id_carrera}> {carrera.nombre}</option>))}      
+        </select> </label>
       </div>
       <div class="botones">
         {
@@ -179,7 +235,10 @@ function App() {
         }
       
       </div>
-
+      <div className="contenedor-tabla">
+      <div className="busqueda">
+      <label>Búsqueda <input type="text" className="form-control" value={search} onChange={(event) => setSearch(event.target.value)} /></label>
+      </div>
       <table class= "table table-striped">
         <thead>
           <tr>
@@ -189,11 +248,11 @@ function App() {
             <th>Contraseña</th>
             <th>Carrera</th>
             <th>Acciones</th>
-
           </tr>
         </thead>
         <tbody>
-          {AlumnosList.map((val, key) => {
+
+          {filteredAlumnos.map((val, key) => {
             return (
               <tr key={key}>
                 <td>{val.rut}</td>
@@ -215,7 +274,8 @@ function App() {
             );
           })}
         </tbody>
-      </table>    
+      </table>
+      </div>  
     </body>
     </html>
   );
