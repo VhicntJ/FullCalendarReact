@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-12-2023 a las 03:30:07
+-- Tiempo de generación: 09-12-2023 a las 09:05:30
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -66,7 +66,6 @@ INSERT INTO `alumno` (`id_alumno`, `rut`, `nombre`, `correo`, `password`, `id_ca
 (1, '20908852-5', 'BENJAMIN BRAVO', 'benja.b@ucen.cl', '$2b$10$gZb1CpV152tGIkW/yAlP8.BEcbowEFhVk9a.ltxdYBPOhYYSMz3DK', NULL, 1),
 (8, '20655755-9', 'EDUARDO TAPIA', 'edutapia@ucen.cl', '$2b$10$bMzo199iUnV4Hkr7MCPToeWl5M3P5L2zlfTT2XUvrdafz39gsB61W', NULL, 1),
 (10, '20913811-5', 'DAMIAN VELASCO ', 'd@gmail.cl', '$2b$10$I85AqXc3F7dSzUR9v7VlwO7oLsYd54s3/YrEMY5Byl/XFKxkMQJoe', NULL, 1),
-(16, '', '', '', '$2b$10$SyNBSTzsSK.uKedcp3pkYuyQAz3zL2Qiruj67H4aqUvuYPnkqaoQC', NULL, 1),
 (17, '21312', 'dassd', 'asdas', '$2b$10$tkq5b46hP4Bf2uhL4VETAuH.iNFcrWkXPHLuW2dqkjPYr5nmqXOBe', NULL, 1),
 (18, 'asd', 'asd', 'ads', '$2b$10$YNKrXB8dBd7pKqg/4gmJKurlO2c9yB6DFqIU6Xj7WawSahcRIOUAC', 998, 1),
 (19, '20923543-6', 'bern', 'A2212', '$2b$10$9smiaHLqNhdGOz1jTHmLkuMzn2lrJYKknZqkgxlmRK/MkqL/OtoPC', 1000, 1);
@@ -88,7 +87,11 @@ CREATE TABLE `alumno_asignatura` (
 --
 
 INSERT INTO `alumno_asignatura` (`id_alumno_asignatura`, `id_alumno`, `id_asignatura`) VALUES
-(1, 1, 19068);
+(1, 1, 19068),
+(2, 10, 19083),
+(3, 8, 19083),
+(4, 1, 19083),
+(5, 1, 19080);
 
 -- --------------------------------------------------------
 
@@ -279,7 +282,7 @@ INSERT INTO `eventos` (`id_evento`, `id_asignatura`, `id_horario`, `id_sala`, `c
 (15, 19080, 1, 'B308', 30, '201', 'lunes', 8),
 (18, 19081, 2, 'B405', 40, '201', 'martes', 9),
 (22, 3346, 1, 'LC2', 40, '201', 'martes', 5),
-(30, 19083, 3, 'B408', 30, '201', 'jueves', NULL);
+(30, 19083, 3, 'B408', 30, '201', 'jueves', 9);
 
 -- --------------------------------------------------------
 
@@ -377,7 +380,7 @@ CREATE TABLE `profesor` (
 --
 
 INSERT INTO `profesor` (`id_profesor`, `rut_profesor`, `nombre`, `contrato`, `correo`, `password`, `estado`) VALUES
-(1, '101-1', 'PATRICIO ALEJANDRO ROJAS CARRASCO', 'Planta', 'patricio@gmail.cl', '$2b$10$SLa.vCfS0dB8PMTiNDH8Ce1.T.vzxTSsTzqAFgTEb/hk.Buz9IMza', 1),
+(1, '101-1', 'PATRICIO ALEJANDRO ROJAS CARRASCO', 'Planta', 'patricio@gmail.cl', '$2b$10$/30UfxNIAjHTrjDWkqdxser8qYZ8BdoNBjKHnJwbVZAthN2vIM03K', 1),
 (2, '10-13', 'MARIO HERNAN HORTIZ BONILLA', 'Planta', '', '$2b$10$cFsfi07wWWnI2zXWJORkwOQDfT.L/pluwtRe6rTQkUljD7HyL8cue', 1),
 (3, '13-14', 'CLAUDIA MARCELA CONTRERAS GAHONA', 'Honorario', '', '$2b$10$048MDBs1yGlknNd9I0lU.OC0QSSXtIQdwUSlrRsY2BwZoMWKepw1y', 1),
 (4, '11-11', 'CHRISTIAN LUIS ACUNA OPAZO', 'Planta', '', '$2b$10$.UnTZluqTgZfyNOZA81zEu4MFri.1AH9B911gpu7MQL/.CTaoXPp2', 1),
@@ -413,7 +416,8 @@ INSERT INTO `profesor_asignatura` (`id_profesor_asignatura`, `id_profesor`, `id_
 (12, 3, 3344),
 (13, 3, 3782),
 (14, 4, 19537),
-(15, 1, 19068);
+(15, 1, 19068),
+(16, 2, 19080);
 
 -- --------------------------------------------------------
 
@@ -590,7 +594,7 @@ ALTER TABLE `alumno`
 -- AUTO_INCREMENT de la tabla `alumno_asignatura`
 --
 ALTER TABLE `alumno_asignatura`
-  MODIFY `id_alumno_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_alumno_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `carrera`
@@ -626,7 +630,7 @@ ALTER TABLE `profesor`
 -- AUTO_INCREMENT de la tabla `profesor_asignatura`
 --
 ALTER TABLE `profesor_asignatura`
-  MODIFY `id_profesor_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_profesor_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `sede`
