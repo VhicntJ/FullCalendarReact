@@ -53,16 +53,19 @@ export default class DemoApp extends React.Component {
   componentDidMount() {
     // Cargar eventos desde la API y establecerlos directamente en FullCalendar
     this.fetchEventsFromAPI().then(apiEvents => {
-      console.log('Eventos cargados desde la APIARRIBA:', apiEvents);
-  
+      console.log('Eventos cargados desde la API ARRIBA:', apiEvents);
+
       this.setState(prevState => ({
         currentEvents: [...prevState.currentEvents, ...apiEvents],
       }));
+
+      // Filtrar eventos con el profesor seleccionado al cargar la página
+      this.fetchAndFilterEventsFromAPI();
     });
   }
   componentDidUpdate(prevProps) {
     // Detectar cambios en las propiedades relacionadas con los filtros y realizar acciones si es necesario
-    if (this.props.sala !== prevProps.sala || this.props.carrera !== prevProps.carrera || this.props.nivel !== prevProps.nivel || this.props.profesor !== prevProps.profesor || this.props.asignatura !== prevProps.asignatura || this.props.facultad !== prevProps.facultad) {
+    if (this.props.sala !== prevProps.sala || this.props.carrera !== prevProps.carrera || this.props.nivel !== prevProps.nivel || this.props.profesor !== prevProps.profesor || this.props.asignatura !== prevProps.asignatura || this.props.facultad !== prevProps.facultad || this.props.alumno !== prevProps.alumno) {
       // Realizar acciones, como recargar eventos con los nuevos filtros
       this.fetchAndFilterEventsFromAPI();
     }
@@ -73,11 +76,14 @@ export default class DemoApp extends React.Component {
       sala,
       carrera,
       nivel,
-      profesor,
+      profesor: filterProfesor, // Usar el valor del filtro directamente
       asignatura,
       facultad,
+      alumno : filterAlumno,
       
     } = this.props;
+    const { selectedProfesor } = this.state; // Obtén el valor de selectedProfesor del estado
+    const { selectedAlumno } = this.state; // Obtén el valor de selectedAlumno del estado
 
     fetch('http://localhost:3001/eventos')
       .then((response) => response.json())
@@ -102,6 +108,8 @@ export default class DemoApp extends React.Component {
                     nivel: event.id_nivel,
                     profesor: event.id_profesor,
                     profesor_nombre: event.nombre_profesor,
+                    alumno: event.id_alumno,
+                    alumno_nombre: event.nombre_alumno,
                   };
                 });
                 console.log('Eventos ANTES del filtro de asignatura:', formattedEvents);
@@ -112,14 +120,23 @@ export default class DemoApp extends React.Component {
                   const eventNivel = event.nivel.toString(); // Convertir a cadena para comparación
                   const isSelectedNivel = !nivel || eventNivel === nivel;
                   const eventProfesor = event.profesor.toString(); // Convertir a cadena para comparación
-                  const isSelectedProfesor = !profesor || eventProfesor === profesor;
+                  const isSelectedProfesor =
+                      (!selectedProfesor && !filterProfesor) ||
+                      (selectedProfesor && eventProfesor === selectedProfesor.toString()) ||
+                      (filterProfesor && eventProfesor === filterProfesor.toString());
+                  const eventAlumno = event.alumno.toString(); // Convertir a cadena para comparación
+                  const isSelectedAlumno =
+                      (!selectedAlumno && !filterAlumno) ||
+                      (selectedAlumno && eventAlumno === selectedAlumno.toString()) ||
+                      (filterAlumno && eventAlumno === filterAlumno.toString());
                   return (
                     (!sala || event.id_sala === sala) &&
                     (!carrera || event.id_carrera === carrera) &&
                     isSelectedNivel &&
                     isSelectedProfesor &&
                     isSelectedAsignatura &&
-                    (!facultad || event.id_facultad === facultad) 
+                    (!facultad || event.id_facultad === facultad) &&
+                    isSelectedAlumno
                     
                   );
                 });
@@ -151,13 +168,17 @@ export default class DemoApp extends React.Component {
     weekendsVisible: true,
     currentEvents: [],
     showModal: false, // Nueva propiedad para manejar la visibilidad del modal
-    selectedEvent: null // Nueva propiedad para almacenar el evento seleccionado
+    selectedEvent: null,
+    selectedProfesor: this.props.idProfesor || null,
+    selectedAlumno: this.props.idAlumno || null,
   }
   render() {
+    console.log("profesor traido LOGIN:", this.props.idProfesor); // Cambia a this.props
     console.log("Sala seleccionada:", this.props.sala); // Cambia a this.props
     console.log("asignatura seleccionada:", this.props.asignatura); // Cambia a this.props
     console.log("nivel seleccionado:", this.props.nivel); // Cambia a this.props
     console.log("profesor seleccionado:", this.props.profesor); // Cambia a this.props
+    console.log("alumno seleccionado:", this.props.idAlumno); // Cambia a this.props
     return (
     
       <div className='demo-app'>
@@ -166,12 +187,14 @@ export default class DemoApp extends React.Component {
         <div className='demo-app-main'>
         
           <FullCalendar
+          
           sala={this.state.selectedSala}
           carrera={this.state.selectedCarrera}
           nivel={this.state.selectedNivel}
           profesor={this.state.selectedProfesor}
           asignatura={this.state.selectedAsignatura}
           facultad={this.state.selectedFacultad}
+          alumno={this.state.selectedAlumno}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin,bootstrap5Plugin]}
             headerToolbar={{
               left: '',

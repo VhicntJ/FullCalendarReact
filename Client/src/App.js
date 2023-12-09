@@ -5,10 +5,6 @@ import {
   useNavigationType,
   useLocation,
 } from "react-router-dom";
-import InicioConVentanaDeNotifica from "./pages/InicioConVentanaDeNotifica";
-import Cruds from "./pages/Cruds";
-import InicioAdmin from "./pages/Inicio";
-import Solicitudes from "./pages/Solicitudes";
 import Form from "./pages/Form";
 import Filtros from "./pages/Filtros";
 import ProfeCrud from "./pages/ProfeCrud";
@@ -16,6 +12,8 @@ import AlumnoCrud from "./pages/AlumnoCrud";
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Admin from './components/Admin';
+import Profesor from "./pages/Profesor";
+import Alumno from "./pages/Alumno";
 
 function App() {
   const action = useNavigationType();
@@ -37,22 +35,6 @@ function App() {
         title = "";
         metaDescription = "";
         break;
-      case "/cruds":
-        title = "";
-        metaDescription = "";
-        break;
-      case "/InicioConVentanaDeNotifica":
-        title = "";
-        metaDescription = "";
-        break;
-      case "/solicitudes":
-        title = "";
-        metaDescription = "";
-        break;
-      case "/InicioAdmin":
-          title = "";
-          metaDescription = "";
-          break;
       case "/Filtros":
           title = "";
           metaDescription = "";
@@ -66,6 +48,14 @@ function App() {
             metaDescription = "";
             break;
       case "/Admin":
+            title = "";
+            metaDescription = "";
+            break;
+      case "/Profesor":
+            title = "";
+            metaDescription = "";
+            break;
+      case "/Alumno":
             title = "";
             metaDescription = "";
             break;
@@ -91,10 +81,6 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Form />} />
-      <Route path="/cruds" element={<Cruds />} />
-      <Route path="/InicioConVentanaDeNotifica" element={<InicioConVentanaDeNotifica />} />
-      <Route path="/solicitudes" element={<Solicitudes />} />
-      <Route path="/InicioAdmin" element={<InicioAdmin />} />
       <Route path="/Filtros" element={<Filtros />} />
       <Route path="/ProfeCrud" element={<ProfeCrud />} />
       <Route path="/AlumnoCrud" element={<AlumnoCrud />} />
@@ -102,6 +88,8 @@ function App() {
       <Route path="/forgot" element={<ForgotPassword />} />
       <Route path="/reset/:userType/:id/:token" element={<ResetPassword />} />
       <Route path="/Admin" element={<Admin/>} />
+      <Route path="/Profesor/:idProfesor/:nombreProfesor" element={<Profesor />} />
+      <Route path="/Alumno/:idAlumno/:nombre" element={<Alumno />} />
 
     </Routes>
   );

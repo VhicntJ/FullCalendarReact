@@ -52,6 +52,16 @@ export default function Form(){
        
     }, []);
    
+    
+    
+    useEffect(() => {
+        axios.get('http://localhost:3001/login').then((response) => {
+            if (response.data && response.data.loggedIn === true && response.data.user && response.data.user[0]) {
+                setLoginStatus(response.data.user[0].rut);
+            }  
+        });
+       
+    }, []);
     return(
         <div className="flex w_full h-screen">
         <div className="w-full flex items-center justify-center lg:w-1/2">

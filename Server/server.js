@@ -127,15 +127,29 @@ app.get('/facultades', (req, res) => {
   });
 });
 
+app.get('/alumnos', (req, res) => {
+  const query = 'SELECT * FROM alumno';
+
+  db.query(query, (error, results) => {
+    if (error) {
+      res.status(500).json({ error: error.message });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
 // Agrega una nueva ruta para obtener eventos
 app.get('/eventos', (req, res) => {
   const query = `
-    SELECT eventos.id_evento, eventos.id_asignatura, asignatura.nombre AS nombre_asignatura, horarios.start, horarios.end,horarios.id_horario, eventos.id_sala, eventos.cupos, eventos.seccion, eventos.fecha,asignatura.id_nivel,profesor_asignatura.id_profesor,profesor.nombre AS nombre_profesor
-    FROM eventos
-    JOIN horarios ON eventos.id_horario = horarios.id_horario
-    JOIN asignatura ON eventos.id_asignatura = asignatura.id_asignatura
-    JOIN profesor_asignatura ON asignatura.id_asignatura = profesor_asignatura.id_asignatura
-    JOIN profesor ON profesor_asignatura.id_profesor = profesor.id_profesor;
+  SELECT eventos.id_evento, eventos.id_asignatura, asignatura.nombre AS nombre_asignatura, horarios.start, horarios.end,horarios.id_horario, eventos.id_sala, eventos.cupos, eventos.seccion, eventos.fecha,asignatura.id_nivel,profesor_asignatura.id_profesor,profesor.nombre AS nombre_profesor,alumno_asignatura.id_alumno,alumno.nombre AS nombre_alumno
+  FROM eventos
+  JOIN horarios ON eventos.id_horario = horarios.id_horario
+  JOIN asignatura ON eventos.id_asignatura = asignatura.id_asignatura
+  JOIN profesor_asignatura ON asignatura.id_asignatura = profesor_asignatura.id_asignatura
+  JOIN profesor ON profesor_asignatura.id_profesor = profesor.id_profesor
+  JOIN alumno_asignatura ON asignatura.id_asignatura = alumno_asignatura.id_asignatura
+  JOIN alumno ON alumno_asignatura.id_alumno = alumno.id_alumno;
     `;
 
   db.query(query, (error, results) => {

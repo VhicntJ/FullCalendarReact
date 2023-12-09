@@ -24,6 +24,9 @@ function App() {
   const [facultadesList, setFacultadesList] = useState([]);
   const [selectedFacultad, setSelectedFacultad] = useState('');
 
+  const [alumnosList, setAlumnosList] = useState([]);
+  const [selectedAlumno, setSelectedAlumno] = useState('');
+
   useEffect(() => {
     getSalas();
     getCarreras();
@@ -31,6 +34,7 @@ function App() {
     getProfesores();
     getAsignaturas();
     getFacultades();
+    getAlumnos();
   }, []);
 
   const getSalas = () => {
@@ -92,6 +96,16 @@ function App() {
         console.error('Error al obtener la lista de facultades:', error);
       });
   };
+  const getAlumnos = () => {
+    axios.get('http://localhost:3001/alumnos')
+      .then((response) => {
+        setAlumnosList(response.data);
+      })
+      .catch((error) => {
+        console.error('Error al obtener la lista de facultades:', error);
+      });
+  };
+
   return (
     <div className='App'>
 <header className='p-1' style={{ backgroundColor: '#FF5200' }}>
@@ -210,6 +224,22 @@ function App() {
                 ))}
               </select>
             </div>
+            <div className='col mb-2'>
+              <label htmlFor='alumnoDropdown' className='form-label text-white fw-bold'>Seleccionar alumnos:</label>
+              <select
+                id='alumnoDropdown'
+                className='form-select'
+                onChange={(event) => setSelectedAlumno(event.target.value)}
+                value={selectedAlumno}
+              >
+                <option value=''>Seleccione un alumno</option>
+                {alumnosList.map((alumno) => (
+                  <option key={alumno.id_alumno} value={alumno.id_alumno}>
+                    {alumno.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
         <CalendarioDemo
@@ -219,6 +249,7 @@ function App() {
           profesor={selectedProfesor}
           asignatura={selectedAsignatura}
           facultad={selectedFacultad}
+          alumno={selectedAlumno}
           />
       </main>
     </div>
