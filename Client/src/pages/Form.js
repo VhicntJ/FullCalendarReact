@@ -2,7 +2,7 @@ import * as React from 'react';
 import './index.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 export default function Form(){
@@ -12,6 +12,15 @@ export default function Form(){
     const [loginStatus, setLoginStatus] = useState("");
     
     axios.defaults.withCredentials = true;
+    const [idAlumno, setIdAlumno] = useState(null); // Asegúrate de inicializar setIdAlumno con useState
+    const [nombre, setNombre] = useState(null); // Asegúrate de inicializar setIdAlumno con useState
+
+    
+    const [idProfesor, setIdProfesor] = useState(null); // Asegúrate de inicializar setIdAlumno con useState
+    const [nombreProfesor, setNombreProfesor] = useState(null); // Asegúrate de inicializar setIdAlumno con useState
+
+    const [idAdmin, setIdAdmin] = useState(null); // Asegúrate de inicializar setIdAlumno con useState
+    
     
     const login = async () => {
         try {
@@ -25,13 +34,53 @@ export default function Form(){
             setLoginStatus(response.data.message);
           } else {
             if (response.data.isAdmin) {
+                // Extract id_admin from the response
+                const idAdmin = response.data.id_administrador;
+
+                // Use idAdmin as needed in your frontend
+                console.log('ID del admin:', idAdmin);
+
+                // You can also store it in a state variable if needed
+                setIdAdmin(idAdmin);
                  // Change this according to your response structure
-                 navigate('/Admin');}
+                 navigate(`/Admin/${idAdmin}`);}
             else if (response.data.isProfesor) {
-                navigate('/PaginaProfesor');
+                // Extract id_profesor from the response
+                const idProfesor = response.data.id_profesor;
+                const nombreProfesor = response.data.nombre;
+
+                // Use idProfesor as needed in your frontend
+                console.log('ID del profesor:', idProfesor);
+
+                // You can also store it in a state variable if needed
+                setIdProfesor(idProfesor);
+                setNombreProfesor(nombreProfesor);
+
+                
+                navigate(`/Profesor/${idProfesor}/${nombreProfesor}`);
+
             }
             else{
-                navigate('/PaginaAlumno');
+                {
+                  // Extract id_alumno from the response
+                const idAlumno = response.data.id_alumno;
+                const nombre = response.data.nombre;
+
+                // Use idAlumno as needed in your frontend
+                console.log('ID del alumno:', idAlumno);
+                console.log('Nombre del alumno:', nombre);
+
+                // You can also store it in a state variable if needed
+                setIdAlumno(idAlumno);
+                setNombre(nombre);
+
+
+                // Navigate to the Alumno page
+                navigate(`/Alumno/${idAlumno}/${nombre}`);
+
+
+                  }
+                
             }
             // Handle successful login
             setLoginStatus(`Bienvenido, ${response.data[0].nombre}`);
@@ -51,17 +100,7 @@ export default function Form(){
         });
        
     }, []);
-   
-    
-    
-    useEffect(() => {
-        axios.get('http://localhost:3001/login').then((response) => {
-            if (response.data && response.data.loggedIn === true && response.data.user && response.data.user[0]) {
-                setLoginStatus(response.data.user[0].rut);
-            }  
-        });
-       
-    }, []);
+      
     return(
         <div className="flex w_full h-screen">
         <div className="w-full flex items-center justify-center lg:w-1/2">
@@ -98,16 +137,17 @@ export default function Form(){
                         />
                         <label className='ml-2 font-medium text-base' for="remember">Recuerdame</label>
                     </div>
-                    <button className='font-medium text-base text-blue-20'>Recuperar Contraseña</button>
-                </div>
+                    <button onClick={() => navigate('/forgot')}>
+                    Olvidaste tu contraseña?
+                    </button>
+                </div> 
+                
                 <div className='mt-8 flex flex-col gap-y-4'>
                 <button className='active:scale-[.98] active-75 hover:scale[1.01] ease-in-out transition-all py-3 rounded-xl bg-blue-500 text-white text-lg font-bold' onClick={login}>
                     Iniciar Sesión
                 </button>
 
-                    <button>
-                        Inicia sesion con Correo institucional
-                    </button>
+                    
                 </div>
                 <div>
                     <h1>{loginStatus}</h1>

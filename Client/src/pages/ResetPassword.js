@@ -2,15 +2,16 @@ import React from "react";
 import './index.css';
 import { useState} from 'react';
 import axios from 'axios';
-import {useNavigate, useParams, Link} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-function ResetPassword() {
+export default function ResetPassword(){
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
-    const { userType, id, token } = useParams();
-
+    const navigate = useNavigate()
+    const {userType, id, token} = useParams();
+    console.log(userType, id, token);
     axios.defaults.withCredentials = true;
+
     const reset = (e) => {
         e.preventDefault();
         console.log(userType, id, token);
@@ -22,7 +23,7 @@ function ResetPassword() {
                 timer:3000
             })
             if (response.data.Status === 'Success') {
-                navigate('/login')
+                navigate('/')
             }
         }).catch(error => console.log(error));
     }
@@ -45,12 +46,11 @@ function ResetPassword() {
                 </div>
                 <div className='mt-8 flex flex-col gap-y-4'>
                 <button className='active:scale-[.98] active-75 hover:scale[1.01] ease-in-out transition-all py-3 rounded-xl bg-blue-500 text-white text-lg font-bold' type="submit" onClick={reset} >
+    
                     Reestablecer contraseña
                 </button>
-                <button className='font-medium text-base text-blue-20'>
-                    <Link to={"/login"}>
-                        volver al inicio
-                    </Link>
+                <button onClick={() => navigate('/')}>
+                 Volver a inicio
                 </button>
                 </div>
                 <div>
@@ -67,4 +67,3 @@ function ResetPassword() {
     )
 
 }
-export default ResetPassword;

@@ -5,19 +5,24 @@ import './Admin.css';
 import axios from 'axios';
 import ProfeCrud from './ProfeCrud';
 import AlumnoCrud from './AlumnoCrud';
-import filtro from './Filtros'
+import Filtros from './Filtros'
+import Solicitudes from "./Solicitudes";
+import { useParams } from 'react-router-dom';
+
+
 
 function Header() {
   const navigate = useNavigate();
   const [mostrarProfeCrud, setMostrarProfeCrud] = useState(false);
   const [mostrarAlumnoCrud, setMostrarAlumnoCrud] = useState(false);
   const [mostrarHorario, setMostrarHorario] = useState(false);
+  const [mostrarSolicitudes, setMostrarSolicitudes] = useState(false);
 
   const handleLogout = async () => {
     try {
       const response = await axios.post('http://localhost:3001/logout');
       console.log(response.data.message);
-      navigate('/login');
+      navigate('/');
     } catch (error) {
       console.error('Error during logout:', error);
     }
@@ -47,6 +52,15 @@ function Header() {
     setMostrarHorario(false);
   }
 
+  const mostrarSolicitudesYVolver = () => {
+    setMostrarSolicitudes(true);
+  }
+
+  const ocultarSolicitudes = () => {
+    setMostrarSolicitudes(false);
+  }
+
+  const { idAdmin } = useParams();
 
   return (
     <html>
@@ -72,23 +86,14 @@ function Header() {
         </header>
         <div className="container-fluid">
           <div className="row">
-            {/* Notificaciones a la izquierda */}
-            <div className="col-sm-3">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">Notificaciones</h5>
-                  {/* Contenido de las notificaciones */}
-                </div>
-              </div>
-            </div>
   
             {/* Divs de los elementos existentes */}
-            <div className="col-sm-9">
+            <div className="col-sm-20">
               <div className="row">
                 <div className="col-sm-6 col-md-4 col-lg-3">
                   <div className="card">
                     <div className="card-body">
-                      <h5 className="card-title">Mantenedor Profesores</h5>
+                      <h3 className="card-title">Mantenedor Profesores</h3>
                       <p className="card-text">Aqui podras ver los profesores que estan en la base de datos</p>
                       {!mostrarProfeCrud && (
                     <button className="btn btn-primary" onClick={mostrarProfeCrudYVolver}>Ir</button>
@@ -102,7 +107,7 @@ function Header() {
                 <div className="col-sm-6 col-md-4 col-lg-3">
                   <div className="card">
                     <div className="card-body">
-                      <h5 className="card-title">Mantenedor Alumnos</h5>
+                      <h3 className="card-title">Mantenedor Alumnos</h3>
                       <p className="card-text">Aqui podras ver los alumnos que estan en la base de datos</p>
                       {!mostrarAlumnoCrud && ( 
                     <button className="btn btn-primary" onClick={mostrarAlumnoCrudYVolver}>Ir</button>
@@ -116,7 +121,7 @@ function Header() {
                 <div className="col-sm-6 col-md-4 col-lg-3">
                   <div className="card">
                     <div className="card-body">
-                      <h5 className="card-title">Horarios</h5>
+                      <h3 className="card-title">Horarios</h3>
                       <p className="card-text">Aqui podras ver los horarios de todas las carreras </p>
                       {!mostrarHorario && ( 
                         <button className="btn btn-primary" onClick={mostrarHorarioYVolver}>Ir</button>
@@ -130,9 +135,14 @@ function Header() {
                 <div className="col-sm-6 col-md-4 col-lg-3">
                   <div className="card">
                     <div className="card-body">
-                      <h5 className="card-title">Solicitudes</h5>
-                      <p className="card-text">Aqui podras ver las solicitudes existentes</p>
-                      <Link to="/" className="btn btn-primary">Ir</Link>
+                      <h3 className="card-title">Solicitudes</h3>
+                      <p className="card-text">Aqui podras ver las solicitudes existentes de los profesores</p>
+                      {!mostrarSolicitudes && ( 
+                        <button className="btn btn-primary" onClick={mostrarSolicitudesYVolver}>Ir</button>
+                        )}
+                      {mostrarSolicitudes && (
+                        <button className="btn btn-secondary mx-2" onClick={ocultarSolicitudes}>Volver</button>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -144,7 +154,8 @@ function Header() {
                   {/* Renderiza el componente ProfeCrud fuera del Div Gigante pero condicionalmente */}
                   {mostrarProfeCrud && <ProfeCrud />}
                   {mostrarAlumnoCrud && <AlumnoCrud />}
-                  {mostrarHorario && <filtro />}
+                  {mostrarHorario && <Filtros />}
+                  {mostrarSolicitudes && <Solicitudes idAdmin={idAdmin} />}
                 </div>
               </div>
               

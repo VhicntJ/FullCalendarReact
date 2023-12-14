@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Filtros.css';
 import logo from './Logo UCEN_.png';
 import CalendarioDemo from './CalendarioDemo';
-
+import CalendarioDemo_copy from './CalendarioDemo_copy';
 
 function App() {
   const [salasList, setSalasList] = useState([]);
@@ -108,18 +108,6 @@ function App() {
 
   return (
     <div className='App'>
-<header className='p-1' style={{ backgroundColor: '#FF5200' }}>
-  <div className='container'>
-    <div className='row align-items-center'>
-      <div className='col'>
-      <img className='img-fluid' src={logo} alt='logo' style={{ maxWidth: '100%', maxHeight: '130px', height: 'auto' }} />
-      </div>
-      <div className='col'>
-        <h1 className='text-white fw-bold'>Horario</h1>
-      </div>
-    </div>
-  </div>
-</header>
       <main className='container mt-2'>
         <div className='bg-primary p-2'>
           {/* Primera Fila de Dropdowns */}
@@ -242,7 +230,7 @@ function App() {
             </div>
           </div>
         </div>
-        <CalendarioDemo
+        <CalendarioDemo_copy 
           sala={selectedSala}
           carrera={selectedCarrera}
           nivel={selectedNivel}

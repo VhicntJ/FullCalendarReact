@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-12-2023 a las 09:05:30
+-- Tiempo de generación: 14-12-2023 a las 01:08:37
 -- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.0.28
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,7 +40,7 @@ CREATE TABLE `administrador` (
 --
 
 INSERT INTO `administrador` (`id_administrador`, `rut_administrador`, `nombre`, `correo`, `password`) VALUES
-(1, 'admin', 'admin', 'admin@ucen.cl', '$2b$10$HhrYwMQpciMpF9owoMxvGO96rEslpOjWmnSPcTGxANshasQ.O42Ti');
+(1, '11111111-1', 'admin', 'admin@ucen.cl', '$2b$10$HhrYwMQpciMpF9owoMxvGO96rEslpOjWmnSPcTGxANshasQ.O42Ti');
 
 -- --------------------------------------------------------
 
@@ -63,12 +63,12 @@ CREATE TABLE `alumno` (
 --
 
 INSERT INTO `alumno` (`id_alumno`, `rut`, `nombre`, `correo`, `password`, `id_carrera`, `estado`) VALUES
-(1, '20908852-5', 'BENJAMIN BRAVO', 'benja.b@ucen.cl', '$2b$10$gZb1CpV152tGIkW/yAlP8.BEcbowEFhVk9a.ltxdYBPOhYYSMz3DK', NULL, 1),
-(8, '20655755-9', 'EDUARDO TAPIA', 'edutapia@ucen.cl', '$2b$10$bMzo199iUnV4Hkr7MCPToeWl5M3P5L2zlfTT2XUvrdafz39gsB61W', NULL, 1),
-(10, '20913811-5', 'DAMIAN VELASCO ', 'd@gmail.cl', '$2b$10$I85AqXc3F7dSzUR9v7VlwO7oLsYd54s3/YrEMY5Byl/XFKxkMQJoe', NULL, 1),
-(17, '21312', 'dassd', 'asdas', '$2b$10$tkq5b46hP4Bf2uhL4VETAuH.iNFcrWkXPHLuW2dqkjPYr5nmqXOBe', NULL, 1),
-(18, 'asd', 'asd', 'ads', '$2b$10$YNKrXB8dBd7pKqg/4gmJKurlO2c9yB6DFqIU6Xj7WawSahcRIOUAC', 998, 1),
-(19, '20923543-6', 'bern', 'A2212', '$2b$10$9smiaHLqNhdGOz1jTHmLkuMzn2lrJYKknZqkgxlmRK/MkqL/OtoPC', 1000, 1);
+(1, '20908852-5', 'BENJAMIN BRAVO', 'benja.b@ucen.cl', '$2b$10$gZb1CpV152tGIkW/yAlP8.BEcbowEFhVk9a.ltxdYBPOhYYSMz3DK', 889, 1),
+(8, '20655755-9', 'EDUARDO TAPIA', 'eduardo.t@ucen.cl', '$2b$10$bMzo199iUnV4Hkr7MCPToeWl5M3P5L2zlfTT2XUvrdafz39gsB61W', 889, 1),
+(10, '20913811-5', 'DAMIAN VELASCO ', 'damian.v@ucen.cl', '$2b$10$I85AqXc3F7dSzUR9v7VlwO7oLsYd54s3/YrEMY5Byl/XFKxkMQJoe', 889, 1),
+(20, '20912164-6', 'VICENTE JULIO', 'vicentej@ucen.cl', '$2b$10$I.w5Nn/5f6VFlASHaSTgEeM74NNgJitvepqcGMQsOXGeCUCpKnrx6', 889, 1),
+(23, '20819830-0', 'RONY PEREZ', 'rony.p@ucen.cl', '$2b$10$FOkMjp8Pu5fYgnBTrpvFjeVLJlxiD5/Eb8kleq9c0yGvnlLB74Fvm', 889, 1),
+(24, '12312-3', 'benjamin', 'benja@', '$2b$10$y9Bat1x/tSwvuBFbScj2.OgRzj6AlxXrlxjji83NzoY28dmDny62y', 996, 1);
 
 -- --------------------------------------------------------
 
@@ -90,8 +90,17 @@ INSERT INTO `alumno_asignatura` (`id_alumno_asignatura`, `id_alumno`, `id_asigna
 (1, 1, 19068),
 (2, 10, 19083),
 (3, 8, 19083),
-(4, 1, 19083),
-(5, 1, 19080);
+(5, 1, 19080),
+(6, 1, 19086),
+(7, 1, 3364),
+(11, 23, 19080),
+(12, 23, 19080),
+(13, 23, 19083),
+(14, 23, 19068),
+(15, 23, 3364),
+(16, 10, 3347),
+(17, 10, 19068),
+(18, 10, 3341);
 
 -- --------------------------------------------------------
 
@@ -251,6 +260,28 @@ INSERT INTO `carrera_sede` (`id_carrera`, `id_sede`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `disputa`
+--
+
+CREATE TABLE `disputa` (
+  `id_disputa` int(11) NOT NULL,
+  `id_solicitud` int(11) DEFAULT NULL,
+  `descripcion` varchar(200) DEFAULT NULL,
+  `tipo_usuario` tinyint(1) DEFAULT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `disputa`
+--
+
+INSERT INTO `disputa` (`id_disputa`, `id_solicitud`, `descripcion`, `tipo_usuario`, `fecha`) VALUES
+(21, 33, 'a las 17:15 del mismo dia tengo libre', 1, '2023-12-12 20:24:04'),
+(22, 33, 'claro a esa hora', NULL, '2023-12-12 20:24:42');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `eventos`
 --
 
@@ -262,27 +293,34 @@ CREATE TABLE `eventos` (
   `cupos` int(10) DEFAULT NULL,
   `seccion` varchar(50) DEFAULT NULL,
   `fecha` varchar(20) DEFAULT NULL,
-  `nivel_asignatura` int(11) DEFAULT NULL
+  `nivel_asignatura` int(11) DEFAULT NULL,
+  `cancelado` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `eventos`
 --
 
-INSERT INTO `eventos` (`id_evento`, `id_asignatura`, `id_horario`, `id_sala`, `cupos`, `seccion`, `fecha`, `nivel_asignatura`) VALUES
-(1, 19068, 6, 'B308', 40, '201', 'lunes', NULL),
-(2, 19086, 7, 'B308', 30, '201', 'lunes', NULL),
-(3, 3364, 8, 'B308', 30, '201', 'lunes', NULL),
-(4, 19068, 5, 'B509', 30, '201', 'martes', NULL),
-(5, 19080, 6, 'B509', 30, '201', 'martes', NULL),
-(6, 19086, 7, 'B307', 30, '201', 'martes', NULL),
-(7, 19086, 8, 'B307', 30, '201', 'martes', NULL),
-(8, 3364, 6, 'B405', 40, '201', 'miercoles', NULL),
-(9, 19068, 5, 'LC2', 30, '201', 'jueves', NULL),
-(15, 19080, 1, 'B308', 30, '201', 'lunes', 8),
-(18, 19081, 2, 'B405', 40, '201', 'martes', 9),
-(22, 3346, 1, 'LC2', 40, '201', 'martes', 5),
-(30, 19083, 3, 'B408', 30, '201', 'jueves', 9);
+INSERT INTO `eventos` (`id_evento`, `id_asignatura`, `id_horario`, `id_sala`, `cupos`, `seccion`, `fecha`, `nivel_asignatura`, `cancelado`) VALUES
+(2, 19086, 7, 'B308', 30, '201', 'lunes', NULL, NULL),
+(3, 3364, 8, 'B308', 30, '201', 'lunes', NULL, NULL),
+(4, 19068, 5, 'B509', 30, '201', 'martes', NULL, NULL),
+(5, 19080, 6, 'B509', 30, '201', 'martes', NULL, NULL),
+(6, 19086, 7, 'B307', 30, '201', 'martes', NULL, NULL),
+(7, 19086, 8, 'B307', 30, '201', 'martes', NULL, NULL),
+(9, 19068, 5, 'LC2', 30, '201', 'jueves', NULL, NULL),
+(18, 19081, 5, 'B405', 40, '201', 'martes', 9, NULL),
+(22, 3346, 1, 'LC2', 40, '201', 'martes', 5, NULL),
+(34, 19068, 6, 'B308', 30, '201', 'lunes', NULL, NULL),
+(36, 3364, 6, 'B405', 40, '201', 'miércoles', NULL, NULL),
+(37, 3364, 7, 'B405', 30, '201', 'miércoles', NULL, NULL),
+(38, 19083, 7, 'B308', 30, '201', 'martes', NULL, 'red'),
+(39, 3347, 5, 'B308', 30, '201', 'martes', NULL, NULL),
+(40, 3347, 7, 'B307', 30, '201', 'viernes', NULL, NULL),
+(41, 3347, 6, 'B308', 30, '201', 'jueves', NULL, NULL),
+(42, 3341, 6, 'B308', 40, '201', 'lunes', NULL, NULL),
+(43, 3341, 7, 'B308', 30, '201', 'lunes', NULL, NULL),
+(44, 3341, 6, 'B307', 40, '201', 'miércoles', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -311,24 +349,25 @@ INSERT INTO `facultad` (`id_facultad`, `nombre_facultad`) VALUES
 CREATE TABLE `horarios` (
   `id_horario` int(11) NOT NULL,
   `start` varchar(20) DEFAULT NULL,
-  `end` varchar(20) DEFAULT NULL
+  `end` varchar(20) DEFAULT NULL,
+  `bloque` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `horarios`
 --
 
-INSERT INTO `horarios` (`id_horario`, `start`, `end`) VALUES
-(1, '08:15:00', '09:35:00'),
-(2, '09:45:00', '11:05:00'),
-(3, '11:15:00', '12:35:00'),
-(4, '12:45:00', '14:05:00'),
-(5, '14:15:00', '15:35:00'),
-(6, '15:45:00', '17:05:00'),
-(7, '17:15:00', '18:35:00'),
-(8, '18:50:00', '20:10:00'),
-(9, '20:15:00', '21:35:00'),
-(10, '21:40:00', '23:00:00');
+INSERT INTO `horarios` (`id_horario`, `start`, `end`, `bloque`) VALUES
+(1, '08:15:00', '09:35:00', '8:15 - 9:35'),
+(2, '09:45:00', '11:05:00', '9:45 - 11:05'),
+(3, '11:15:00', '12:35:00', '11:15 - 12:35'),
+(4, '12:45:00', '14:05:00', '12:45 - 14:05'),
+(5, '14:15:00', '15:35:00', '14:15 - 15:35'),
+(6, '15:45:00', '17:05:00', '15:45 - 17:05'),
+(7, '17:15:00', '18:35:00', '17:15 - 18:35'),
+(8, '18:50:00', '20:10:00', '18:50 - 20:10'),
+(9, '20:15:00', '21:35:00', '20:15 - 21:35'),
+(10, '21:40:00', '23:00:00', '21:40 - 23:00');
 
 -- --------------------------------------------------------
 
@@ -380,12 +419,13 @@ CREATE TABLE `profesor` (
 --
 
 INSERT INTO `profesor` (`id_profesor`, `rut_profesor`, `nombre`, `contrato`, `correo`, `password`, `estado`) VALUES
-(1, '101-1', 'PATRICIO ALEJANDRO ROJAS CARRASCO', 'Planta', 'patricio@gmail.cl', '$2b$10$/30UfxNIAjHTrjDWkqdxser8qYZ8BdoNBjKHnJwbVZAthN2vIM03K', 1),
-(2, '10-13', 'MARIO HERNAN HORTIZ BONILLA', 'Planta', '', '$2b$10$cFsfi07wWWnI2zXWJORkwOQDfT.L/pluwtRe6rTQkUljD7HyL8cue', 1),
-(3, '13-14', 'CLAUDIA MARCELA CONTRERAS GAHONA', 'Honorario', '', '$2b$10$048MDBs1yGlknNd9I0lU.OC0QSSXtIQdwUSlrRsY2BwZoMWKepw1y', 1),
-(4, '11-11', 'CHRISTIAN LUIS ACUNA OPAZO', 'Planta', '', '$2b$10$.UnTZluqTgZfyNOZA81zEu4MFri.1AH9B911gpu7MQL/.CTaoXPp2', 1),
-(5, '11-05', 'SEBASTIAN BAEZA DONOSO', 'Planta', '', '$2b$10$lNKMl3RlYfng0tEXCAOjku6mTWYQIuDtAMAb5RHUrIM78Q/wgHtam', 1),
-(13, '20912165-5', 'vice', 'Planta', '', '$2b$10$c65UDGmBqoC1ztU8b6GDX.ZhLxZ6Y3.VJt1/Be.qDH7VOs.9qjxPO', 1);
+(1, '12345678-9', 'PATRICIO ALEJANDRO ROJAS CARRASCO', 'Planta', 'patricio.r@gmail.cl', '$2b$10$/30UfxNIAjHTrjDWkqdxser8qYZ8BdoNBjKHnJwbVZAthN2vIM03K', 1),
+(2, '12345678-0', 'MARIO HERNAN ORTIZ BONILLA', 'Planta', 'mario.o@ucen.cl', '$2b$10$cFsfi07wWWnI2zXWJORkwOQDfT.L/pluwtRe6rTQkUljD7HyL8cue', 1),
+(3, '12312312-3', 'CLAUDIA MARCELA CONTRERAS GAHONA', 'Honorario', 'claudia.m@ucen.cl', '$2b$10$048MDBs1yGlknNd9I0lU.OC0QSSXtIQdwUSlrRsY2BwZoMWKepw1y', 1),
+(4, '32132132-7', 'CHRISTIAN LUIS ACUNA OPAZO', 'Planta', 'christian.l@ucen.cl', '$2b$10$.UnTZluqTgZfyNOZA81zEu4MFri.1AH9B911gpu7MQL/.CTaoXPp2', 1),
+(5, '23123123-4', 'SEBASTIAN BAEZA DONOSO', 'Planta', 'sebastian.b@ucen.cl', '$2b$10$lNKMl3RlYfng0tEXCAOjku6mTWYQIuDtAMAb5RHUrIM78Q/wgHtam', 1),
+(15, '98765432-2', 'JOSE LUIS VEAS MUÑOZ', 'Honorario', 'jose.l@ucen.cl', '$2b$10$SPIF0eeu/pjn3Og/HhQ1DOAu7iOfnqsEDZl8VhitXBr63/FCs3iqa', 1),
+(16, '28327828-2', 'FRANCISCO GABRIEL CAICEO LEON', 'Honorario', 'francisco.g@ucen.cl', '$2b$10$qOzOZWej8w1R5pyXq92Oye8aDMQvTx3aB4OeNsOCfA2oWnsozX5TW', 1);
 
 -- --------------------------------------------------------
 
@@ -417,7 +457,10 @@ INSERT INTO `profesor_asignatura` (`id_profesor_asignatura`, `id_profesor`, `id_
 (13, 3, 3782),
 (14, 4, 19537),
 (15, 1, 19068),
-(16, 2, 19080);
+(16, 2, 19080),
+(17, 15, 19086),
+(18, 16, 3364),
+(19, 2, 3341);
 
 -- --------------------------------------------------------
 
@@ -466,6 +509,33 @@ CREATE TABLE `sede` (
 
 INSERT INTO `sede` (`id_sede`, `nombre`, `telefono`) VALUES
 (4, 'COQUIMBO', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `solicitudes`
+--
+
+CREATE TABLE `solicitudes` (
+  `id_solicitud` int(11) NOT NULL,
+  `id_profesor` int(11) DEFAULT NULL,
+  `tipo_solicitud` varchar(255) DEFAULT NULL,
+  `estado` varchar(50) DEFAULT NULL,
+  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `id_administrador` int(11) DEFAULT NULL,
+  `id_evento` int(11) DEFAULT NULL,
+  `id_horario` int(11) DEFAULT NULL,
+  `fecha` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `solicitudes`
+--
+
+INSERT INTO `solicitudes` (`id_solicitud`, `id_profesor`, `tipo_solicitud`, `estado`, `fecha_creacion`, `fecha_actualizacion`, `id_administrador`, `id_evento`, `id_horario`, `fecha`) VALUES
+(33, 2, 'Cambio hora de clase', 'Cambio Aceptado', '2023-12-12 20:21:19', '2023-12-12 20:25:23', 1, 40, 7, 'viernes'),
+(34, 2, 'Cambio hora de clase', 'En revisión', '2023-12-12 20:27:50', '2023-12-12 20:28:02', 1, 5, 5, 'sábado');
 
 --
 -- Índices para tablas volcadas
@@ -522,13 +592,21 @@ ALTER TABLE `carrera_sede`
   ADD KEY `id_sede` (`id_sede`);
 
 --
+-- Indices de la tabla `disputa`
+--
+ALTER TABLE `disputa`
+  ADD PRIMARY KEY (`id_disputa`),
+  ADD KEY `id_solicitud` (`id_solicitud`);
+
+--
 -- Indices de la tabla `eventos`
 --
 ALTER TABLE `eventos`
   ADD PRIMARY KEY (`id_evento`),
   ADD KEY `id_asignatura` (`id_asignatura`),
   ADD KEY `id_horario` (`id_horario`),
-  ADD KEY `id_sala` (`id_sala`);
+  ADD KEY `id_sala` (`id_sala`),
+  ADD KEY `fk_nivel_asignatura` (`nivel_asignatura`);
 
 --
 -- Indices de la tabla `facultad`
@@ -575,6 +653,16 @@ ALTER TABLE `sede`
   ADD PRIMARY KEY (`id_sede`);
 
 --
+-- Indices de la tabla `solicitudes`
+--
+ALTER TABLE `solicitudes`
+  ADD PRIMARY KEY (`id_solicitud`),
+  ADD KEY `id_profesor` (`id_profesor`),
+  ADD KEY `id_administrador` (`id_administrador`),
+  ADD KEY `id_evento` (`id_evento`),
+  ADD KEY `id_horario` (`id_horario`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -588,13 +676,13 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT de la tabla `alumno`
 --
 ALTER TABLE `alumno`
-  MODIFY `id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `alumno_asignatura`
 --
 ALTER TABLE `alumno_asignatura`
-  MODIFY `id_alumno_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_alumno_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `carrera`
@@ -609,10 +697,16 @@ ALTER TABLE `carrera_asignatura`
   MODIFY `id_carrera_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
+-- AUTO_INCREMENT de la tabla `disputa`
+--
+ALTER TABLE `disputa`
+  MODIFY `id_disputa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
 -- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `id_evento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_evento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `nivel`
@@ -624,19 +718,25 @@ ALTER TABLE `nivel`
 -- AUTO_INCREMENT de la tabla `profesor`
 --
 ALTER TABLE `profesor`
-  MODIFY `id_profesor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_profesor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `profesor_asignatura`
 --
 ALTER TABLE `profesor_asignatura`
-  MODIFY `id_profesor_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_profesor_asignatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `sede`
 --
 ALTER TABLE `sede`
   MODIFY `id_sede` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+
+--
+-- AUTO_INCREMENT de la tabla `solicitudes`
+--
+ALTER TABLE `solicitudes`
+  MODIFY `id_solicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- Restricciones para tablas volcadas
@@ -682,6 +782,12 @@ ALTER TABLE `carrera_sede`
   ADD CONSTRAINT `carrera_sede_ibfk_2` FOREIGN KEY (`id_sede`) REFERENCES `sede` (`id_sede`);
 
 --
+-- Filtros para la tabla `disputa`
+--
+ALTER TABLE `disputa`
+  ADD CONSTRAINT `disputa_ibfk_1` FOREIGN KEY (`id_solicitud`) REFERENCES `solicitudes` (`id_solicitud`);
+
+--
 -- Filtros para la tabla `eventos`
 --
 ALTER TABLE `eventos`
@@ -696,6 +802,15 @@ ALTER TABLE `eventos`
 ALTER TABLE `profesor_asignatura`
   ADD CONSTRAINT `profesor_asignatura_ibfk_1` FOREIGN KEY (`id_profesor`) REFERENCES `profesor` (`id_profesor`),
   ADD CONSTRAINT `profesor_asignatura_ibfk_2` FOREIGN KEY (`id_asignatura`) REFERENCES `asignatura` (`id_asignatura`);
+
+--
+-- Filtros para la tabla `solicitudes`
+--
+ALTER TABLE `solicitudes`
+  ADD CONSTRAINT `solicitudes_ibfk_1` FOREIGN KEY (`id_profesor`) REFERENCES `profesor` (`id_profesor`),
+  ADD CONSTRAINT `solicitudes_ibfk_2` FOREIGN KEY (`id_administrador`) REFERENCES `administrador` (`id_administrador`),
+  ADD CONSTRAINT `solicitudes_ibfk_3` FOREIGN KEY (`id_evento`) REFERENCES `eventos` (`id_evento`),
+  ADD CONSTRAINT `solicitudes_ibfk_4` FOREIGN KEY (`id_horario`) REFERENCES `horarios` (`id_horario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

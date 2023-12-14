@@ -11,9 +11,14 @@ import ProfeCrud from "./pages/ProfeCrud";
 import AlumnoCrud from "./pages/AlumnoCrud";
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
-import Admin from './components/Admin';
+import CalendarioBig from "./pages/CalendarioBig";
 import Profesor from "./pages/Profesor";
 import Alumno from "./pages/Alumno";
+import Solicitudes from "./pages/Solicitudes";
+import Solicitudes_Calendario from "./pages/SOLICITUDES_CALENDARIO";
+import Admin from "./pages/Admin";
+import CalendarioEventual from "./pages/CalendarioEventual";
+
 
 function App() {
   const action = useNavigationType();
@@ -51,6 +56,10 @@ function App() {
             title = "";
             metaDescription = "";
             break;
+      case "/CalendarioBig":
+            title = "";
+            metaDescription = "";
+            break;
       case "/Profesor":
             title = "";
             metaDescription = "";
@@ -59,9 +68,21 @@ function App() {
             title = "";
             metaDescription = "";
             break;
-            
-      
+      case "/Solicitudes":
+            title = "";
+            metaDescription = "";
+            break;
 
+      case "/Solicitudes_Calendario":
+            title = "";
+            metaDescription = "";
+            break;
+
+      case "/CalendarioEventual":
+            title = "";
+            metaDescription = "";
+            break;
+            
     }
 
     if (title) {
@@ -84,13 +105,15 @@ function App() {
       <Route path="/Filtros" element={<Filtros />} />
       <Route path="/ProfeCrud" element={<ProfeCrud />} />
       <Route path="/AlumnoCrud" element={<AlumnoCrud />} />
-      <Route path="/Admin" element={<Admin />} />
+      <Route path="/Admin/:idAdmin" element={<Admin />} />
       <Route path="/forgot" element={<ForgotPassword />} />
       <Route path="/reset/:userType/:id/:token" element={<ResetPassword />} />
-      <Route path="/Admin" element={<Admin/>} />
+      <Route path="/CalendarioBig" element={<CalendarioBig />} />
       <Route path="/Profesor/:idProfesor/:nombreProfesor" element={<Profesor />} />
       <Route path="/Alumno/:idAlumno/:nombre" element={<Alumno />} />
-
+      <Route path="/Solicitudes/:idProfesor" element={<Solicitudes />} />
+      <Route path="/Solicitudes_Calendario" element={<Solicitudes_Calendario />} />
+      <Route path="/CalendarioEventual" element={<CalendarioEventual />} />
     </Routes>
   );
 }

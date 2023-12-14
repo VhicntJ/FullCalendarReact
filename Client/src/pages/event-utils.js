@@ -13,18 +13,18 @@ export function createEventId() {
 export const INITIAL_EVENTS = [
   {
     id: createEventId(),
-    start: '2023-11-27T09:35:00',
-    end: '2023-11-27T09:45:00',
+    start: '2023-12-11T09:35:00',
+    end: '2023-12-11T09:45:00',
     allDay: false,
-    color: 'red', // Ajusta el color según tus necesidades
+    color: '#ff7474', // Ajusta el color según tus necesidades
     editable: false,
   },
 
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-04T09:35:00',
-    end: '2023-12-04T09:45:00',
+    start: '2023-12-16T09:35:00',
+    end: '2023-12-16T09:45:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -32,8 +32,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-05T09:35:00',
-    end: '2023-12-05T09:45:00',
+    start: '2023-12-12T09:35:00',
+    end: '2023-12-12T09:45:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -41,8 +41,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-06T09:35:00',
-    end: '2023-12-06T09:45:00',
+    start: '2023-12-13T09:35:00',
+    end: '2023-12-13T09:45:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -50,8 +50,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-07T09:35:00',
-    end: '2023-12-07T09:45:00',
+    start: '2023-12-14T09:35:00',
+    end: '2023-12-14T09:45:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -59,8 +59,18 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-08T09:35:00',
-    end: '2023-12-08T09:45:00',
+    start: '2023-12-15T09:35:00',
+    end: '2023-12-15T09:45:00',
+    allDay: false,
+    color: 'red', // Ajusta el color según tus necesidades
+    editable: false,
+  },
+  
+  {
+    id: createEventId(),
+    title: '',
+    start: '2023-12-11T11:05:00',
+    end: '2023-12-11T11:15:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -68,8 +78,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-09T09:35:00',
-    end: '2023-12-09T09:45:00',
+    start: '2023-12-12T11:05:00',
+    end: '2023-12-12T11:15:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -77,8 +87,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-09T11:05:00',
-    end: '2023-12-09T11:15:00',
+    start: '2023-12-13T11:05:00',
+    end: '2023-12-13T11:15:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -86,8 +96,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-08T11:05:00',
-    end: '2023-12-08T11:15:00',
+    start: '2023-12-14T11:05:00',
+    end: '2023-12-14T11:15:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -95,8 +105,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-07T11:05:00',
-    end: '2023-12-07T11:15:00',
+    start: '2023-12-15T11:05:00',
+    end: '2023-12-15T11:15:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -104,8 +114,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-06T11:05:00',
-    end: '2023-12-06T11:15:00',
+    start: '2023-12-16T11:05:00',
+    end: '2023-12-16T11:15:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -113,8 +123,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-05T11:05:00',
-    end: '2023-12-05T11:15:00',
+    start: '2023-12-11T12:35:00',
+    end: '2023-12-11T12:45:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -122,8 +132,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-04T11:05:00',
-    end: '2023-12-04T11:15:00',
+    start: '2023-12-12T12:35:00',
+    end: '2023-12-12T12:45:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -131,8 +141,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-04T12:35:00',
-    end: '2023-12-04T12:45:00',
+    start: '2023-12-13T12:35:00',
+    end: '2023-12-13T12:45:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -140,8 +150,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-09T12:35:00',
-    end: '2023-12-09T12:45:00',
+    start: '2023-12-14T12:35:00',
+    end: '2023-12-14T12:45:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -149,8 +159,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-08T12:35:00',
-    end: '2023-12-08T12:45:00',
+    start: '2023-12-15T12:35:00',
+    end: '2023-12-15T12:45:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -158,26 +168,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-07T12:35:00',
-    end: '2023-12-07T12:45:00',
-    allDay: false,
-    color: 'red', // Ajusta el color según tus necesidades
-    editable: false,
-  },
-  {
-    id: createEventId(),
-    title: '',
-    start: '2023-12-06T12:35:00',
-    end: '2023-12-06T12:45:00',
-    allDay: false,
-    color: 'red', // Ajusta el color según tus necesidades
-    editable: false,
-  },
-  {
-    id: createEventId(),
-    title: '',
-    start: '2023-12-05T12:35:00',
-    end: '2023-12-05T12:45:00',
+    start: '2023-12-16T12:35:00',
+    end: '2023-12-16T12:45:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -187,8 +179,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-04T14:05:00',
-    end: '2023-12-04T14:15:00',
+    start: '2023-12-11T14:05:00',
+    end: '2023-12-11T14:15:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -196,8 +188,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-09T14:05:00',
-    end: '2023-12-09T14:15:00',
+    start: '2023-12-12T14:05:00',
+    end: '2023-12-12T14:15:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -205,8 +197,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-08T14:05:00',
-    end: '2023-12-08T14:15:00',
+    start: '2023-12-13T14:05:00',
+    end: '2023-12-13T14:15:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -214,8 +206,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-07T14:05:00',
-    end: '2023-12-07T14:15:00',
+    start: '2023-12-14T14:05:00',
+    end: '2023-12-14T14:15:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -223,8 +215,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-06T14:05:00',
-    end: '2023-12-06T14:15:00',
+    start: '2023-12-15T14:05:00',
+    end: '2023-12-15T14:15:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -232,8 +224,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-05T14:05:00',
-    end: '2023-12-05T14:15:00',
+    start: '2023-12-16T14:05:00',
+    end: '2023-12-16T14:15:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -242,8 +234,8 @@ export const INITIAL_EVENTS = [
     {
       id: createEventId(),
       title: '',
-      start: '2023-12-04T15:35:00',
-      end: '2023-12-04T15:45:00',
+      start: '2023-12-11T15:35:00',
+      end: '2023-12-11T15:45:00',
       allDay: false,
       color: 'red', // Ajusta el color según tus necesidades
       editable: false,
@@ -251,8 +243,8 @@ export const INITIAL_EVENTS = [
     {
       id: createEventId(),
       title: '',
-      start: '2023-12-09T15:35:00',
-      end: '2023-12-09T15:45:00',
+      start: '2023-12-12T15:35:00',
+      end: '2023-12-12T15:45:00',
       allDay: false,
       color: 'red', // Ajusta el color según tus necesidades
       editable: false,
@@ -260,8 +252,8 @@ export const INITIAL_EVENTS = [
     {
       id: createEventId(),
       title: '',
-      start: '2023-12-08T15:35:00',
-      end: '2023-12-08T15:45:00',
+      start: '2023-12-13T15:35:00',
+      end: '2023-12-13T15:45:00',
       allDay: false,
       color: 'red', // Ajusta el color según tus necesidades
       editable: false,
@@ -269,8 +261,8 @@ export const INITIAL_EVENTS = [
     {
       id: createEventId(),
       title: '',
-      start: '2023-12-07T15:35:00',
-      end: '2023-12-07T15:45:00',
+      start: '2023-12-14T15:35:00',
+      end: '2023-12-14T15:45:00',
       allDay: false,
       color: 'red', // Ajusta el color según tus necesidades
       editable: false,
@@ -278,8 +270,8 @@ export const INITIAL_EVENTS = [
     {
       id: createEventId(),
       title: '',
-      start: '2023-12-06T15:35:00',
-      end: '2023-12-06T15:45:00',
+      start: '2023-12-15T15:35:00',
+      end: '2023-12-15T15:45:00',
       allDay: false,
       color: 'red', // Ajusta el color según tus necesidades
       editable: false,
@@ -287,8 +279,8 @@ export const INITIAL_EVENTS = [
     {
       id: createEventId(),
       title: '',
-      start: '2023-12-05T15:35:00',
-      end: '2023-12-05T15:45:00',
+      start: '2023-12-16T15:35:00',
+      end: '2023-12-16T15:45:00',
       allDay: false,
       color: 'red', // Ajusta el color según tus necesidades
       editable: false,
@@ -297,8 +289,8 @@ export const INITIAL_EVENTS = [
     {
       id: createEventId(),
       title: '',
-      start: '2023-12-04T17:05:00',
-      end: '2023-12-04T17:15:00',
+      start: '2023-12-11T17:05:00',
+      end: '2023-12-11T17:15:00',
       allDay: false,
       color: 'red', // Ajusta el color según tus necesidades
       editable: false,
@@ -306,8 +298,8 @@ export const INITIAL_EVENTS = [
     {
       id: createEventId(),
       title: '',
-      start: '2023-12-09T17:05:00',
-      end: '2023-12-09T17:15:00',
+      start: '2023-12-12T17:05:00',
+      end: '2023-12-12T17:15:00',
       allDay: false,
       color: 'red', // Ajusta el color según tus necesidades
       editable: false,
@@ -315,8 +307,8 @@ export const INITIAL_EVENTS = [
     {
       id: createEventId(),
       title: '',
-      start: '2023-12-08T17:05:00',
-      end: '2023-12-08T17:15:00',
+      start: '2023-12-13T17:05:00',
+      end: '2023-12-13T17:15:00',
       allDay: false,
       color: 'red', // Ajusta el color según tus necesidades
       editable: false,
@@ -324,8 +316,8 @@ export const INITIAL_EVENTS = [
     {
       id: createEventId(),
       title: '',
-      start: '2023-12-07T17:05:00',
-      end: '2023-12-07T17:15:00',
+      start: '2023-12-14T17:05:00',
+      end: '2023-12-14T17:15:00',
       allDay: false,
       color: 'red', // Ajusta el color según tus necesidades
       editable: false,
@@ -333,8 +325,8 @@ export const INITIAL_EVENTS = [
     {
       id: createEventId(),
       title: '',
-      start: '2023-12-06T17:05:00',
-      end: '2023-12-06T17:15:00',
+      start: '2023-12-15T17:05:00',
+      end: '2023-12-15T17:15:00',
       allDay: false,
       color: 'red', // Ajusta el color según tus necesidades
       editable: false,
@@ -342,8 +334,8 @@ export const INITIAL_EVENTS = [
     {
       id: createEventId(),
       title: '',
-      start: '2023-12-05T17:05:00',
-      end: '2023-12-05T17:15:00',
+      start: '2023-12-16T17:05:00',
+      end: '2023-12-16T17:15:00',
       allDay: false,
       color: 'red', // Ajusta el color según tus necesidades
       editable: false,
@@ -352,8 +344,8 @@ export const INITIAL_EVENTS = [
         {
           id: createEventId(),
           title: '',
-          start: '2023-12-04T18:35:00',
-          end: '2023-12-04T18:50:00',
+          start: '2023-12-11T18:35:00',
+          end: '2023-12-11T18:50:00',
           allDay: false,
           color: 'red', // Ajusta el color según tus necesidades
           editable: false,
@@ -361,8 +353,8 @@ export const INITIAL_EVENTS = [
         {
           id: createEventId(),
           title: '',
-          start: '2023-12-09T18:35:00',
-          end: '2023-12-09T18:50:00',
+          start: '2023-12-12T18:35:00',
+          end: '2023-12-12T18:50:00',
           allDay: false,
           color: 'red', // Ajusta el color según tus necesidades
           editable: false,
@@ -370,8 +362,8 @@ export const INITIAL_EVENTS = [
         {
           id: createEventId(),
           title: '',
-          start: '2023-12-08T18:35:00',
-          end: '2023-12-08T18:50:00',
+          start: '2023-12-13T18:35:00',
+          end: '2023-12-13T18:50:00',
           allDay: false,
           color: 'red', // Ajusta el color según tus necesidades
           editable: false,
@@ -379,8 +371,8 @@ export const INITIAL_EVENTS = [
         {
           id: createEventId(),
           title: '',
-          start: '2023-12-07T18:35:00',
-          end: '2023-12-07T18:50:00',
+          start: '2023-12-14T18:35:00',
+          end: '2023-12-14T18:50:00',
           allDay: false,
           color: 'red', // Ajusta el color según tus necesidades
           editable: false,
@@ -388,8 +380,8 @@ export const INITIAL_EVENTS = [
         {
           id: createEventId(),
           title: '',
-          start: '2023-12-06T18:35:00',
-          end: '2023-12-06T18:50:00',
+          start: '2023-12-15T18:35:00',
+          end: '2023-12-15T18:50:00',
           allDay: false,
           color: 'red', // Ajusta el color según tus necesidades
           editable: false,
@@ -397,8 +389,8 @@ export const INITIAL_EVENTS = [
         {
           id: createEventId(),
           title: '',
-          start: '2023-12-05T18:35:00',
-          end: '2023-12-05T18:50:00',
+          start: '2023-12-16T18:35:00',
+          end: '2023-12-16T18:50:00',
           allDay: false,
           color: 'red', // Ajusta el color según tus necesidades
           editable: false,
@@ -407,8 +399,8 @@ export const INITIAL_EVENTS = [
                 {
                   id: createEventId(),
                   title: '',
-                  start: '2023-12-04T20:10:00',
-                  end: '2023-12-04T20:15:00',
+                  start: '2023-12-11T20:10:00',
+                  end: '2023-12-11T20:15:00',
                   allDay: false,
                   color: 'red', // Ajusta el color según tus necesidades
                   editable: false,
@@ -416,8 +408,8 @@ export const INITIAL_EVENTS = [
                 {
                   id: createEventId(),
                   title: '',
-                  start: '2023-12-09T20:10:00',
-                  end: '2023-12-09T20:15:00',
+                  start: '2023-12-12T20:10:00',
+                  end: '2023-12-12T20:15:00',
                   allDay: false,
                   color: 'red', // Ajusta el color según tus necesidades
                   editable: false,
@@ -425,8 +417,8 @@ export const INITIAL_EVENTS = [
                 {
                   id: createEventId(),
                   title: '',
-                  start: '2023-12-08T20:10:00',
-                  end: '2023-12-08T20:15:00',
+                  start: '2023-12-13T20:10:00',
+                  end: '2023-12-13T20:15:00',
                   allDay: false,
                   color: 'red', // Ajusta el color según tus necesidades
                   editable: false,
@@ -434,8 +426,8 @@ export const INITIAL_EVENTS = [
                 {
                   id: createEventId(),
                   title: '',
-                  start: '2023-12-07T20:10:00',
-                  end: '2023-12-07T20:15:00',
+                  start: '2023-12-14T20:10:00',
+                  end: '2023-12-14T20:15:00',
                   allDay: false,
                   color: 'red', // Ajusta el color según tus necesidades
                   editable: false,
@@ -443,8 +435,8 @@ export const INITIAL_EVENTS = [
                 {
                   id: createEventId(),
                   title: '',
-                  start: '2023-12-06T20:10:00',
-                  end: '2023-12-06T20:15:00',
+                  start: '2023-12-15T20:10:00',
+                  end: '2023-12-15T20:15:00',
                   allDay: false,
                   color: 'red', // Ajusta el color según tus necesidades
                   editable: false,
@@ -452,8 +444,8 @@ export const INITIAL_EVENTS = [
                 {
                   id: createEventId(),
                   title: '',
-                  start: '2023-12-05T20:10:00',
-                  end: '2023-12-05T20:15:00',
+                  start: '2023-12-16T20:10:00',
+                  end: '2023-12-16T20:15:00',
                   allDay: false,
                   color: 'red', // Ajusta el color según tus necesidades
                   editable: false,
@@ -462,8 +454,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-04T21:35:00',
-    end: '2023-12-04T21:40:00',
+    start: '2023-12-11T21:35:00',
+    end: '2023-12-11T21:40:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -471,8 +463,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-09T21:35:00',
-    end: '2023-12-09T21:40:00',
+    start: '2023-12-12T21:35:00',
+    end: '2023-12-12T21:40:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -480,8 +472,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-05T21:35:00',
-    end: '2023-12-05T21:40:00',
+    start: '2023-12-13T21:35:00',
+    end: '2023-12-13T21:40:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -489,8 +481,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-06T21:35:00',
-    end: '2023-12-06T21:40:00',
+    start: '2023-12-14T21:35:00',
+    end: '2023-12-14T21:40:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -498,8 +490,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-07T21:35:00',
-    end: '2023-12-07T21:40:00',
+    start: '2023-12-15T21:35:00',
+    end: '2023-12-15T21:40:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,
@@ -507,8 +499,8 @@ export const INITIAL_EVENTS = [
   {
     id: createEventId(),
     title: '',
-    start: '2023-12-08T21:35:00',
-    end: '2023-12-08T21:40:00',
+    start: '2023-12-16T21:35:00',
+    end: '2023-12-16T21:40:00',
     allDay: false,
     color: 'red', // Ajusta el color según tus necesidades
     editable: false,

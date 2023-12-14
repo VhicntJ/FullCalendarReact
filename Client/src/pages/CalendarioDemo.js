@@ -15,27 +15,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
-
 export default class DemoApp extends React.Component {
-
-  obtenerNumeroDia = (diaPalabra) => {
-    const dias = {
-      domingo: "2023-12-03",
-      lunes: "2023-12-04",
-      martes: "2023-12-05",
-      miércoles: "2023-12-06",
-      jueves: "2023-12-07",
-      viernes: "2023-12-08",
-      sábado: "2023-12-09",
-    };
-
-    const diaLowerCase = diaPalabra.trim().toLowerCase();
-
-    return dias[diaLowerCase];
-  };
-
-  
-  
 
   customSlotLabelContent = (slotInfo) => {
     const blockNumber = slotInfo.date.getHours() - 7; // Resta 7 para ajustar desde las 8:15
@@ -51,134 +31,28 @@ export default class DemoApp extends React.Component {
   };
 
   componentDidMount() {
-    // Cargar eventos desde la API y establecerlos directamente en FullCalendar
+    // Cargar eventos iniciales
+    const initialEvents = [...INITIAL_EVENTS];
+  
+    // Cargar eventos desde la API y combinar con los eventos iniciales
     this.fetchEventsFromAPI().then(apiEvents => {
-      console.log('Eventos cargados desde la API ARRIBA:', apiEvents);
-
-      this.setState(prevState => ({
-        currentEvents: [...prevState.currentEvents, ...apiEvents],
-      }));
-
-      // Filtrar eventos con el profesor seleccionado al cargar la página
-      this.fetchAndFilterEventsFromAPI();
+      
+      console.log('Eventos cargados desde la APIARRIBA:', apiEvents); // Agrega esta línea para imprimir los eventos en la consola del navegador
+      const combinedEvents = [...initialEvents, ...apiEvents];
+      console.log('Eventos inicialesSSS:', initialEvents); // Agrega esta línea para imprimir los eventos en la consola del navegador
+      this.setState({ currentEvents: combinedEvents });
+      console.log('COMBINACIONSSS:', combinedEvents); // Agrega esta línea para imprimir los eventos en la consola del navegador
     });
   }
-  componentDidUpdate(prevProps) {
-    // Detectar cambios en las propiedades relacionadas con los filtros y realizar acciones si es necesario
-    if (this.props.sala !== prevProps.sala || this.props.carrera !== prevProps.carrera || this.props.nivel !== prevProps.nivel || this.props.profesor !== prevProps.profesor || this.props.asignatura !== prevProps.asignatura || this.props.facultad !== prevProps.facultad || this.props.alumno !== prevProps.alumno) {
-      // Realizar acciones, como recargar eventos con los nuevos filtros
-      this.fetchAndFilterEventsFromAPI();
-    }
-  }
-
-  fetchAndFilterEventsFromAPI = () => {
-    const {
-      sala,
-      carrera,
-      nivel,
-      profesor: filterProfesor, // Usar el valor del filtro directamente
-      asignatura,
-      facultad,
-      alumno : filterAlumno,
-      
-    } = this.props;
-    const { selectedProfesor } = this.state; // Obtén el valor de selectedProfesor del estado
-    const { selectedAlumno } = this.state; // Obtén el valor de selectedAlumno del estado
-
-    fetch('http://localhost:3001/eventos')
-      .then((response) => response.json())
-      .then((eventos) => {
-                // Mapear los eventos para que se ajusten al formato esperado por FullCalendar
-                const formattedEvents = eventos.map((event) => {
-                  const fecha = this.obtenerNumeroDia(event.fecha);
-                  const start = `${fecha}T${event.start}`;
-                  const end = `${fecha}T${event.end}`;
-        
-                  return {
-                    id: event.id_evento,
-                    bloque: event.id_horario,
-                    title: event.nombre_asignatura,
-                    start,
-                    end,
-                    id_sala: event.id_sala,
-                    cupos: event.cupos,
-                    seccion: event.seccion,
-                    id_asignatura: event.id_asignatura,
-                    fecha,
-                    nivel: event.id_nivel,
-                    profesor: event.id_profesor,
-                    profesor_nombre: event.nombre_profesor,
-                    alumno: event.id_alumno,
-                    alumno_nombre: event.nombre_alumno,
-                  };
-                });
-                console.log('Eventos ANTES del filtro de asignatura:', formattedEvents);
-
-                const filteredEvents = formattedEvents.filter((event) => {
-                  const eventAsignatura = event.id_asignatura.toString(); // Convertir a cadena para comparación
-                  const isSelectedAsignatura = !asignatura || eventAsignatura === asignatura;
-                  const eventNivel = event.nivel.toString(); // Convertir a cadena para comparación
-                  const isSelectedNivel = !nivel || eventNivel === nivel;
-                  const eventProfesor = event.profesor.toString(); // Convertir a cadena para comparación
-                  const isSelectedProfesor =
-                      (!selectedProfesor && !filterProfesor) ||
-                      (selectedProfesor && eventProfesor === selectedProfesor.toString()) ||
-                      (filterProfesor && eventProfesor === filterProfesor.toString());
-                  const eventAlumno = event.alumno.toString(); // Convertir a cadena para comparación
-                  const isSelectedAlumno =
-                      (!selectedAlumno && !filterAlumno) ||
-                      (selectedAlumno && eventAlumno === selectedAlumno.toString()) ||
-                      (filterAlumno && eventAlumno === filterAlumno.toString());
-                  return (
-                    (!sala || event.id_sala === sala) &&
-                    (!carrera || event.id_carrera === carrera) &&
-                    isSelectedNivel &&
-                    isSelectedProfesor &&
-                    isSelectedAsignatura &&
-                    (!facultad || event.id_facultad === facultad) &&
-                    isSelectedAlumno
-                    
-                  );
-                });
-                
-        console.log('Eventos después del filtro de asignatura:', filteredEvents);
-
-
-        this.setState({
-          currentEvents: filteredEvents,
-        });
-        console.log('filtro', filteredEvents);
-      })
-      .catch((error) => {
-        console.error('Error al obtener eventos desde la API:', error);
-      });
-  };
-    
-  
-    // Función para manejar cambios en los filtros
-    handleFilterChange = () => {
-      // Llamar a la función para obtener y filtrar eventos desde la API
-      this.fetchAndFilterEventsFromAPI();
-    };
-    
-  
   
 
   state = {
     weekendsVisible: true,
     currentEvents: [],
     showModal: false, // Nueva propiedad para manejar la visibilidad del modal
-    selectedEvent: null,
-    selectedProfesor: this.props.idProfesor || null,
-    selectedAlumno: this.props.idAlumno || null,
+    selectedEvent: null // Nueva propiedad para almacenar el evento seleccionado
   }
   render() {
-    console.log("profesor traido LOGIN:", this.props.idProfesor); // Cambia a this.props
-    console.log("Sala seleccionada:", this.props.sala); // Cambia a this.props
-    console.log("asignatura seleccionada:", this.props.asignatura); // Cambia a this.props
-    console.log("nivel seleccionado:", this.props.nivel); // Cambia a this.props
-    console.log("profesor seleccionado:", this.props.profesor); // Cambia a this.props
-    console.log("alumno seleccionado:", this.props.idAlumno); // Cambia a this.props
     return (
     
       <div className='demo-app'>
@@ -187,14 +61,6 @@ export default class DemoApp extends React.Component {
         <div className='demo-app-main'>
         
           <FullCalendar
-          
-          sala={this.state.selectedSala}
-          carrera={this.state.selectedCarrera}
-          nivel={this.state.selectedNivel}
-          profesor={this.state.selectedProfesor}
-          asignatura={this.state.selectedAsignatura}
-          facultad={this.state.selectedFacultad}
-          alumno={this.state.selectedAlumno}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin,bootstrap5Plugin]}
             headerToolbar={{
               left: '',
@@ -213,16 +79,17 @@ export default class DemoApp extends React.Component {
             dayMaxEvents={true}
             
             slotLabelContent={this.customSlotLabelContent}
+            schedulerLicenseKey='CC-Attribution-NonCommercial-NoDerivatives'
             themeSystem='bootstrap5'
             weekends={this.state.weekendsVisible}
-            events={[...INITIAL_EVENTS, ...this.state.currentEvents]} // alternatively, use the `events` setting to fetch from a feed
+            initialEvents={[...INITIAL_EVENTS, ...this.state.currentEvents]} // alternatively, use the `events` setting to fetch from a feed
             
             select={this.handleDateSelect}
             eventContent={renderEventContent} // custom render function
             eventClick={this.handleEventClick}
-            //eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
+            eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
             allDaySlot={false}
-
+       
             //slotLabelDidMount={this.customSlotLabelMount}
             slotLabelInterval={'01:20:00'} // Intervalo de los bloques
             slotDuration={"00:10:00"}
@@ -248,16 +115,35 @@ export default class DemoApp extends React.Component {
     const eventStart = info.event.start;
     const eventEnd = info.event.end;
   }  
-
+/*
+  renderSidebar() {
+    return (
+      <div className='demo-app-sidebar'>
+        <div className='demo-app-sidebar-section'>
+          <h2>Instrucciones</h2>
+          <ul>
+            <li>Selecciona un bloque especifico y podras agregar un</li>
+            <li>Puedes mantener, mover y estirar eventos para abarcar mas horas</li>
+            <li>Click en un evento para eliminarlo</li>
+          </ul>
+        </div>
+        <div className='demo-app-sidebar-section'>
+          <h2>Todos los eventos ({this.state.currentEvents.length})</h2>
+          <ul>
+            {this.state.currentEvents.map(renderSidebarEvent)}
+          </ul>
+        </div>
+      </div>
+    )
+  }
+*/
   renderEventModal() {
     const { showModal, selectedEvent } = this.state;
   
     if (!showModal || !selectedEvent) {
       return null; // No hay evento seleccionado, no renderizar el modal
     }
-  
     const isRecreo = selectedEvent.title === 'RECREO';
-  
     return (
       <Modal show={showModal} onHide={this.handleCloseModal}>
         <Modal.Header>
@@ -267,91 +153,78 @@ export default class DemoApp extends React.Component {
           </Button>
         </Modal.Header>
         <Modal.Body>
-          {isRecreo ? (
-            <p>¡Es hora de descansar!</p>
-          ) : (
-            <>
-              <p><strong>Nombre Asignatura:</strong> {selectedEvent.title}</p>
-              <p><strong>ID Asignatura:</strong> {selectedEvent.extendedProps.id_asignatura}</p>
-              <p><strong>Carrera 1:</strong> {selectedEvent.extendedProps.id_asignatura}</p>
-              <p><strong>Carrera 2:</strong> {selectedEvent.extendedProps.id_asignatura}</p>
-              <p><strong>ID de Sala:</strong> {selectedEvent.extendedProps.id_sala}</p>
-              <p><strong>Sección:</strong> {selectedEvent.extendedProps.seccion}</p>
-              <p><strong>Cupos:</strong> {selectedEvent.extendedProps.cupos}</p>
-              <p><strong>Bloque:</strong> {selectedEvent.extendedProps.bloque}</p>
-              {/* Agrega más detalles según tus necesidades */}
-            </>
-          )}
+        {isRecreo ? (
+          <p>¡Es hora de descansar!</p>
+        ) : (
+          <>
+          <p><strong>Fecha:</strong> {selectedEvent.start.toLocaleString()}</p>
+          <p><strong>Nombre Asignatura:</strong> {selectedEvent.title}</p>
+          <p><strong>ID Asignatura:</strong> {selectedEvent.id_asignatura}</p>
+          <p><strong>Carrera 1:</strong> {selectedEvent.id_asignatura}</p>
+          <p><strong>Carrera 2:</strong> {selectedEvent.id_asignatura}</p>
+          <p><strong>ID de Sala:</strong> {selectedEvent.id_sala}</p>
+          <p><strong>Sección:</strong> {selectedEvent.seccion}</p>
+          <p><strong>Cupos:</strong> {selectedEvent.cupos}</p>
+          {/* Agrega más detalles según tus necesidades */}
+          </>
+        )}
         </Modal.Body>
         {!isRecreo && (
-          <Modal.Footer>
-            <Button variant="danger" onClick={this.handleDeleteEvent}>
-              Eliminar
-            </Button>
-          </Modal.Footer>
+        <Modal.Footer>
+          <Button variant="danger" onClick={this.handleDeleteEvent}>
+            Eliminar
+          </Button>
+        </Modal.Footer>
         )}
       </Modal>
     );
   }
-  
-  
 
-  fetchEventsFromAPI() {
-    function obtenerNumeroDia(diaPalabra) {
-      const dias = {
-        domingo: "2023-12-03",
-        lunes: "2023-12-04",
-        martes: "2023-12-05",
-        miércoles: "2023-12-06",
-        jueves: "2023-12-07",
-        viernes: "2023-12-08",
-        sábado: "2023-12-09",
-      };
+  /*
+  componentDidMount() {
+    // Cargar eventos iniciales
+    const initialEvents = [...INITIAL_EVENTS];
   
-      // Convertir a minúsculas y eliminar posibles espacios extra al inicio y al final
-      const diaLowerCase = diaPalabra.trim().toLowerCase();
-  
-      return dias[diaLowerCase];
-    }
-  
-    return fetch('http://localhost:3001/eventos')
-      .then(response => response.json())
-      .then(eventos => {
-        if (!Array.isArray(eventos)) {
-          console.error('La respuesta de la API no es un array:', eventos);
-          return []; // Devolver un array vacío si no es un array
-        }
-        console.log('Datos originales de la API:', eventos);
-  
-        // Mapear los eventos para que se ajusten al formato esperado por FullCalendar
-        return eventos.map(event => {
-          const fecha = obtenerNumeroDia(event.fecha);
-          const start = `${fecha}T${event.start}`;
-          const end = `${fecha}T${event.end}`;
-  
-          return {
-            id: event.id_evento,
-            bloque: event.id_horario,
-            title: event.nombre_asignatura,
-            start,
-            end,
-            id_sala: event.id_sala,
-            cupos: event.cupos,
-            seccion: event.seccion,
-            id_asignatura: event.id_asignatura,
-            fecha,
-            nivel: event.id_nivel,
-            profesor: event.id_profesor,
-            profesor_nombre: event.nombre_profesor,
-          };
-        });
-      })
-      .catch(error => {
-        console.error('Error al obtener eventos desde la API:', error);
-        return []; // Devolver un array vacío en caso de error
-      });
+    // Cargar eventos desde la API y combinar con los eventos iniciales
+    this.fetchEventsFromAPI().then(apiEvents => {
+      console.log('Eventos cargados desde la API:', apiEvents); // Agrega esta línea para imprimir los eventos en la consola del navegador
+      const combinedEvents = [...initialEvents, ...apiEvents];
+      this.setState({ currentEvents: combinedEvents });
+      console.log('COMBINACION:', combinedEvents); // Agrega esta línea para imprimir los eventos en la consola del navegador
+
+    });
   }
+  */
+
   
+  async fetchEventsFromAPI() {
+    try {
+      const response = await fetch('http://localhost:3001/eventos');
+      const eventos = await response.json();
+  
+      // Verificar que eventos sea un array
+      if (!Array.isArray(eventos)) {
+        console.error('La respuesta de la API no es un array:', eventos);
+        return []; // Devolver un array vacío si no es un array
+      }
+      console.log('Datos originales de la API:', eventos);
+  
+      // Mapear los eventos para que se ajusten al formato esperado por FullCalendar
+      return eventos.map(event => ({
+        id: event.id_evento,
+        title: event.nombre_asignatura,
+        start: event.start,
+        end: event.end,
+        id_sala: event.id_sala,
+        cupos: event.cupos,
+        seccion: event.seccion,
+        
+      }));
+    } catch (error) {
+      console.error('Error al obtener eventos desde la API:', error);
+      return []; // Devolver un array vacío en caso de error
+    }
+  }
 
   
 
@@ -360,6 +233,11 @@ export default class DemoApp extends React.Component {
       showModal: false,
       selectedEvent: null,
     });
+  }
+  handleWeekendsToggle = () => {
+    this.setState({
+      weekendsVisible: !this.state.weekendsVisible
+    })
   }
 
   handleDateSelect = async (selectInfo) => {
@@ -406,13 +284,18 @@ export default class DemoApp extends React.Component {
       }
     }
   };
-
+  /*
+      handleEventClick = (clickInfo) => {
+    if (confirm(`¿Estas seguro de eliminar este evento? '${clickInfo.event.title}'`)) {
+      clickInfo.event.remove()
+    }
+  } */
 
   handleEventClick = (clickInfo) => {
     const selectedEvent = clickInfo.event;
   
     // Verificar si el evento es un "Recreo"
-    if (selectedEvent.title === '') {
+    if (selectedEvent.title === 'RECREO') {
       return; // No hacer nada si es un "Recreo"
     }
   
@@ -443,19 +326,12 @@ export default class DemoApp extends React.Component {
 function renderEventContent(eventInfo) {
   return (
     <>
-      <b className='grid height:50px'>{eventInfo.timeText}</b>
-      {eventInfo.event.title && ( // Verifica si el título no está vacío
-        <>
-          <i className='grid height:50px'>{eventInfo.event.title}</i>
-          <p>Sección: {eventInfo.event.extendedProps.seccion}</p>
-          <p>Sala: {eventInfo.event.extendedProps.id_sala}</p>
-          <p>Bloque: {eventInfo.event.extendedProps.bloque}</p>
-        </>
-      )}
+      <b>{eventInfo.timeText}</b>
+      <i className='grid'>{eventInfo.event.title}</i>
+      <p>Más información: {eventInfo.event.extendedProps.description}</p>
     </>
   );
 }
-
  
 /*
 function renderSidebarEvent(event, index) {
